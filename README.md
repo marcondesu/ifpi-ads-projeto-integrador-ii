@@ -27,11 +27,7 @@
   - **Sprint Backlog:** https://trello.com/b/baOnxLcM/moodminder
 
 ## Resumo do Projeto
-Desenvolvimento de uma aplicação mobile voltada para o autocuidado, em que o paciente pode Esta aplicação oferecerá aos pacientes a capacidade de:
-
-Registrar e monitorar suas emoções, humor e bem-estar mental.
-Acompanhar o progresso ao longo do tempo por meio de gráficos e análises.
-Compartilhar seletivamente informações com terapeutas ou profissionais de saúde mental.
-Estabelecer lembretes e notificações para promover o uso regular da aplicação.
-Acesso a recursos educacionais abrangentes sobre saúde mental e bem-estar emocional.
-O aplicativo visa capacitar os usuários a cuidarem de sua saúde mental de forma autônoma, proporcionando ferramentas de autoavaliação, autorreflexão e a opção de colaborar com profissionais de saúde mental quando desejarem.
+Desenvolvimento de uma aplicação mobile voltada para o autocuidado, em que o paciente pode:
+* registrar e monitorar suas emoções, humor e bem-estar mental;
+* acompanhar o progresso ao longo do tempo por meio de gráficos e análises;
+* compartilhar seletivamente informações com terapeutas ou profissionais de saúde mental.
