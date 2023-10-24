@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "MoodMinder",
+    "slug": "MoodMinder",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
