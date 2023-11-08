@@ -5,7 +5,7 @@ import AppLoading from 'expo-app-loading';
 import theme from './styles/theme';
 import { StatusBar } from 'expo-status-bar';
 import { ThemeProvider } from 'styled-components';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
 // importação de fontes
@@ -42,7 +42,9 @@ export default function App() {
         <ThemeProvider theme={theme}>
         <NavigationContainer>
             <StatusBar style="dark" translucent backgroundColor="transparent" />
-            <View>
+            <View style={{
+
+            }}>
                 <Login></Login>
             </View>
         </NavigationContainer>

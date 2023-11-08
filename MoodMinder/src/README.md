@@ -61,3 +61,7 @@ Para resolver
 
 Cannot find module 'react-native-gesture-handler' or its corresponding type declarations.
 npm install react-native-gesture-handler
+
+
+Module not found: Can't resolve 'react-native-reanimated'
+npm i react-native-reanimated
