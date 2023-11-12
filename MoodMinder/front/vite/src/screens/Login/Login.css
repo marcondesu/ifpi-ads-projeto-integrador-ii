@@ -1,0 +1,9 @@
+.forgot-password {
+  margin-top: 1rem;
+  font-size: 10pt;
+
+  & span {
+    color: blueviolet;
+    cursor: pointer;
+  }
+}

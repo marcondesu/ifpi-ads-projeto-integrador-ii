@@ -1,0 +1,92 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.text {
+  margin-bottom: 1rem;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.inputs {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.input {
+  display: flex;
+  align-items: center;
+  width: 70%;
+  height: 50px;
+  background-color: #eaeaea;
+  border-radius: 5px;
+
+  & svg {
+    font-size: 1.5em;
+    padding: 1rem;
+  }
+
+  & input {
+    height: 80%;
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    /* font-size: 12pt; */
+  }
+}
+
+.submit-container {
+  display: flex;
+  margin: 1rem;
+  box-sizing: border-box;
+  justify-content: center;
+  
+  & span {
+    border-radius: 10px;
+    padding: 1rem;
+    cursor: pointer;
+    background-color: #123142;
+    color: white;
+    height: 80%;
+  }
+}
+
+.social-list {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+
+  & li {
+    gap: 0.5rem;
+    display: flex;
+    cursor: pointer;
+    margin: 0 1em;
+    background-color: #797979;
+    padding: 1rem;
+    border-radius: 10px;
+  }
+
+  & svg {
+    justify-content: center;
+    text-align: center;
+    font-size: 1.5em;
+  }
+}
+
+.has-account {
+  font-size: 10pt;
+  padding: 1rem;
+  color: #797979;
+
+  & span {
+    color: blueviolet;
+    cursor: pointer;
+  }
+}
