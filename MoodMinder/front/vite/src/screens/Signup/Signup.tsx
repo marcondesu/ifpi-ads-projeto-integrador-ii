@@ -3,8 +3,15 @@ import { PiKey } from "react-icons/pi";
 import { HiOutlineEnvelope, HiOutlineUser } from "react-icons/hi2";
 import { BiLogoFacebook } from "react-icons/bi";
 import { FcGoogle } from "react-icons/fc";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
+  const navigate = useNavigate()
+
+  const goLogin = () => {
+    navigate("/login")
+  }
+  
   return (
     <div className="container">
       <div className="header">
@@ -12,29 +19,6 @@ const Signup = () => {
           Acompanhe seu progresso em busca do autocuidado
         </div>
       </div>
-
-      <div className="inputs">
-        <div className="input">
-          <HiOutlineUser />
-          <input type="text" placeholder="Nome" />
-        </div>
-
-        <div className="input">
-          <HiOutlineEnvelope />
-          <input type="email" placeholder="E-mail"></input>
-        </div>
-
-        <div className="input">
-          <PiKey />
-          <input type="password" placeholder="Senha"></input>
-        </div>
-      </div>
-
-      <div className="submit-container">
-        <span>Cadastar</span>
-      </div>
-
-      <div className="underline" style={{fontSize: '10pt'}}>ou</div>
 
       <ul className="social-list">
         <li
@@ -58,9 +42,36 @@ const Signup = () => {
         </li>
       </ul>
 
+      <div className="underline" style={{ fontSize: "10pt" }}>
+        <div className="left-u"></div>
+        <p>ou</p>
+        <div className="right-u"></div>
+      </div>
+
+      <div className="inputs">
+        <div className="input">
+          <HiOutlineUser />
+          <input type="text" placeholder="Nome" />
+        </div>
+
+        <div className="input">
+          <HiOutlineEnvelope />
+          <input type="email" placeholder="E-mail"></input>
+        </div>
+
+        <div className="input">
+          <PiKey />
+          <input type="password" placeholder="Senha"></input>
+        </div>
+      </div>
+
+      <div className="submit-container">
+        <span>Cadastar</span>
+      </div>
+
       <div className="has-account">
         Já tem uma conta?
-        <span> Clique aqui</span>
+        <span onClick={goLogin}> Clique aqui</span>
       </div>
     </div>
   );
