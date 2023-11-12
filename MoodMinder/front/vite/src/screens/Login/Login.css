@@ -8,6 +8,14 @@
   }
 }
 
-.has-account {
+.no-has-account {
   padding: 1rem;
+  font-size: 10pt;
+  color: #797979;
+
+  & span {
+    color: blueviolet;
+    cursor: pointer;
+  }
+  
 }

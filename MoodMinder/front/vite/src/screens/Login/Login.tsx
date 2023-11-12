@@ -11,6 +11,10 @@ const Login = () => {
   const goSignup = () => {
     navigate("/register")
   }
+
+  const goForm = () => {
+    navigate("/emotionform")
+  }
   
   return (
     <div className="container">
@@ -59,14 +63,14 @@ const Login = () => {
       </div>
 
       <div className="submit-container">
-        <span>Acessar</span>
+        <span onClick={goForm}>Acessar</span>
       </div>
 
       <div className="forgot-password">
         <span>Esqueci minha senha</span>
       </div>
 
-      <div className="has-account">
+      <div className="no-has-account">
         Ainda não tem uma conta?
         <span onClick={goSignup}> Clique aqui</span>
       </div>
