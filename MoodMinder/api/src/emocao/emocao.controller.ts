@@ -7,11 +7,13 @@ import {
   Delete,
   Patch,
 } from '@nestjs/common';
-import { EmocaoService } from './emocao.service';
-import { CreateEmocaoDto } from './dto/create-emocao.dto';
-import { Emocao } from './entities/emocao.entity';
 import { DeleteResult } from 'typeorm';
+import { ApiTags } from '@nestjs/swagger';
+import { EmocaoService } from './emocao.service';
+import { Emocao } from './entities/emocao.entity';
+import { CreateEmocaoDto } from './dto/create-emocao.dto';
 
+@ApiTags('Emoção')
 @Controller('emocao')
 export class EmocaoController {
   constructor(private readonly emocaoService: EmocaoService) {}

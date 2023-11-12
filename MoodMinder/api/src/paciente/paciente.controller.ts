@@ -7,11 +7,13 @@ import {
   Param,
   Patch,
 } from '@nestjs/common';
-import { PacienteService } from './paciente.service';
-import { CreatePacienteDto } from './dto/create-paciente.dto';
-import { Paciente } from './entities/paciente.entity';
 import { DeleteResult } from 'typeorm';
+import { ApiTags } from '@nestjs/swagger';
+import { PacienteService } from './paciente.service';
+import { Paciente } from './entities/paciente.entity';
+import { CreatePacienteDto } from './dto/create-paciente.dto';
 
+@ApiTags('Paciente')
 @Controller('paciente')
 export class PacienteController {
   constructor(private readonly pacienteService: PacienteService) {}

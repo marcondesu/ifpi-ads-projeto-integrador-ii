@@ -1,10 +1,12 @@
 import { Controller, Post, Get, Body, Delete, Param } from '@nestjs/common';
-import { AcompanhamentoService } from './acompanhamento.service';
-import { CreateAcompanhamentoDto } from './dto/create-acompanhamento.dto';
-import { Acompanhamento } from './entities/acompanhamento.entity';
 import { DeleteResult } from 'typeorm';
+import { ApiTags } from '@nestjs/swagger';
+import { AcompanhamentoService } from './acompanhamento.service';
 import { Feedback } from 'src/feedback/entities/feedback.entity';
+import { Acompanhamento } from './entities/acompanhamento.entity';
+import { CreateAcompanhamentoDto } from './dto/create-acompanhamento.dto';
 
+@ApiTags('Acompanhamento')
 @Controller('acompanhamento')
 export class AcompanhamentoController {
   constructor(private readonly acompanhamentoService: AcompanhamentoService) {}

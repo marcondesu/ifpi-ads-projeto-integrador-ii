@@ -1,9 +1,11 @@
 import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
-import { FeedbackService } from './feedback.service';
-import { CreateFeedbackDto } from './dto/create-feedback.dto';
-import { Feedback } from './entities/feedback.entity';
 import { DeleteResult } from 'typeorm';
+import { ApiTags } from '@nestjs/swagger';
+import { FeedbackService } from './feedback.service';
+import { Feedback } from './entities/feedback.entity';
+import { CreateFeedbackDto } from './dto/create-feedback.dto';
 
+@ApiTags('Feedback')
 @Controller('feedback')
 export class FeedbackController {
   constructor(private readonly feedbackService: FeedbackService) {}

@@ -7,11 +7,13 @@ import {
   Param,
   Patch,
 } from '@nestjs/common';
-import { ProfissionalService } from './profissional.service';
-import { CreateProfissionalDto } from './dto/create-profissional.dto';
-import { Profissional } from './entities/profissional.entity';
 import { DeleteResult } from 'typeorm';
+import { ApiTags } from '@nestjs/swagger';
+import { ProfissionalService } from './profissional.service';
+import { Profissional } from './entities/profissional.entity';
+import { CreateProfissionalDto } from './dto/create-profissional.dto';
 
+@ApiTags('Profissional')
 @Controller('profissional')
 export class ProfissionalController {
   constructor(private readonly profissionalService: ProfissionalService) {}
