@@ -4,18 +4,20 @@ import { HiOutlineEnvelope } from "react-icons/hi2";
 import { BiLogoFacebook } from "react-icons/bi";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
+import InputWithIcon from "../../components/Input";
+import SubmitButton from "../../components/SubmitButton";
 
 const Login = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const goSignup = () => {
-    navigate("/register")
-  }
+    navigate("/register");
+  };
 
   const goForm = () => {
-    navigate("/emotionform")
-  }
-  
+    navigate("/emotionform");
+  };
+
   return (
     <div className="container">
       <div className="header">
@@ -43,7 +45,7 @@ const Login = () => {
           <span>Google</span>
         </li>
       </ul>
-      
+
       <div className="underline" style={{ fontSize: "10pt" }}>
         <div className="left-u"></div>
         <p>ou</p>
@@ -51,20 +53,18 @@ const Login = () => {
       </div>
 
       <div className="inputs">
-        <div className="input">
-          <HiOutlineEnvelope />
-          <input type="email" placeholder="E-mail"></input>
-        </div>
-
-        <div className="input">
-          <PiKey />
-          <input type="password" placeholder="Senha"></input>
-        </div>
+        <InputWithIcon
+          icon={<HiOutlineEnvelope />}
+          type="email"
+          placeholder="E-mail"
+        />
+        <InputWithIcon icon={<PiKey />} type="password" placeholder="Senha" />
       </div>
 
-      <div className="submit-container">
-        <span onClick={goForm}>Acessar</span>
-      </div>
+      <SubmitButton
+        onClick={goForm}
+        label={"Acessar"}
+      />
 
       <div className="forgot-password">
         <span>Esqueci minha senha</span>

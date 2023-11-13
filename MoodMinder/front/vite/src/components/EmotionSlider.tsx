@@ -9,7 +9,7 @@ export default function FormEmotion() {
     <Box sx={{ width: 500, display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
       <div style={{width: '70%', display: 'flex', alignItems: 'center', gap: '20px'}}>
       < HiOutlineFaceFrown style={svgStyle}/>
-      <Slider defaultValue={30} aria-label="Disabled slider" color='secondary' />
+      <Slider defaultValue={30} aria-label="Disabled slider" color='primary' />
       <HiOutlineFaceSmile style={svgStyle}/>
       </div>
     </Box>

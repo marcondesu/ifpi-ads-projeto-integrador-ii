@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import Box from "@mui/material/Box";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
@@ -7,31 +7,81 @@ import {
   HiOutlineCog6Tooth,
   HiOutlinePencil,
 } from "react-icons/hi2";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
-export default function BottomBar() {
-  const [value, setValue] = React.useState(0);
+const BottomBar = () => {
+  const [value, setValue] = React.useState(4);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const svgStyle = { fontSize: '2em' };
+  const handleNavigation = (
+    newValue: React.SetStateAction<number>,
+    path: string
+  ) => {
+    setValue(newValue);
+    navigate(path);
+  };
+
+  const svgStyle = { fontSize: "2em" };
 
   return (
-    <Box sx={{ width: 500, position: "fixed", bottom: 0 }}>
+    <Box
+      sx={{
+        width: 500,
+        position: "fixed",
+        bottom: 0,
+        left: "50%",
+        transform: "translateX(-50%)",
+      }}
+    >
       <BottomNavigation
         showLabels
         value={value}
         onChange={(event, newValue) => {
-          setValue(newValue);
+          const path =
+            newValue === 0
+              ? "/Configuracoes"
+              : newValue === 1
+              ? "/EmotionForm"
+              : "/Historico";
+          handleNavigation(newValue, path);
         }}
       >
         <BottomNavigationAction
           label="Configurações"
-          icon={<HiOutlineCog6Tooth style={svgStyle}/>}
+          icon={<HiOutlineCog6Tooth style={svgStyle} />}
+          component={Link}
+          to="/Configuracoes"
+          sx={{
+            color:
+              location.pathname === "/Configuracoes"
+                ? "primary.main"
+                : "inherit",
+          }}
         />
-        <BottomNavigationAction label="Registrar" icon={<HiOutlinePencil style={svgStyle}/>} />
+        <BottomNavigationAction
+          label="Registrar"
+          icon={<HiOutlinePencil style={svgStyle} />}
+          component={Link}
+          to="/EmotionForm"
+          sx={{
+            color:
+              location.pathname === "/EmotionForm" ? "primary.main" : "inherit",
+          }}
+        />
         <BottomNavigationAction
           label="Histórico"
-          icon={<HiOutlineCalendar style={svgStyle}/>}
+          icon={<HiOutlineCalendar style={svgStyle} />}
+          component={Link}
+          to="/Historico"
+          sx={{
+            color:
+              location.pathname === "/Historico" ? "primary.main" : "inherit",
+          }}
         />
       </BottomNavigation>
     </Box>
   );
-}
+};
+
+export default BottomBar;

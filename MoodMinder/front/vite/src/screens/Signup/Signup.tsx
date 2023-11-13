@@ -1,17 +1,20 @@
 import "./Signup.css";
-import { PiKey } from "react-icons/pi";
+import { PiKey, PiCalendar, PiGenderMale } from "react-icons/pi";
 import { HiOutlineEnvelope, HiOutlineUser } from "react-icons/hi2";
 import { BiLogoFacebook } from "react-icons/bi";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
+import InputWithIcon from "../../components/Input";
+import SocialListItem from "../../components/SocialListItem";
+import SubmitButton from "../../components/SubmitButton";
 
 const Signup = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const goLogin = () => {
-    navigate("/login")
-  }
-  
+    navigate("/login");
+  };
+
   return (
     <div className="container">
       <div className="header">
@@ -21,25 +24,17 @@ const Signup = () => {
       </div>
 
       <ul className="social-list">
-        <li
-          style={{
-            background: "blue",
-            color: "white",
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-          }}
-        >
-          <BiLogoFacebook />
-          <span>Facebook</span>
-        </li>
-        <li
-          style={{
-            background: "white",
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-          }}
-        >
-          <FcGoogle />
-          <span>Google</span>
-        </li>
+        <SocialListItem
+          background="blue"
+          icon={<BiLogoFacebook />}
+          label="Facebook"
+        />
+        <SocialListItem
+          background="white"
+          icon={<FcGoogle />}
+          label="Google"
+          color="black"
+        />
       </ul>
 
       <div className="underline" style={{ fontSize: "10pt" }}>
@@ -49,25 +44,38 @@ const Signup = () => {
       </div>
 
       <div className="inputs">
-        <div className="input">
-          <HiOutlineUser />
-          <input type="text" placeholder="Nome" />
+        <InputWithIcon
+          icon={<HiOutlineUser />}
+          type="text"
+          placeholder="Nome"
+        />
+
+        <InputWithIcon
+          icon={<HiOutlineEnvelope />}
+          type="email"
+          placeholder="E-mail"
+        />
+
+        <div style={{width: '70%', display: 'flex', gap: '1rem'}}>
+  
+        <InputWithIcon
+          icon={<PiCalendar />}
+          type="date"
+          placeholder="Data"
+        />
+
+        <InputWithIcon
+          icon={<PiGenderMale />}
+          type="text"
+          placeholder="Gênero"
+        />
         </div>
 
-        <div className="input">
-          <HiOutlineEnvelope />
-          <input type="email" placeholder="E-mail"></input>
-        </div>
 
-        <div className="input">
-          <PiKey />
-          <input type="password" placeholder="Senha"></input>
-        </div>
+        <InputWithIcon icon={<PiKey />} type="password" placeholder="Senha" />
       </div>
 
-      <div className="submit-container">
-        <span>Cadastar</span>
-      </div>
+      <SubmitButton onClick={() => {}} label={"Cadastrar"} />
 
       <div className="has-account">
         Já tem uma conta?
