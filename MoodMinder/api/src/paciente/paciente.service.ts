@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm';
 import { Paciente } from './entities/paciente.entity';
@@ -11,7 +11,9 @@ export class PacienteService {
     private pacienteRepository: Repository<Paciente>,
   ) {}
 
-  public async create(createPacienteDto: CreatePacienteDto) {
+  public async create(
+    createPacienteDto: CreatePacienteDto,
+  ): Promise<Paciente | HttpException> {
     const paciente = new Paciente();
     paciente.nome = createPacienteDto.nome;
     paciente.cpf = createPacienteDto.cpf;
@@ -19,11 +21,24 @@ export class PacienteService {
     paciente.email = createPacienteDto.email;
     paciente.nascimento = createPacienteDto.nascimento;
 
-    return await this.pacienteRepository.save(paciente);
+    try {
+      return await this.pacienteRepository.save(paciente);
+    } catch (error) {
+      throw new HttpException('Requisição inválida', HttpStatus.BAD_REQUEST);
+    }
   }
 
   public async findAll(): Promise<Paciente[]> {
-    return await this.pacienteRepository.find();
+    const pacientes = await this.pacienteRepository.find();
+
+    if (pacientes.length < 1) {
+      throw new HttpException(
+        'Nenhum paciente encontrado',
+        HttpStatus.NO_CONTENT,
+      );
+    }
+
+    return pacientes;
   }
 
   public async findOne(id: string): Promise<Paciente> {

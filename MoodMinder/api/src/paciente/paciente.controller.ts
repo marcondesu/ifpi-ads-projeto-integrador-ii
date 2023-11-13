@@ -6,9 +6,10 @@ import {
   Delete,
   Param,
   Patch,
+  HttpException,
 } from '@nestjs/common';
 import { DeleteResult } from 'typeorm';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PacienteService } from './paciente.service';
 import { Paciente } from './entities/paciente.entity';
 import { CreatePacienteDto } from './dto/create-paciente.dto';
@@ -19,12 +20,30 @@ export class PacienteController {
   constructor(private readonly pacienteService: PacienteService) {}
 
   @Post()
-  async create(@Body() createPacienteDto: CreatePacienteDto) {
+  @ApiResponse({
+    status: 201,
+    description: 'Paciente criado com sucesso',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Requisição inválida',
+  })
+  async create(
+    @Body() createPacienteDto: CreatePacienteDto,
+  ): Promise<Paciente | HttpException> {
     return await this.pacienteService.create(createPacienteDto);
   }
 
   @Get()
-  async findAll(): Promise<Paciente[]> {
+  @ApiResponse({
+    status: 200,
+    description: 'Pacientes retornados com sucesso',
+  })
+  @ApiResponse({
+    status: 204,
+    description: 'Nenhum paciente encontrado',
+  })
+  async findAll(): Promise<Paciente[] | HttpException> {
     return await this.pacienteService.findAll();
   }
 
