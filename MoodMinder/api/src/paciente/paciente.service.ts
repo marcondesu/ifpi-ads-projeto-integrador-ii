@@ -19,6 +19,7 @@ export class PacienteService {
     paciente.cpf = createPacienteDto.cpf;
     paciente.sexo = createPacienteDto.sexo;
     paciente.email = createPacienteDto.email;
+    paciente.senha = createPacienteDto.senha;
     paciente.nascimento = createPacienteDto.nascimento;
 
     try {

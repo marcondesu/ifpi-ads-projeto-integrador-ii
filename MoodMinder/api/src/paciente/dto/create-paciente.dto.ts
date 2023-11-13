@@ -35,6 +35,14 @@ export class CreatePacienteDto {
   email: string;
 
   @ApiProperty({
+    type: String,
+    description: 'Senha do paciente',
+    default: 'senhasegura123',
+    required: true,
+  })
+  senha: string;
+
+  @ApiProperty({
     type: Date,
     description: 'Data de nascimento do paciente',
     default: '2001-12-27',
