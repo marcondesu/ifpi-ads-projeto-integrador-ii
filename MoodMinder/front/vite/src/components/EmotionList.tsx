@@ -1,63 +1,39 @@
-import Paper from '@mui/material/Paper';
-import { HiOutlineFaceSmile } from "react-icons/hi2";
-import { GridItem } from './GridItem';
-
+import GridItem, { GridItemProps } from "./EmotionItem";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 const ComplexGrid = () => {
-    return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+  const [emotions, setEmotions] = useState<GridItemProps[]>([]);
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/emocao");
+      setEmotions(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-            <Paper
-                sx={{
-                    p: 2,
-                    maxWidth: 500,
-                    flexGrow: 1,
-                    backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#1A2027' : '#fff'),
-                }}
-            >
-                <GridItem
-                    icon={<HiOutlineFaceSmile />}
-                    title="aaaaa"
-                    description="bbbbbb"
-                    date="13/11/2023"
-                />
-            </Paper>
-
-            <Paper
-                sx={{
-                    p: 2,
-                    maxWidth: 500,
-                    flexGrow: 1,
-                    backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#1A2027' : '#fff'),
-                }}
-            >
-                <GridItem
-                    icon={<HiOutlineFaceSmile />}
-                    title="aaaaa"
-                    description="bbbbbb"
-                    date="13/11/2023"
-                />
-            </Paper>
-
-
-            <Paper
-                sx={{
-                    p: 2,
-                    maxWidth: 500,
-                    flexGrow: 1,
-                    backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#1A2027' : '#fff'),
-                }}
-            >
-                <GridItem
-                    icon={<HiOutlineFaceSmile />}
-                    title="aaaaa"
-                    description="bbbbbb"
-                    date="13/11/2023"
-                />
-            </Paper>
-
-        </div>
-    );
+  useEffect(() => {
+    fetchData();
+    const intervalId = setInterval(fetchData, 100);
+    return () => clearInterval(intervalId);
+  }, []);
+  return (
+    <div
+      style={{
+        display: "flex",
+        width: 500,
+        flexDirection: "column",
+        gap: "1rem",
+        paddingTop: "2rem",
+        paddingBottom: "4rem",
+      }}
+    >
+      {emotions.map((emotion) => (
+        <GridItem key={emotion.id} {...emotion} />
+      ))}
+    </div>
+  );
 };
 
 export default ComplexGrid;
