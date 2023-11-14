@@ -18,6 +18,7 @@ export class EmocaoService {
     emocao.intensidade = createEmocaoDto.intensidade;
     emocao.descricao = createEmocaoDto.descricao;
     emocao.contexto = createEmocaoDto.contexto;
+    emocao.privacidade = createEmocaoDto.privacidade;
     emocao.data = new Date();
 
     return await this.emocaoRepository.save(emocao);
