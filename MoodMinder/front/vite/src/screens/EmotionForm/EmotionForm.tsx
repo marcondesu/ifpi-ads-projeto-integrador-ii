@@ -11,7 +11,7 @@ import axios from "axios";
 const EmotionForm = () => {
   const navegation = useNavigate();
   const [emotion, setEmotion] = useState({
-    idPaciente: "e6acf5e7-759c-41d5-b2a9-1d9e09a73f2f",
+    idPaciente: "46858068-e8d6-4ff6-b732-16d69163e477",
     intensidade: 0,
     categoria: "",
     descricao: "",
