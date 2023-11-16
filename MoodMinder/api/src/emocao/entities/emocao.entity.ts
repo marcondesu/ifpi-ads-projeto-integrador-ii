@@ -1,4 +1,4 @@
-    import { CategoriaEmocao } from 'src/Categoria';
+    import { CategoriaEmocao } from 'src/categoria';
     import { Paciente } from 'src/paciente/entities/paciente.entity';
     import { Privacidade } from 'src/privacidade';
     import {
