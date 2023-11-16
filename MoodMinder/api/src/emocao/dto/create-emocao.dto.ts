@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { CategoriaEmocao } from 'src/Categoria';
+import { CategoriaEmocao } from 'src/categoria';
 import { Privacidade } from 'src/privacidade';
 
 export class CreateEmocaoDto {
