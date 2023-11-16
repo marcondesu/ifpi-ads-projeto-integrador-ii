@@ -49,7 +49,7 @@ const GridItem: React.FC<GridItemProps> = ({
     privacidade === "publico" ? <HiOutlineUsers /> : <HiOutlineLockClosed />;
   const handleRemover = async (id: string) => {
     try {
-      await axios.delete(`http://localhost:3000/emocao/${id}`);
+      await axios.delete(`https://ifpi-projeto-integrador-ii.onrender.com/emocao/${id}`);
     } catch (error: any) {
       console.error("Erro ao remover emoção:", error.message);
     }
@@ -60,7 +60,7 @@ const GridItem: React.FC<GridItemProps> = ({
 
   const handleMudarPrivacidade = async (id: string) => {
     try {
-      await axios.patch(`http://localhost:3000/emocao/${id}/mudar-privacidade`);
+      await axios.patch(`https://ifpi-projeto-integrador-ii.onrender.com/emocao/${id}/mudar-privacidade`);
     } catch (error: any) {
       console.error("Erro ao mudar a privacidade da emoção:", error.message);
     }
