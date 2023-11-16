@@ -30,7 +30,7 @@ const Signup = () => {
   const handleSubmit = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/paciente",
+        "https://ifpi-projeto-integrador-ii.onrender.com/paciente",
         formData
       );
       console.log("Usuário cadastrado com sucesso:", response.data);
