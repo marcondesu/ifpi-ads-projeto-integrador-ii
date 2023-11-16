@@ -6,7 +6,7 @@ const ComplexGrid = () => {
   const [emotions, setEmotions] = useState<GridItemProps[]>([]);
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/emocao");
+      const response = await axios.get("https://ifpi-projeto-integrador-ii.onrender.com/emocao");
       setEmotions(response.data);
     } catch (error) {
       console.error(error);
