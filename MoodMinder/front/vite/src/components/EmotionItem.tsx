@@ -44,16 +44,12 @@ const GridItem: React.FC<GridItemProps> = ({
   data,
 }) => {
   const emojiIcon =
-    intensidade > 5 ? <HiOutlineFaceSmile /> : <HiOutlineFaceFrown />;
-    const emojiPrivacidade = privacidade === "publico" ? (
-      <HiOutlineUsers />
-    ) : (
-      <HiOutlineLockClosed />
-    );
+    intensidade > 50 ? <HiOutlineFaceSmile /> : <HiOutlineFaceFrown />;
+  const emojiPrivacidade =
+    privacidade === "publico" ? <HiOutlineUsers /> : <HiOutlineLockClosed />;
   const handleRemover = async (id: string) => {
     try {
       await axios.delete(`http://localhost:3000/emocao/${id}`);
-
     } catch (error: any) {
       console.error("Erro ao remover emoção:", error.message);
     }
