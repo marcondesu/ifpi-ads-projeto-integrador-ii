@@ -4,15 +4,21 @@ interface InputWithIconProps {
   icon: React.ReactNode;
   type?: string;
   placeholder: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input: React.FC<InputWithIconProps> = ({ icon, type, placeholder }) => {
+const InputWithIcon: React.FC<InputWithIconProps> = ({
+  icon,
+  type,
+  placeholder,
+  onChange,
+}) => {
   return (
     <div className="input">
       {icon}
-      <input type={type} placeholder={placeholder} />
+      <input type={type} placeholder={placeholder} onChange={onChange} />
     </div>
   );
 };
 
-export default Input;
+export default InputWithIcon;
