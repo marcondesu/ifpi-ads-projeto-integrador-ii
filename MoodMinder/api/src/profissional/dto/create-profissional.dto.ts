@@ -43,6 +43,14 @@ export class CreateProfissionalDto {
   email: string;
 
   @ApiProperty({
+    type: String,
+    description: 'Senha do profissional',
+    default: 'senhasegura123',
+    required: true,
+  })
+  senha: string;
+
+  @ApiProperty({
     type: Date,
     description: 'Data de nascimento do profissional',
     default: '1971-06-15',
