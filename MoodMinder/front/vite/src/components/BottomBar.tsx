@@ -7,6 +7,7 @@ import {
   HiOutlineCog6Tooth,
   HiOutlinePencil,
 } from "react-icons/hi2";
+import { LiaHandsHelpingSolid } from "react-icons/lia";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
 const BottomBar = () => {
@@ -77,6 +78,16 @@ const BottomBar = () => {
           sx={{
             color:
               location.pathname === "/Historico" ? "primary.main" : "inherit",
+          }}
+        />
+      <BottomNavigationAction
+          label="Acompanhamento"
+          icon={<LiaHandsHelpingSolid style={svgStyle} />}
+          component={Link}
+          to="/Acompanhamento"
+          sx={{
+            color:
+              location.pathname === "/Acompanhamento" ? "primary.main" : "inherit",
           }}
         />
       </BottomNavigation>

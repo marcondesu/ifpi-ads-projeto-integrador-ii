@@ -48,6 +48,16 @@ const EmotionForm = () => {
 
   return (
     <div>
+      <div
+        style={{
+          position: "fixed",
+          top: 0,
+          left: "50%",
+          transform: "translateX(-50%)",
+        }}
+      >
+        <h1>Guarde um novo momento</h1>
+      </div>
       {/* <h1>Cadastre uma situação</h1> */}
       <EmotionSlider onChange={handleSliderChange} />
       <BottomBar />

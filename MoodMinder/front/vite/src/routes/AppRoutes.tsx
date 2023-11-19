@@ -5,6 +5,7 @@ import EmotionForm from "../screens/EmotionForm/EmotionForm";
 import HistoryList from "../screens/HistoryList/HistoryList";
 import Settings from "../screens/Settigns/Settings";
 import SignupProfissional from "../screens/SignupProfissional/Signup";
+import FollowUp from "../screens/FollowUp/FollowUp";
 
 const AppRoutes = () => {
     return (
@@ -15,6 +16,7 @@ const AppRoutes = () => {
                 <Route path="/Login" element={<Login />} />
                 <Route path="/EmotionForm" element={<EmotionForm />} />
                 <Route path="/Historico" element={<HistoryList />} />
+                <Route path="/Acompanhamento" element={<FollowUp />} />
                 <Route path="/Configuracoes" element={<Settings />} />
             </Routes>
         </Router>

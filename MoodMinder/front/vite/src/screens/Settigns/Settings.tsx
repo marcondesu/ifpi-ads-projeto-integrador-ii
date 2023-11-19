@@ -2,6 +2,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import BottomBar from '../../components/BottomBar';
 import SubmitButton from '../../components/SubmitButton';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Settings = () => {
   const [dadosDoUsuario, setDadosDoUsuario] = useState({
@@ -25,6 +26,9 @@ const Settings = () => {
 
     fetchData();
   }, []);
+
+  const navegate = useNavigate()
+  const goHome = () => navegate("/login")
 
 //   const formatarData = (data: string | number | Date) => {
 //     const dataFormatada = new Date(data);
@@ -142,7 +146,7 @@ const Settings = () => {
         </div>
       )}
 
-      <h3
+      {/* <h3
         onClick={handleTrackingClick}
         style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
       >
@@ -155,12 +159,10 @@ const Settings = () => {
         <div>
           <p>Configurações de Acompanhamentos</p>
         </div>
-      )}
+      )} */}
 
       <SubmitButton
-        onClick={() => {
-          console.log('Logout');
-        }}
+        onClick={goHome}
         label={'Logout'}
       />
       <BottomBar />
