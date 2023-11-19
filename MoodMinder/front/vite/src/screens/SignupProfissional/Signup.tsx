@@ -12,6 +12,7 @@ import SocialListItem from "../../components/SocialListItem";
 import SubmitButton from "../../components/SubmitButton";
 import axios from "axios";
 import { useState } from "react";
+import { PiKey } from "react-icons/pi";
 
 const SignupProfissional = () => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const SignupProfissional = () => {
     email: "",
     nascimento: "",
     sexo: "",
-    // senha: ""
+    senha: ""
   });
 
   const handleChange = (e: { target: { value: any } }, field: any) => {
@@ -147,12 +148,12 @@ const SignupProfissional = () => {
             onChange={(e) => handleChange(e, "email")}
           />
 
-        {/* <InputWithIcon
+        <InputWithIcon
           icon={<PiKey />}
           type="password"
           placeholder="Senha"
           onChange={(e) => handleChange(e, "senha")}
-        /> */}
+        />
       </div>
 
       <SubmitButton onClick={handleSubmit} label={"Cadastrar"} />
