@@ -42,13 +42,13 @@ export class CreateProfissionalDto {
   })
   email: string;
 
-  @ApiProperty({
-    type: String,
-    description: 'Senha do profissional',
-    default: 'senhasegura123',
-    required: true,
-  })
-  senha: string;
+  // @ApiProperty({
+  //   type: String,
+  //   description: 'Senha do profissional',
+  //   default: 'senhasegura123',
+  //   required: true,
+  // })
+  // senha: string;
 
   @ApiProperty({
     type: Date,
