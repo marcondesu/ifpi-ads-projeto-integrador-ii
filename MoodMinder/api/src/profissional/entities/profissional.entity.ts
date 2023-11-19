@@ -21,8 +21,8 @@ export class Profissional extends BaseEntity {
   @Column({ name: 'email', type: 'varchar', nullable: false })
   email: string;
 
-  // @Column({ name: 'senha', type: 'varchar', nullable: false })
-  // senha: string;
+  @Column({ name: 'senha', type: 'varchar', nullable: false })
+  senha: string;
 
   @Column({ name: 'nascimento', nullable: false })
   nascimento: Date;

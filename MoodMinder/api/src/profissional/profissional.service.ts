@@ -19,7 +19,7 @@ export class ProfissionalService {
     profissional.especialidade = createProfissionalDto.especialidade;
     profissional.sexo = createProfissionalDto.sexo;
     profissional.email = createProfissionalDto.email;
-    // profissional.senha = createProfissionalDto.senha;
+    profissional.senha = createProfissionalDto.senha;
     profissional.nascimento = createProfissionalDto.nascimento;
 
     return await this.profissionalRepository.save(profissional);
