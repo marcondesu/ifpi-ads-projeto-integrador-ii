@@ -1,5 +1,4 @@
 import "./Signup.css";
-import { PiKey } from "react-icons/pi";
 import {
   HiOutlineEnvelope,
   HiOutlineUser,
@@ -14,15 +13,16 @@ import SubmitButton from "../../components/SubmitButton";
 import axios from "axios";
 import { useState } from "react";
 
-const Signup = () => {
+const SignupProfissional = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     nome: "",
+    crm: "",
+    especialidade: "",
     email: "",
-    cpf: "",
     nascimento: "",
     sexo: "",
-    senha: "",
+    // senha: ""
   });
 
   const handleChange = (e: { target: { value: any } }, field: any) => {
@@ -35,7 +35,7 @@ const Signup = () => {
   const handleSubmit = async () => {
     try {
       const response = await axios.post(
-        "https://ifpi-projeto-integrador-ii.onrender.com/paciente",
+        "https://ifpi-projeto-integrador-ii.onrender.com/profissional",
         formData
       );
       console.log("Usuário cadastrado com sucesso:", response.data);
@@ -52,7 +52,7 @@ const Signup = () => {
     <div className="container">
       <div className="header">
         <div className="text">
-          Acompanhe seu progresso em busca do autocuidado
+          Acompanhe o progresso de seus pacientes em busca do autocuidado
         </div>
       </div>
 
@@ -87,19 +87,19 @@ const Signup = () => {
         <div style={{ width: "70%", display: "flex", gap: "1rem" }}>
           <InputWithIcon
             icon={<HiOutlineEnvelope />}
-            type="email"
-            placeholder="E-mail"
-            onChange={(e) => handleChange(e, "email")}
+            type="text"
+            placeholder="Especialidade"
+            onChange={(e) => handleChange(e, "especialidade")}
           />
           <InputWithIcon
             icon={<HiOutlineIdentification />}
             type="text"
-            placeholder="CPF"
-            onChange={(e) => handleChange(e, "cpf")}
+            placeholder="CRM"
+            onChange={(e) => handleChange(e, "crm")}
           />
         </div>
 
-        <div style={{ width: "70%", display: "flex" }}>
+        <div style={{ width: "70%", display: "flex"}}>
           <div
             style={{
               width: "100%",
@@ -141,11 +141,18 @@ const Signup = () => {
         </div>
 
         <InputWithIcon
+            icon={<HiOutlineEnvelope />}
+            type="email"
+            placeholder="E-mail"
+            onChange={(e) => handleChange(e, "email")}
+          />
+
+        {/* <InputWithIcon
           icon={<PiKey />}
           type="password"
           placeholder="Senha"
           onChange={(e) => handleChange(e, "senha")}
-        />
+        /> */}
       </div>
 
       <SubmitButton onClick={handleSubmit} label={"Cadastrar"} />
@@ -158,4 +165,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignupProfissional;

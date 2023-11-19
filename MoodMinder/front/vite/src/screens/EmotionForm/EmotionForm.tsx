@@ -36,7 +36,7 @@ const EmotionForm = () => {
   const handleSubmit = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/emocao",
+        "https://ifpi-projeto-integrador-ii.onrender.com/emocao",
         emotion
       );
       console.log("Emoção cadastrada com sucesso:", response.data);

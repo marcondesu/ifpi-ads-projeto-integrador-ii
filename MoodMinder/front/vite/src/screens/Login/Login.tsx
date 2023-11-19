@@ -11,7 +11,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const goSignup = () => {
-    navigate("/register");
+    navigate("/");
   };
 
   const goForm = () => {
