@@ -95,7 +95,7 @@ const SignupProfissional = () => {
           <InputWithIcon
             icon={<HiOutlineIdentification />}
             type="text"
-            placeholder="CRM"
+            placeholder="CRM/CRP"
             onChange={(e) => handleChange(e, "crm")}
           />
         </div>

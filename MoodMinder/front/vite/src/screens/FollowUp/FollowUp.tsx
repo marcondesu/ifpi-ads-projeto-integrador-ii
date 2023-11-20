@@ -1,6 +1,7 @@
 import BottomBar from "../../components/BottomBar";
 import InputWithIcon from "../../components/Input";
 import { HiOutlineSearch } from "react-icons/hi";
+import ComplexGrid from "../../components/ProfList";
 
 const FollowUp = () => {
   return (
@@ -23,6 +24,7 @@ const FollowUp = () => {
         </div>
       </div>
       <BottomBar />
+      <ComplexGrid />
     </div>
   );
 };
