@@ -1,18 +1,28 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateProfissionalDto } from './dto/create-profissional.dto';
-// import { UpdateProfissionalDto } from './dto/update-profissional.dto';
 import { Profissional } from './entities/profissional.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm';
+import { PacienteService } from 'src/paciente/paciente.service';
 
 @Injectable()
 export class ProfissionalService {
   constructor(
     @InjectRepository(Profissional)
     private profissionalRepository: Repository<Profissional>,
+    private pacienteService: PacienteService,
   ) {}
 
-  public async create(createProfissionalDto: CreateProfissionalDto) {
+  public async create(
+    createProfissionalDto: CreateProfissionalDto,
+  ): Promise<Profissional | HttpException> {
+    if (await this.validateEmail(createProfissionalDto.email)) {
+      throw new HttpException(
+        `Requisição inválida! E-mail em uso`,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
     const profissional = new Profissional();
     profissional.nome = createProfissionalDto.nome;
     profissional.crm = createProfissionalDto.crm;
@@ -22,7 +32,24 @@ export class ProfissionalService {
     profissional.senha = createProfissionalDto.senha;
     profissional.nascimento = createProfissionalDto.nascimento;
 
-    return await this.profissionalRepository.save(profissional);
+    try {
+      return await this.profissionalRepository.save(profissional);
+    } catch (error) {
+      throw new HttpException(
+        `Requisição inválida! ${error}`,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  private async validateEmail(email: string): Promise<boolean> {
+    const paciente = await this.pacienteService.findEmail(email);
+
+    if (paciente === null) {
+      return false;
+    }
+
+    return true;
   }
 
   public async findAll(): Promise<Profissional[]> {
@@ -31,6 +58,12 @@ export class ProfissionalService {
 
   public async findOne(id: string): Promise<Profissional> {
     return await this.profissionalRepository.findOne({ where: { id: id } });
+  }
+
+  public async findEmail(email: string): Promise<Profissional | null> {
+    return await this.profissionalRepository.findOne({
+      where: { email: email },
+    });
   }
 
   public async updatePartial(

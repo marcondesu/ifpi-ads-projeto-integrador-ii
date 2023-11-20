@@ -14,13 +14,13 @@ export class Paciente extends BaseEntity {
   })
   nome: string;
 
-  @Column({ name: 'cpf', type: 'varchar', nullable: false })
+  @Column({ name: 'cpf', type: 'varchar', nullable: false, unique: true })
   cpf: string;
 
   @Column({ name: 'sexo', type: 'varchar', nullable: false })
   sexo: SexoEnum;
 
-  @Column({ name: 'email', type: 'varchar', nullable: false })
+  @Column({ name: 'email', type: 'varchar', nullable: false, unique: true })
   email: string;
 
   @Column({ name: 'senha', type: 'varchar', nullable: false })

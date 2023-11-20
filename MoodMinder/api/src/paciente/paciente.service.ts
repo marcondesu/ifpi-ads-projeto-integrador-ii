@@ -25,7 +25,10 @@ export class PacienteService {
     try {
       return await this.pacienteRepository.save(paciente);
     } catch (error) {
-      throw new HttpException('Requisição inválida', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        `Requisição inválida! ${error}`,
+        HttpStatus.BAD_REQUEST,
+      );
     }
   }
 
@@ -44,6 +47,10 @@ export class PacienteService {
 
   public async findOne(id: string): Promise<Paciente> {
     return await this.pacienteRepository.findOne({ where: { id: id } });
+  }
+
+  public async findEmail(email: string): Promise<Paciente | null> {
+    return await this.pacienteRepository.findOne({ where: { email: email } });
   }
 
   public async updatePartial(

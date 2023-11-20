@@ -9,7 +9,7 @@ export class Profissional extends BaseEntity {
   @Column({ name: 'nome', type: 'varchar', nullable: false })
   nome: string;
 
-  @Column({ name: 'crm', type: 'varchar', nullable: false })
+  @Column({ name: 'crm', type: 'varchar', nullable: false, unique: true })
   crm: string;
 
   @Column({ name: 'especialidade', type: 'varchar', nullable: false })
@@ -18,7 +18,7 @@ export class Profissional extends BaseEntity {
   @Column({ name: 'sexo', type: 'varchar', nullable: false })
   sexo: SexoEnum;
 
-  @Column({ name: 'email', type: 'varchar', nullable: false })
+  @Column({ name: 'email', type: 'varchar', nullable: false, unique: true })
   email: string;
 
   @Column({ name: 'senha', type: 'varchar', nullable: false })
