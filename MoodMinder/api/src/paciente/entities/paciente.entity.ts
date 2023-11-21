@@ -26,6 +26,6 @@ export class Paciente extends BaseEntity {
   @Column({ name: 'senha', type: 'varchar', nullable: false })
   senha: string;
 
-  @Column({ name: 'nascimento', nullable: false })
+  @Column({ name: 'nascimento', type: 'date', nullable: false })
   nascimento: Date;
 }
