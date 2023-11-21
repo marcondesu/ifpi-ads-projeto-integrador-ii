@@ -5,6 +5,8 @@ interface InputWithIconProps {
   type?: string;
   placeholder: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value?: string
+  name?: string
 }
 
 const InputWithIcon: React.FC<InputWithIconProps> = ({

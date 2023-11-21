@@ -13,6 +13,7 @@ import {
   HiOutlineLockClosed,
   HiOutlineUsers,
 } from "react-icons/hi2";
+import { useNavigate } from "react-router-dom";
 
 const CustomButtonBase = styled(ButtonBase)({
   display: "flex",
@@ -49,18 +50,25 @@ const GridItem: React.FC<GridItemProps> = ({
     privacidade === "publico" ? <HiOutlineUsers /> : <HiOutlineLockClosed />;
   const handleRemover = async (id: string) => {
     try {
-      await axios.delete(`https://ifpi-projeto-integrador-ii.onrender.com/emocao/${id}`);
+      await axios.delete(
+        `https://ifpi-projeto-integrador-ii.onrender.com/emocao/${id}`
+      );
     } catch (error: any) {
       console.error("Erro ao remover emoção:", error.message);
     }
   };
 
-  // const handleEditar = async () => {
-  // };
+  const navigate = useNavigate();
+
+  const handleEditar = async (id: string) => {
+    navigate(`/Historico/${id}`);
+  };
 
   const handleMudarPrivacidade = async (id: string) => {
     try {
-      await axios.patch(`https://ifpi-projeto-integrador-ii.onrender.com/emocao/${id}/mudar-privacidade`);
+      await axios.patch(
+        `https://ifpi-projeto-integrador-ii.onrender.com/emocao/${id}/mudar-privacidade`
+      );
     } catch (error: any) {
       console.error("Erro ao mudar a privacidade da emoção:", error.message);
     }
@@ -117,7 +125,11 @@ const GridItem: React.FC<GridItemProps> = ({
                 >
                   Remover
                 </Typography>
-                <Typography sx={{ cursor: "pointer" }} variant="body2">
+                <Typography
+                  sx={{ cursor: "pointer" }}
+                  variant="body2"
+                  onClick={() => handleEditar(id)}
+                >
                   Editar
                 </Typography>
                 <Typography
