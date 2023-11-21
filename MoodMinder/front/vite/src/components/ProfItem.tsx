@@ -7,6 +7,7 @@ import {
   Paper,
 } from "@mui/material";
 import axios from "axios";
+import { useState } from "react";
 import { HiOutlineUsers } from "react-icons/hi2";
 
 const CustomButtonBase = styled(ButtonBase)({
@@ -35,10 +36,10 @@ const GridItem: React.FC<ProfissionalProps> = ({
   crm,
 }) => {
   const emojiIcon = <HiOutlineUsers />;
+  const [acompanhamento, setAcompanhamento] = useState(false)
 
   const handleRemoverAcompanhamento = async (
     idPaciente: string,
-    idProfissional: string
   ) => {
     try {
       const response = await axios.get(
@@ -47,18 +48,18 @@ const GridItem: React.FC<ProfissionalProps> = ({
 
       const acompanhamentos = response.data;
       console.log(acompanhamentos);
-      
+
       const acompanhamentoParaRemover = acompanhamentos.find(
         (acompanhamento: any) =>
           acompanhamento.idPaciente.id === idPaciente &&
-          acompanhamento.idProfissional.id === idProfissional
+          acompanhamento.idProfissional.id === id
       );
 
       if (acompanhamentoParaRemover) {
         await axios.delete(
           `https://ifpi-projeto-integrador-ii.onrender.com/acompanhamento/${acompanhamentoParaRemover.id}`
         );
-
+        setAcompanhamento(false)
         console.log("Acompanhamento removido com sucesso.");
       } else {
         console.log("Acompanhamento não encontrado para remoção.");
@@ -83,6 +84,7 @@ const GridItem: React.FC<ProfissionalProps> = ({
           dtFim,
         }
       );
+      setAcompanhamento(true)
       console.log("Acompanhamento criado com sucesso.", response.data);
     } catch (error: any) {
       console.error("Erro ao criar acompanhamento:", error.message);
@@ -130,31 +132,35 @@ const GridItem: React.FC<ProfissionalProps> = ({
               <Box
                 sx={{ display: "flex", justifyContent: "center", gap: "1rem" }}
               >
-                <Typography
-                  sx={{ cursor: "pointer" }}
-                  variant="body2"
-                  onClick={() =>
-                    handleRemoverAcompanhamento(
-                      "46858068-e8d6-4ff6-b732-16d69163e477",
-                      "052911b9-d600-4a3a-b4da-1715ceaf83d5"
-                    )
-                  }
-                >
-                  Remover
-                </Typography>
-                <Typography
-                  sx={{ cursor: "pointer" }}
-                  variant="body2"
-                  onClick={() =>
-                    handleCriarAcompanhamento(
-                      "46858068-e8d6-4ff6-b732-16d69163e477",
-                      "2023-01-01",
-                      "2024-02-01"
-                    )
-                  }
-                >
-                  Adicionar
-                </Typography>
+                {acompanhamento ?
+                  (
+                    <Typography
+                      sx={{ cursor: "pointer" }}
+                      variant="body2"
+                      onClick={() =>
+                        handleRemoverAcompanhamento(
+                          "46858068-e8d6-4ff6-b732-16d69163e477",
+                        )
+                      }
+                    >
+                      Remover
+                    </Typography>
+                  ) : (
+                    <Typography
+                      sx={{ cursor: "pointer" }}
+                      variant="body2"
+                      onClick={() =>
+                        handleCriarAcompanhamento(
+                          "46858068-e8d6-4ff6-b732-16d69163e477",
+                          "2023-01-01",
+                          "2024-02-01"
+                        )
+                      }
+                    >
+                      Adicionar
+                    </Typography>
+
+                  )}
               </Box>
             </Grid>
           </Grid>
