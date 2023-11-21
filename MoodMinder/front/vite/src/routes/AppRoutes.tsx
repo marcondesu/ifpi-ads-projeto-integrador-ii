@@ -3,9 +3,10 @@ import Signup from "../screens/Signup/Signup";
 import Login from "../screens/Login/Login";
 import EmotionForm from "../screens/EmotionForm/EmotionForm";
 import HistoryList from "../screens/HistoryList/HistoryList";
-import Settings from "../screens/Settigns/Settings";
+import Settings from "../screens/Settings/Settings";
 import SignupProfissional from "../screens/SignupProfissional/Signup";
 import FollowUp from "../screens/FollowUp/FollowUp";
+import EmotionDetails from "../screens/EmotionDetails/EmotionDetails";
 
 const AppRoutes = () => {
     return (
@@ -18,6 +19,7 @@ const AppRoutes = () => {
                 <Route path="/Historico" element={<HistoryList />} />
                 <Route path="/Acompanhamento" element={<FollowUp />} />
                 <Route path="/Configuracoes" element={<Settings />} />
+                <Route path="/Historico/:id" element={<EmotionDetails />} />
             </Routes>
         </Router>
     )
