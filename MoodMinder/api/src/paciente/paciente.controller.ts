@@ -7,12 +7,14 @@ import {
   Param,
   Patch,
   HttpException,
+  UseGuards,
 } from '@nestjs/common';
 import { DeleteResult } from 'typeorm';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PacienteService } from './paciente.service';
 import { Paciente } from './entities/paciente.entity';
 import { CreatePacienteDto } from './dto/create-paciente.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @ApiTags('Paciente')
 @Controller('paciente')
@@ -47,11 +49,13 @@ export class PacienteController {
     return await this.pacienteService.findAll();
   }
 
+  @UseGuards(AuthGuard)
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Paciente> {
     return await this.pacienteService.findOne(id);
   }
 
+  @UseGuards(AuthGuard)
   @Patch(':id')
   async updatePartial(
     @Param('id') id: string,

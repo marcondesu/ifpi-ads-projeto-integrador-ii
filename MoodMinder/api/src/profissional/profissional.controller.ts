@@ -6,12 +6,14 @@ import {
   Body,
   Param,
   Patch,
+  UseGuards,
 } from '@nestjs/common';
 import { DeleteResult } from 'typeorm';
 import { ApiTags } from '@nestjs/swagger';
 import { ProfissionalService } from './profissional.service';
 import { Profissional } from './entities/profissional.entity';
 import { CreateProfissionalDto } from './dto/create-profissional.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @ApiTags('Profissional')
 @Controller('profissional')
@@ -28,12 +30,14 @@ export class ProfissionalController {
     return await this.profissionalService.findAll();
   }
 
+  @UseGuards(AuthGuard)
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Profissional> {
     console.log('findOne');
     return await this.profissionalService.findOne(id);
   }
 
+  @UseGuards(AuthGuard)
   @Patch(':id')
   async updatePartial(
     @Param('id') id: string,
