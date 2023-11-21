@@ -4,11 +4,13 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {cors: true});
+  
   const config = new DocumentBuilder()
     .setTitle('MoodMinder')
     .setDescription('Documentação de API')
     .setVersion('1.0')
     .build();
+  
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('doc', app, document);
 
