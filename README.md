@@ -31,3 +31,15 @@ Desenvolvimento de uma aplicação mobile voltada para o autocuidado, em que o p
 * registrar e monitorar suas emoções, humor e bem-estar mental;
 * acompanhar o progresso ao longo do tempo por meio de gráficos e análises;
 * compartilhar seletivamente informações com terapeutas ou profissionais de saúde mental.
+
+## Como rodar o Projeto
+- **API:**
+  - [/emocao](https://ifpi-projeto-integrador-ii.onrender.com/emocao)
+  - [/paciente](https://ifpi-projeto-integrador-ii.onrender.com/paciente)
+  - [/profissional](https://ifpi-projeto-integrador-ii.onrender.com/profissional)
+  - [/acompanhamento](https://ifpi-projeto-integrador-ii.onrender.com/emocao)
+
+- **FRONT:**
+  - cd \MoodMinder\front\vite
+  - `npm run dev`
+  - http://localhost:5173
