@@ -1,4 +1,5 @@
 import React from 'react';
+import './FormField.css'; // Importando o arquivo de estilos
 
 interface FormFieldProps {
   label: string;
@@ -16,9 +17,10 @@ const FormField: React.FC<FormFieldProps> = ({
   onChange,
 }) => {
   return (
-    <div className="input">
-      <label>{label}:</label>
+    <div className="form-field-container">
+      <label className="form-label">{label}:</label>
       <input
+        className="form-input"
         type={type}
         name={name}
         value={value}

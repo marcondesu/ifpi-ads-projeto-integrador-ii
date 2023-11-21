@@ -45,10 +45,23 @@ const useSettings = () => {
     }
   };
 
+  const handleRemover = async () => {
+    console.log("Delete pressionado");
+    // try {
+    //   await axios.delete(
+    //     `https://ifpi-projeto-integrador-ii.onrender.com/paciente/052911b9-d600-4a3a-b4da-1715ceaf83d5`
+    //   );
+    // } catch (error: any) {
+    //   console.error("Erro ao remover emoção:", error.message);
+    // }
+  };
+
+
   return {
     dadosDoUsuario,
     handleChange,
     handleSubmit,
+    handleRemover
   };
 };
 

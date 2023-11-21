@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 interface UserData {
-    nome: string;
-    email: string;
-    sexo: string;
-    nascimento: string;
-  }
+  nome: string;
+  email: string;
+  sexo: string;
+  nascimento: string;
+}
 
 const useSettings = () => {
   const [dadosDoUsuario, setDadosDoUsuario] = useState<UserData>({
@@ -45,11 +45,24 @@ const useSettings = () => {
     }
   };
 
+  const handleRemover = async () => {
+    console.log("Delete pressionado");
+    // try {
+    //   await axios.delete(
+    //     `https://ifpi-projeto-integrador-ii.onrender.com/paciente/46858068-e8d6-4ff6-b732-16d69163e477`
+    //   );
+    // } catch (error: any) {
+    //   console.error("Erro ao remover emoção:", error.message);
+    // }
+  };
+
   return {
     dadosDoUsuario,
     handleChange,
     handleSubmit,
+    handleRemover
   };
+
 };
 
 export default useSettings;
