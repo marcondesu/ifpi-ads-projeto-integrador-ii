@@ -19,6 +19,7 @@ import { EmocaoModule } from './emocao/emocao.module';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
+    AuthModule,
     PacienteModule,
     ProfissionalModule,
     AcompanhamentoModule,
