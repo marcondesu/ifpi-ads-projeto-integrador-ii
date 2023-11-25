@@ -6,6 +6,7 @@ import { ProfissionalModule } from './profissional/profissional.module';
 import { AcompanhamentoModule } from './acompanhamento/acompanhamento.module';
 import { FeedbackModule } from './feedback/feedback.module';
 import { EmocaoModule } from './emocao/emocao.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
