@@ -2,6 +2,7 @@ import BottomBar from "../../../components/BottomBarPatient";
 import ComplexGrid from "../../../components/EmotionList";
 
 const HistoryList = () => {
+  
   return (
     <div>
       <div

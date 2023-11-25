@@ -14,6 +14,7 @@ import {
   HiOutlineUsers,
 } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const CustomButtonBase = styled(ButtonBase)({
   display: "flex",
@@ -44,14 +45,22 @@ const GridItem: React.FC<GridItemProps> = ({
   privacidade,
   data,
 }) => {
+  // const { token } = useAuth();
+
   const emojiIcon =
     intensidade > 50 ? <HiOutlineFaceSmile /> : <HiOutlineFaceFrown />;
   const emojiPrivacidade =
     privacidade === "publico" ? <HiOutlineUsers /> : <HiOutlineLockClosed />;
+
   const handleRemover = async (id: string) => {
     try {
       await axios.delete(
-        `https://ifpi-projeto-integrador-ii.onrender.com/emocao/${id}`
+      `https://ifpi-projeto-integrador-ii.onrender.com/emocao/${id}`,
+        // {
+        //   headers: {
+        //     "Authorization": `Bearer ${token}`,
+        //   },
+        // }
       );
     } catch (error: any) {
       console.error("Erro ao remover emoção:", error.message);
@@ -67,7 +76,12 @@ const GridItem: React.FC<GridItemProps> = ({
   const handleMudarPrivacidade = async (id: string) => {
     try {
       await axios.patch(
-        `https://ifpi-projeto-integrador-ii.onrender.com/emocao/${id}/mudar-privacidade`
+        `https://ifpi-projeto-integrador-ii.onrender.com/emocao/${id}/mudar-privacidade`,
+        // {
+        //   headers: {
+        //     "Authorization": `Bearer ${token}`,
+        //   },
+        // }
       );
     } catch (error: any) {
       console.error("Erro ao mudar a privacidade da emoção:", error.message);
