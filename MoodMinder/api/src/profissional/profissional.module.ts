@@ -9,5 +9,6 @@ import { PacienteModule } from 'src/paciente/paciente.module';
   imports: [TypeOrmModule.forFeature([Profissional]), PacienteModule],
   controllers: [ProfissionalController],
   providers: [ProfissionalService],
+  exports: [ProfissionalService],
 })
 export class ProfissionalModule {}
