@@ -5,7 +5,8 @@ import FormField from "../../../components/FormField";
 import BottomBarDoctor from "../../../components/BottomBarDoctor";
 
 const Settings = () => {
-  const { dadosDoUsuario, handleChange, handleSubmit, handleRemover } = useUserData();
+  const { dadosDoUsuario, handleChange, handleSubmit, handleRemover } =
+    useUserData();
 
   const navegate = useNavigate();
   const goHome = () => navegate("/Login/Profissional");
@@ -33,15 +34,11 @@ const Settings = () => {
         />
         <FormField
           label="Gênero"
-          type="select"
+          type="text"
           name="sexo"
           value={dadosDoUsuario.sexo}
           onChange={(e) => handleChange(e, "sexo")}
-        >
-          <option value="male">Masculino</option>
-          <option value="female">Feminino</option>
-          <option value="other">Outro</option>
-        </FormField>
+        />
         <FormField
           label="Nascimento"
           type="text"
@@ -51,15 +48,26 @@ const Settings = () => {
         />
       </div>
       <div>
-        <div style={{ display: "flex", alignItems: "center", paddingTop: '2rem'}}>
+        <div
+          style={{ display: "flex", alignItems: "center", paddingTop: "2rem" }}
+        >
           <span>Ações</span>
         </div>
-        <div style={{display: 'flex', alignItems:'center', justifyContent: 'center'}}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <SubmitButton onClick={handleSubmit} label={"Salvar Alterações"} />
-          <SubmitButton style={{background: '#bf2a23'}} onClick={handleRemover} label={"Deletar conta"} />
+          <SubmitButton
+            style={{ background: "#bf2a23" }}
+            onClick={handleRemover}
+            label={"Deletar conta"}
+          />
           <SubmitButton onClick={goHome} label={"Logout"} />
         </div>
-
       </div>
 
       <BottomBarDoctor />

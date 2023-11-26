@@ -33,15 +33,11 @@ const Settings = () => {
         />
         <FormField
           label="Gênero"
-          type="select"
+          type="text"
           name="sexo"
           value={dadosDoUsuario.sexo}
           onChange={(e) => handleChange(e, "sexo")}
-        >
-          <option value="male">Masculino</option>
-          <option value="female">Feminino</option>
-          <option value="other">Outro</option>
-        </FormField>
+        />
         <FormField
           label="Nascimento"
           type="text"

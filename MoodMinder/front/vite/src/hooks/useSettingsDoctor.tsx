@@ -56,7 +56,6 @@ const useSettings = () => {
     // }
   };
 
-
   return {
     dadosDoUsuario,
     handleChange,
