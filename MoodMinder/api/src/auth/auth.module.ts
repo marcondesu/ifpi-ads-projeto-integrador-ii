@@ -12,7 +12,7 @@ import { ProfissionalModule } from 'src/profissional/profissional.module';
     JwtModule.register({
       global: true,
       secret: 'segredo',
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '1h' },
     }),
   ],
   controllers: [AuthController],
