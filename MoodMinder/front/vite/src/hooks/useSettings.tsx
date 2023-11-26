@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 interface UserData {
   nome: string;
@@ -9,17 +10,27 @@ interface UserData {
 }
 
 const useSettings = () => {
+  const token = localStorage.getItem("token") ?? "";
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  const decoded = jwtDecode(token);
+  const id = decoded.sub ?? ""; //não aceita undefined
+
   const [dadosDoUsuario, setDadosDoUsuario] = useState<UserData>({
-    nome: '',
-    email: '',
-    sexo: '',
-    nascimento: '2000-12-01',
+    nome: "",
+    email: "",
+    sexo: "",
+    nascimento: "2000-12-01",
   });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("https://ifpi-projeto-integrador-ii.onrender.com/paciente/46858068-e8d6-4ff6-b732-16d69163e477");
+        const response = await axios.get(
+          `https://ifpi-projeto-integrador-ii.onrender.com/paciente/${id}`,
+          { headers }
+        );
         setDadosDoUsuario(response.data);
       } catch (error: any) {
         console.error("Erro ao obter dados do usuário:", error.message);
@@ -29,7 +40,7 @@ const useSettings = () => {
     fetchData();
   }, []);
 
-  const handleChange = (e: { target: { value: any; }; }, field: any) => {
+  const handleChange = (e: { target: { value: any } }, field: any) => {
     setDadosDoUsuario({
       ...dadosDoUsuario,
       [field]: e.target.value,
@@ -38,7 +49,11 @@ const useSettings = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.patch("https://ifpi-projeto-integrador-ii.onrender.com/paciente/46858068-e8d6-4ff6-b732-16d69163e477", dadosDoUsuario);
+      const response = await axios.patch(
+        `https://ifpi-projeto-integrador-ii.onrender.com/paciente/${id}`,
+        dadosDoUsuario,
+        { headers }
+      );
       console.log("Usuário alterado com sucesso:", response.data);
     } catch (error: any) {
       console.error("Erro ao alterar usuário:", error.message);
@@ -47,22 +62,22 @@ const useSettings = () => {
 
   const handleRemover = async () => {
     console.log("Delete pressionado");
-    // try {
-    //   await axios.delete(
-    //     `https://ifpi-projeto-integrador-ii.onrender.com/paciente/46858068-e8d6-4ff6-b732-16d69163e477`
-    //   );
-    // } catch (error: any) {
-    //   console.error("Erro ao remover emoção:", error.message);
-    // }
+    try {
+      await axios.delete(
+        `https://ifpi-projeto-integrador-ii.onrender.com/paciente/${id}`,
+        { headers }
+      );
+    } catch (error: any) {
+      console.error("Erro ao remover emoção:", error.message);
+    }
   };
 
   return {
     dadosDoUsuario,
     handleChange,
     handleSubmit,
-    handleRemover
+    handleRemover,
   };
-
 };
 
 export default useSettings;

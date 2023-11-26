@@ -7,6 +7,7 @@ import {
   Paper,
 } from "@mui/material";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 import { useState } from "react";
 import { HiOutlineUsers } from "react-icons/hi2";
 
@@ -36,14 +37,19 @@ const GridItem: React.FC<ProfissionalProps> = ({
   crm,
 }) => {
   const emojiIcon = <HiOutlineUsers />;
-  const [acompanhamento, setAcompanhamento] = useState(false)
+  const [acompanhamento, setAcompanhamento] = useState(false);
+  const token = localStorage.getItem("token") ?? "";
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  const decoded = jwtDecode(token);
+  const patientlId = decoded.sub ?? ""; //não aceita undefined
 
-  const handleRemoverAcompanhamento = async (
-    idPaciente: string,
-  ) => {
+  const handleRemoverAcompanhamento = async () => {
     try {
       const response = await axios.get(
-        "https://ifpi-projeto-integrador-ii.onrender.com/acompanhamento"
+        "https://ifpi-projeto-integrador-ii.onrender.com/acompanhamento",
+        { headers }
       );
 
       const acompanhamentos = response.data;
@@ -51,15 +57,16 @@ const GridItem: React.FC<ProfissionalProps> = ({
 
       const acompanhamentoParaRemover = acompanhamentos.find(
         (acompanhamento: any) =>
-          acompanhamento.idPaciente.id === idPaciente &&
+          acompanhamento.idPaciente.id === patientlId &&
           acompanhamento.idProfissional.id === id
       );
 
       if (acompanhamentoParaRemover) {
         await axios.delete(
-          `https://ifpi-projeto-integrador-ii.onrender.com/acompanhamento/${acompanhamentoParaRemover.id}`
+          `https://ifpi-projeto-integrador-ii.onrender.com/acompanhamento/${acompanhamentoParaRemover.id}`,
+          { headers }
         );
-        setAcompanhamento(false)
+        setAcompanhamento(false);
         console.log("Acompanhamento removido com sucesso.");
       } else {
         console.log("Acompanhamento não encontrado para remoção.");
@@ -69,22 +76,21 @@ const GridItem: React.FC<ProfissionalProps> = ({
     }
   };
 
-  const handleCriarAcompanhamento = async (
-    idPaciente: string,
-    dtInicio: string,
-    dtFim: string
-  ) => {
+  const handleCriarAcompanhamento = async (dtInicio: string, dtFim: string) => {
     try {
       const response = await axios.post(
         "https://ifpi-projeto-integrador-ii.onrender.com/acompanhamento",
         {
           idProfissional: id,
-          idPaciente,
+          idPaciente: patientlId,
           dtInicio,
           dtFim,
+        },
+        {
+          headers,
         }
       );
-      setAcompanhamento(true)
+      setAcompanhamento(true);
       console.log("Acompanhamento criado com sucesso.", response.data);
     } catch (error: any) {
       console.error("Erro ao criar acompanhamento:", error.message);
@@ -132,35 +138,25 @@ const GridItem: React.FC<ProfissionalProps> = ({
               <Box
                 sx={{ display: "flex", justifyContent: "center", gap: "1rem" }}
               >
-                {acompanhamento ?
-                  (
-                    <Typography
-                      sx={{ cursor: "pointer" }}
-                      variant="body2"
-                      onClick={() =>
-                        handleRemoverAcompanhamento(
-                          "46858068-e8d6-4ff6-b732-16d69163e477",
-                        )
-                      }
-                    >
-                      Remover
-                    </Typography>
-                  ) : (
-                    <Typography
-                      sx={{ cursor: "pointer" }}
-                      variant="body2"
-                      onClick={() =>
-                        handleCriarAcompanhamento(
-                          "46858068-e8d6-4ff6-b732-16d69163e477",
-                          "2023-01-01",
-                          "2024-02-01"
-                        )
-                      }
-                    >
-                      Adicionar
-                    </Typography>
-
-                  )}
+                {acompanhamento ? (
+                  <Typography
+                    sx={{ cursor: "pointer" }}
+                    variant="body2"
+                    onClick={() => handleRemoverAcompanhamento()}
+                  >
+                    Remover
+                  </Typography>
+                ) : (
+                  <Typography
+                    sx={{ cursor: "pointer" }}
+                    variant="body2"
+                    onClick={() =>
+                      handleCriarAcompanhamento("2023-01-01", "2024-02-01")
+                    }
+                  >
+                    Adicionar
+                  </Typography>
+                )}
               </Box>
             </Grid>
           </Grid>

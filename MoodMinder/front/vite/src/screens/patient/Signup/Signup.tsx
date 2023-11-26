@@ -9,7 +9,7 @@ import { BiLogoFacebook } from "react-icons/bi";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import InputWithIcon from "../../../components/Input";
-import SocialListItem from "../../../components/SocialListItem";
+import SocialListItem from "../../../components/Social/SocialListItem";
 import SubmitButton from "../../../components/SubmitButton";
 import axios from "axios";
 import { useState } from "react";

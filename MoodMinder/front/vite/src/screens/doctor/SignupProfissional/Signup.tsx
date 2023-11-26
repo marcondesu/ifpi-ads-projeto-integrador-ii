@@ -8,7 +8,7 @@ import { BiLogoFacebook } from "react-icons/bi";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import InputWithIcon from "../../../components/Input";
-import SocialListItem from "../../../components/SocialListItem";
+import SocialListItem from "../../../components/Social/SocialListItem";
 import SubmitButton from "../../../components/SubmitButton";
 import axios from "axios";
 import { useState } from "react";
@@ -40,7 +40,7 @@ const SignupProfissional = () => {
         formData
       );
       console.log("Usuário cadastrado com sucesso:", response.data);
-      navigate("/login");
+      navigate("/login/profissional");
     } catch (error: any) {
       console.error("Erro ao cadastrar usuário:", error.message);
     }

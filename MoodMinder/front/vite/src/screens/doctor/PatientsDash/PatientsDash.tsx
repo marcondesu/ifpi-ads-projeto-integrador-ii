@@ -1,5 +1,5 @@
-import BottomBar from "../../../components/BottomBarDoctor";
-import ComplexGrid from "../../../components/PatientsList";
+import BottomBar from "../../../components/BottomBar/BottomBarDoctor";
+import ComplexGrid from "../../../components/PatientDash/PatientsList";
 
 const PatientDash = () => {
   return (

@@ -1,8 +1,8 @@
-import BottomBar from "../../../components/BottomBarPatient";
+import BottomBar from "../../../components/BottomBar/BottomBarPatient";
 import SubmitButton from "../../../components/SubmitButton";
 import { useNavigate } from "react-router-dom";
 import useUserData from "../../../hooks/useSettings";
-import FormField from "../../../components/FormField";
+import FormField from "../../../components/FormField/FormField";
 
 const Settings = () => {
   const { dadosDoUsuario, handleChange, handleSubmit, handleRemover } = useUserData();

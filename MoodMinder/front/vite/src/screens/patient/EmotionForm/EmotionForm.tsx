@@ -1,8 +1,8 @@
 import React from "react";
 import { BsStopwatch, BsLightbulb, BsArrowThroughHeart } from "react-icons/bs";
-import EmotionSlider from "../../../components/EmotionSlider";
+import EmotionSlider from "../../../components/EmotionForm/EmotionSlider";
 import Input from "../../../components/Input";
-import BottomBar from "../../../components/BottomBarPatient";
+import BottomBar from "../../../components/BottomBar/BottomBarPatient";
 import SubmitButton from "../../../components/SubmitButton";
 import useEmotion from "../../../hooks/useEmotion";
 

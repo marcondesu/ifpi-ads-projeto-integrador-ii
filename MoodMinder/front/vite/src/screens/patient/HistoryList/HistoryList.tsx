@@ -1,5 +1,5 @@
-import BottomBar from "../../../components/BottomBarPatient";
-import ComplexGrid from "../../../components/EmotionList";
+import BottomBar from "../../../components/BottomBar/BottomBarPatient";
+import ComplexGrid from "../../../components/EmotionDash/EmotionList";
 
 const HistoryList = () => {
   

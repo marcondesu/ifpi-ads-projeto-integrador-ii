@@ -44,22 +44,21 @@ const GridItem: React.FC<GridItemProps> = ({
   privacidade,
   data,
 }) => {
-  // const { token } = useAuth();
-
   const emojiIcon =
     intensidade > 50 ? <HiOutlineFaceSmile /> : <HiOutlineFaceFrown />;
+
   const emojiPrivacidade =
     privacidade === "publico" ? <HiOutlineUsers /> : <HiOutlineLockClosed />;
+
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  };
 
   const handleRemover = async (id: string) => {
     try {
       await axios.delete(
-      `https://ifpi-projeto-integrador-ii.onrender.com/emocao/${id}`,
-        // {
-        //   headers: {
-        //     "Authorization": `Bearer ${token}`,
-        //   },
-        // }
+        `https://ifpi-projeto-integrador-ii.onrender.com/emocao/${id}`,
+        { headers }
       );
     } catch (error: any) {
       console.error("Erro ao remover emoção:", error.message);
@@ -76,11 +75,7 @@ const GridItem: React.FC<GridItemProps> = ({
     try {
       await axios.patch(
         `https://ifpi-projeto-integrador-ii.onrender.com/emocao/${id}/mudar-privacidade`,
-        // {
-        //   headers: {
-        //     "Authorization": `Bearer ${token}`,
-        //   },
-        // }
+        { headers }
       );
     } catch (error: any) {
       console.error("Erro ao mudar a privacidade da emoção:", error.message);

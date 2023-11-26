@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import BottomBar from "../../../components/BottomBarPatient";
+import BottomBar from "../../../components/BottomBar/BottomBarPatient";
 import SubmitButton from "../../../components/SubmitButton";
-import FormField from "../../../components/FormField";
+import FormField from "../../../components/FormField/FormField";
 
 export default function PacientDetails() {
   const { id } = useParams();

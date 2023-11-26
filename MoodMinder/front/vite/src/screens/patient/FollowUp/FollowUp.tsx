@@ -1,7 +1,7 @@
-import BottomBar from "../../../components/BottomBarPatient";
+import BottomBar from "../../../components/BottomBar/BottomBarPatient";
 import InputWithIcon from "../../../components/Input";
 import { HiOutlineSearch } from "react-icons/hi";
-import ComplexGrid from "../../../components/ProfList";
+import ComplexGrid from "../../../components/ProfissionalDash/ProfList";
 
 const FollowUp = () => {
   return (

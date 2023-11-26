@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import BottomBar from "../../../components/BottomBarPatient";
+import BottomBar from "../../../components/BottomBar/BottomBarPatient";
 import SubmitButton from "../../../components/SubmitButton";
-import FormField from "../../../components/FormField";
+import FormField from "../../../components/FormField/FormField";
 
 export default function EmotionDetails() {
   const { id } = useParams();
@@ -16,11 +16,16 @@ export default function EmotionDetails() {
     data: "",
   });
 
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  };
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://ifpi-projeto-integrador-ii.onrender.com/emocao/${id}`
+          `https://ifpi-projeto-integrador-ii.onrender.com/emocao/${id}`,
+          { headers }
         );
         setEmocao(response.data);
       } catch (error) {
@@ -43,7 +48,8 @@ export default function EmotionDetails() {
     try {
       const response = await axios.patch(
         `https://ifpi-projeto-integrador-ii.onrender.com/emocao/${id}`,
-        emocao
+        emocao,
+        { headers }
       );
       console.log(response.data);
     } catch (error) {

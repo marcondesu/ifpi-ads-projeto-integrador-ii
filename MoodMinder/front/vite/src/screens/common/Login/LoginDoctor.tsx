@@ -6,16 +6,34 @@ import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import InputWithIcon from "../../../components/Input";
 import SubmitButton from "../../../components/SubmitButton";
+import { useState } from "react";
+import axios from "axios";
 
 const Login = () => {
   const navigate = useNavigate();
 
-  const goSignup = () => {
-    navigate("/Profissional");
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+
+  const goForm = async () => {
+    try {
+      const response = await axios.post(
+        "https://ifpi-projeto-integrador-ii.onrender.com/auth/login",
+        {
+          email: email,
+          senha: senha,
+        }
+      );
+
+      localStorage.setItem("token", response.data.access_token);
+      navigate("/Profissional/Acompanhamento");
+    } catch (error: any) {
+      console.log("Erro ao fazer login:", error.message);
+    }
   };
 
-  const goForm = () => {
-    navigate("/Profissional/Acompanhamento");
+  const goSignup = () => {
+    navigate("/Profissional");
   };
 
   return (
@@ -53,18 +71,23 @@ const Login = () => {
       </div>
 
       <div className="inputs">
-        <InputWithIcon
-          icon={<HiOutlineEnvelope />}
-          type="email"
-          placeholder="E-mail"
-        />
-        <InputWithIcon icon={<PiKey />} type="password" placeholder="Senha" />
+      <InputWithIcon
+        icon={<HiOutlineEnvelope />}
+        type="email"
+        placeholder="E-mail"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <InputWithIcon
+        icon={<PiKey />}
+        type="password"
+        placeholder="Senha"
+        value={senha}
+        onChange={(e) => setSenha(e.target.value)}
+      />
       </div>
 
-      <SubmitButton
-        onClick={goForm}
-        label={"Acessar"}
-      />
+      <SubmitButton onClick={goForm} label={"Acessar"} />
 
       <div className="forgot-password">
         <span>Esqueci minha senha</span>

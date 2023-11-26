@@ -1,34 +1,33 @@
 import GridItem, { GridItemProps } from "./EmotionItem";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useAuth } from "../context/AuthContext";
 
 const ComplexGrid = () => {
   const [emotions, setEmotions] = useState<GridItemProps[]>([]);
-  const { token } = useAuth();
-  console.log(token);
   
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  };
+
   const fetchData = async () => {
     try {
-      console.log(token);
-      
-      const response = await axios.get("https://ifpi-projeto-integrador-ii.onrender.com/emocao", {
-        headers: {
-          "Authorization": `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(
+        "https://ifpi-projeto-integrador-ii.onrender.com/emocao",
+        { headers }
+      );
+      console.log(response.data);
+
       setEmotions(response.data);
     } catch (error) {
-      // console.log(`Authorization: Bearer ${token}`);
       console.error(error);
     }
   };
 
   useEffect(() => {
     fetchData();
-    const intervalId = setInterval(fetchData, 6000);
+    const intervalId = setInterval(fetchData, 100);
     return () => clearInterval(intervalId);
-  }, [token]);
+  }, []);
 
   return (
     <div
