@@ -36,7 +36,7 @@ const BottomBar = () => {
       <BottomNavigation
         showLabels
         value={value}
-        onChange={(event, newValue) => {
+        onChange={(_event, newValue) => {
           const path =
             newValue === 0
               ? "/Profissional/Configuracoes"

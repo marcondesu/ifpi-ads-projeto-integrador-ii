@@ -1,5 +1,5 @@
 import { styled, ButtonBase, Grid, Typography, Box } from "@mui/material";
-import { HiOutlineFaceSmile, HiOutlineLockClosed } from 'react-icons/hi2';
+import { HiOutlineLockClosed } from 'react-icons/hi2';
 
 const CustomButtonBase = styled(ButtonBase)({
     display: 'flex',
