@@ -25,8 +25,8 @@ const ComplexGrid = () => {
 
   useEffect(() => {
     fetchData();
-    const intervalId = setInterval(fetchData, 100);
-    return () => clearInterval(intervalId);
+    // const intervalId = setInterval(fetchData, 3600);
+    // return () => clearInterval(intervalId);
   }, []);
 
   return (

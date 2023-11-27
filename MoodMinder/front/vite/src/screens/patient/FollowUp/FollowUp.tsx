@@ -1,30 +1,16 @@
-import BottomBar from "../../../components/BottomBar/BottomBarPatient";
-import InputWithIcon from "../../../components/Input";
-import { HiOutlineSearch } from "react-icons/hi";
-import ComplexGrid from "../../../components/ProfissionalDash/ProfList";
+// FollowUp.js
+import BottomBar from '../../../components/SideBar/SideBarPatient';
+import ComplexGrid from '../../../components/ProfissionalDash/ProfList';
+import './FollowUp.css';
 
 const FollowUp = () => {
   return (
-    <div>
-      <div
-        style={{
-          position: "fixed",
-          top: 0,
-          left: "50%",
-          transform: "translateX(-50%)",
-        }}
-      >
-        <h1>Conecte-se com profissionais</h1>
-        <div className="inputs">
-          <InputWithIcon
-            icon={<HiOutlineSearch />}
-            type="search"
-            placeholder={"Nome do Profissional"}
-          />
-        </div>
-      </div>
+    <div style={{ display: 'flex' }}>
       <BottomBar />
-      <ComplexGrid />
+      <div className="content-container">
+        <h1>Conecte-se com profissionais</h1>
+        <ComplexGrid />
+      </div>
     </div>
   );
 };

@@ -19,7 +19,7 @@ const EmotionSlider: React.FC<EmotionSliderProps> = ({ onChange }) => {
   return (
     <Box
       sx={{
-        width: 500,
+        width: "100%",
         display: "flex",
         flexDirection: "row",
         justifyContent: "center",
@@ -27,7 +27,7 @@ const EmotionSlider: React.FC<EmotionSliderProps> = ({ onChange }) => {
     >
       <div
         style={{
-          width: "70%",
+          width: "60%",
           display: "flex",
           alignItems: "center",
           gap: "20px",

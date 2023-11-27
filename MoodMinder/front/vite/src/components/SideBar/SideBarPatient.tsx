@@ -7,6 +7,7 @@ interface SidebarProps {
 }
 
 const SidebarWrapper = styled.div<SidebarProps>`
+  z-index:2;
   height: 100vh;
   width: 280px;
   background-color: #fff;
@@ -61,7 +62,7 @@ const HamburgerMenu = styled.div`
   position: fixed;
   top: 10px;
   left: 10px;
-  z-index: 1;
+  z-index: 3;
 
   @media (max-width: 768px) {
     display: block;

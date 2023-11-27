@@ -15,8 +15,8 @@ const ComplexGrid = () => {
 
   useEffect(() => {
     fetchData();
-    const intervalId = setInterval(fetchData, 100);
-    return () => clearInterval(intervalId);
+    // const intervalId = setInterval(fetchData, 100);
+    // return () => clearInterval(intervalId);
   }, []);
   return (
     <div
@@ -24,10 +24,10 @@ const ComplexGrid = () => {
       display: "grid",
       gridTemplateColumns: "repeat(auto-fill, minmax(350px, 1fr))", // Ou ajuste os valores conforme necessário
       gap: "1rem",
-      maxWidth: "100vw",
       margin: "0 auto", 
       flexWrap: "wrap"
-    }}
+    }} 
+    className="element-container"
     >
       {professional.map((professional) => (
         <GridItem key={professional.id} {...professional} />

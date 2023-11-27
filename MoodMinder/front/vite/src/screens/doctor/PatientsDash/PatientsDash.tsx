@@ -1,21 +1,14 @@
-import BottomBar from "../../../components/BottomBar/BottomBarDoctor";
+import BottomBar from "../../../components/SideBar/SideBarDoctor";
 import ComplexGrid from "../../../components/PatientDash/PatientsList";
 
 const PatientDash = () => {
   return (
-    <div>
-      <div
-        style={{
-          position: "fixed",
-          top: 0,
-          left: "50%",
-          transform: "translateX(-50%)",
-        }}
-      >
-        <h1>Pacientes Cadastrados</h1>
-      </div>
+    <div style={{ display: 'flex' }}>
       <BottomBar />
+      <div className="content-container">
+        <h1>Pacientes Cadastrados</h1>
       <ComplexGrid />
+      </div>
     </div>
   );
 };

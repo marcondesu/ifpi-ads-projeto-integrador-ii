@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import BottomBar from "../../../components/BottomBar/BottomBarPatient";
+import BottomBar from "../../../components/SideBar/SideBarPatient";
 import SubmitButton from "../../../components/SubmitButton";
 import FormField from "../../../components/FormField/FormField";
 

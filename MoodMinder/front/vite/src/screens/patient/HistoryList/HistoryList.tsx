@@ -1,22 +1,14 @@
-import BottomBar from "../../../components/BottomBar/BottomBarPatient";
+import BottomBar from "../../../components/SideBar/SideBarPatient";
 import ComplexGrid from "../../../components/EmotionDash/EmotionList";
 
 const HistoryList = () => {
-  
   return (
-    <div>
-      <div
-        style={{
-          position: "fixed",
-          top: 0,
-          left: "50%",
-          transform: "translateX(-50%)",
-        }}
-      >
-        <h1>Situações que você já viveu</h1>
-      </div>
+    <div style={{ display: "flex" }}>
       <BottomBar />
-      <ComplexGrid />
+      <div className="content-container">
+        <h1>Situações que você já viveu</h1>
+        <ComplexGrid />
+      </div>
     </div>
   );
 };
