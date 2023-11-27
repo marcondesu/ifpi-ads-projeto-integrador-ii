@@ -5,7 +5,6 @@ import Input from "../../../components/Input";
 import BottomBar from "../../../components/BottomBar/BottomBarPatient";
 import SubmitButton from "../../../components/SubmitButton";
 import useEmotion from "../../../hooks/useEmotion";
-import './EmotionForm.css'
 
 const EmotionForm: React.FC = () => {
   const { handleChange, handleSliderChange, handleSubmit } = useEmotion();
