@@ -20,14 +20,14 @@ const ComplexGrid = () => {
   }, []);
   return (
     <div
-      style={{
-        display: "flex",
-        width: 500,
-        flexDirection: "column",
-        gap: "1rem",
-        paddingTop: "2rem",
-        paddingBottom: "4rem",
-      }}
+    style={{
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fill, minmax(350px, 1fr))", // Ou ajuste os valores conforme necessário
+      gap: "1rem",
+      maxWidth: "100vw",
+      margin: "0 auto", 
+      flexWrap: "wrap"
+    }}
     >
       {professional.map((professional) => (
         <GridItem key={professional.id} {...professional} />
