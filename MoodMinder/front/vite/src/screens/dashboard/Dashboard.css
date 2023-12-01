@@ -1,0 +1,70 @@
+/* Dashboard.css */
+.dashboard {
+  display: flex;
+  justify-content: space-around;
+  align-items: stretch; /* Ajuste para alongar a altura da .main */
+  height: calc(100vh - 104px); /* Subtrai a altura do Header */
+  background-color: #f4f4f4; /* Light theme background color */
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding: 20px;
+  background-color: #fff; /* Light theme card background color */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #e0e0e0; /* Light theme card background color on hover */
+  }
+
+  h3 {
+    margin-top: 10px;
+  }
+}
+
+.main {
+  flex: 1;
+  box-sizing: border-box;
+  /* display: flex;
+  flex-direction: column; */
+  align-items: center;
+  justify-content: center;
+  background-color: #fff; /* Light theme main content background color */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-top: 20px;
+  margin-right: 20px;
+}
+
+.icon {
+  font-size: 2rem;
+}
+
+/* Dark theme styles (add this section for dark theme) */
+body.dark-mode {
+  background-color: #333; /* Dark theme background color */
+  color: #fff; /* Dark theme text color */
+
+  .dashboard {
+    background-color: #555; /* Dark theme dashboard background color */
+  }
+
+  .card {
+    background-color: #666; /* Dark theme card background color */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+
+    &:hover {
+      background-color: #444; /* Dark theme card background color on hover */
+    }
+  }
+
+  .main {
+    background-color: #666; /* Dark theme main content background color */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  }
+}

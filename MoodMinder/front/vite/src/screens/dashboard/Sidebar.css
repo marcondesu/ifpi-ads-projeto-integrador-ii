@@ -1,0 +1,31 @@
+/* Sidebar.css */
+.sidebar {
+  width: 200px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  align-items: center;
+}
+
+.sidebar.light-mode {
+  background-color: white; /* Cor do fundo no tema claro */
+}
+
+.card {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 16px;
+  width: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+  background-color: #555; /* Cor do fundo no tema escuro */
+}
+
+.card h3 {
+  margin-top: 8px;
+}
+
+/* Adicione outros estilos conforme necessário */
