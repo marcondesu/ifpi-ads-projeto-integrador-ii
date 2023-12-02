@@ -10,8 +10,8 @@ const Settings = () => {
 
   const navegate = useNavigate();
   const goHome = () => {
+    navegate("/login/profissional");
     localStorage.removeItem("token");
-    navegate("/Login/Profissional");
   };
   return (
     <div style={{ display: "flex" }}>

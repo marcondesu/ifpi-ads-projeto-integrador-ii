@@ -85,13 +85,13 @@ const BottomBar: React.FC = () => {
         <SidebarTop>
           <Logo src="caminho/para/o/seu/logo.png" alt="Logo" />
         </SidebarTop>
-        <SidebarLink href="/Profissional/Acompanhamento">
+        <SidebarLink href="/profissional/acompanhamento">
           <FaUser /> Acompanhamentos
         </SidebarLink>
-        <SidebarLink href="/Profissional/Configuracoes">
+        <SidebarLink href="/profissional/configuracoes">
           <FaCog /> Account
         </SidebarLink>
-        <SidebarLink href="/Profissional/Login">
+        <SidebarLink href="/login/profissional">
           <FaSignInAlt /> Logout
         </SidebarLink>
       </SidebarWrapper>

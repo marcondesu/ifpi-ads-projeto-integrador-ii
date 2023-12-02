@@ -1,169 +1,271 @@
-import "./Signup.css";
-import {
-  HiOutlineEnvelope,
-  HiOutlineUser,
-  HiOutlineIdentification,
-} from "react-icons/hi2";
-import { BiLogoFacebook } from "react-icons/bi";
-import { FcGoogle } from "react-icons/fc";
-import { useNavigate } from "react-router-dom";
-import InputWithIcon from "../../../components/Input";
-import SocialListItem from "../../../components/Social/SocialListItem";
-import SubmitButton from "../../../components/SubmitButton";
-import axios from "axios";
+import * as React from "react";
 import { useState } from "react";
-import { PiKey } from "react-icons/pi";
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  Link,
+  Grid,
+  Box,
+  Typography,
+  Container,
+  IconButton,
+  InputAdornment,
+  CircularProgress,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Alert,
+} from "@mui/material";
+import { LuEye, LuEyeOff } from "react-icons/lu";
+import { CiLock } from "react-icons/ci";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useFormValidation } from "../../../hooks/useForm";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const SignupProfissional = () => {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    nome: "",
-    crm: "",
-    especialidade: "",
-    email: "",
-    nascimento: "",
-    sexo: "",
-    senha: ""
-  });
+const defaultTheme = createTheme();
 
-  const handleChange = (e: { target: { value: any } }, field: any) => {
-    setFormData({
-      ...formData,
-      [field]: e.target.value,
-    });
+export default function SignUp() {
+  const { emailError, passwordError, handleEmailBlur, handlePasswordBlur } =
+    useFormValidation();
+  const navegacao = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const [name, setName] = useState("");
+  const [emailInput, setEmailInput] = useState("");
+  const [passwordInput, setPasswordInput] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [gender, setGender] = useState("");
+  const [especialidade, setEspacialidade] = useState("");
+  const [crm, setCRM] = useState("");
+
+  const [formValid, setFormValid] = useState<string | null>(null);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+  };
+
+  const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setDateOfBirth(event.target.value);
   };
 
   const handleSubmit = async () => {
+    setFormValid(null);
+
+    if (emailError || !emailInput) {
+      setFormValid("Email inválido.");
+      setTimeout(() => {
+        setFormValid(null);
+      }, 5000);
+      return;
+    }
+
+    if (passwordError || !passwordInput) {
+      setFormValid("Senha deve ter no mínimo 4 caracteres");
+      setTimeout(() => {
+        setFormValid(null);
+      }, 5000);
+      return;
+    }
+
+    setLoading(true);
+
     try {
-      const response = await axios.post(
+      await axios.post(
         "https://ifpi-projeto-integrador-ii.onrender.com/profissional",
-        formData
+        {
+          nome: name,
+          email: emailInput,
+          senha: passwordInput,
+          crm: crm,
+          especialidade: especialidade,
+          sexo: gender,
+          nascimento: dateOfBirth
+        }
       );
-      console.log("Usuário cadastrado com sucesso:", response.data);
-      navigate("/login/profissional");
+
+      // console.log("Usuário cadastrado com sucesso:", response.data);
+      navegacao("/login/profissional");
     } catch (error: any) {
       console.error("Erro ao cadastrar usuário:", error.message);
+    } finally {
+      setLoading(false);
     }
-  };
-  const goLogin = () => {
-    navigate("/login/profissional");
   };
 
   return (
-    <div className="container">
-      <div className="header">
-        <div className="text">
-          Acompanhe o progresso de seus pacientes em busca do autocuidado
-        </div>
-      </div>
-
-      <ul className="social-list">
-        <SocialListItem
-          background="blue"
-          icon={<BiLogoFacebook />}
-          label="Facebook"
-        />
-        <SocialListItem
-          background="white"
-          icon={<FcGoogle />}
-          label="Google"
-          color="black"
-        />
-      </ul>
-
-      <div className="underline" style={{ fontSize: "10pt" }}>
-        <div className="left-u"></div>
-        <p>ou</p>
-        <div className="right-u"></div>
-      </div>
-
-      <div className="inputs">
-        <InputWithIcon
-          icon={<HiOutlineUser />}
-          type="text"
-          placeholder="Nome"
-          onChange={(e) => handleChange(e, "nome")}
-        />
-
-        <div style={{ width: "70%", display: "flex", gap: "1rem" }}>
-          <InputWithIcon
-            icon={<HiOutlineEnvelope />}
-            type="text"
-            placeholder="Especialidade"
-            onChange={(e) => handleChange(e, "especialidade")}
-          />
-          <InputWithIcon
-            icon={<HiOutlineIdentification />}
-            type="text"
-            placeholder="CRM/CRP"
-            onChange={(e) => handleChange(e, "crm")}
-          />
-        </div>
-
-        <div style={{ width: "70%", display: "flex"}}>
-          <div
-            style={{
-              width: "100%",
-              display: "flex",
-              height: "50px",
-              gap: "1rem",
-            }}
-          >
-            <input
-              type="date"
-              style={{
-                width: "50%",
-                borderRadius: "5px",
-                padding: "16px",
-                border: "none",
-                backgroundColor: "#eaeaea",
-                boxSizing: "border-box",
-                outline: "none"
-              }}
-              onChange={(e) => handleChange(e, "nascimento")}
+    <ThemeProvider theme={defaultTheme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <CiLock />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Cadastre-se
+          </Typography>
+          <Box component="form" noValidate sx={{ mt: 3 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="name"
+              label="Nome"
+              name="name"
+              autoComplete="name"
+              autoFocus
+              onChange={(event) => setName(event.target.value)}
             />
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="dateOfBirth"
+                  label="Data de Nascimento"
+                  name="dateOfBirth"
+                  type="date"
+                  value={dateOfBirth}
+                  onChange={handleDateChange}
+                  InputLabelProps={{
+                    shrink: true,
+                    className: "always-shrink-label", // Add a class for custom styling
+                  }}
+                  sx={{
+                    "& .always-shrink-label": {
+                      transform: "translate(14px, -6px) scale(0.75)", // Adjust the position
+                      pointerEvents: "none", // Avoid interference with the input
+                    },
+                  }}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl fullWidth margin="normal" required>
+                  <InputLabel id="gender-label">Gênero</InputLabel>
+                  <Select
+                    labelId="gender-label"
+                    id="gender"
+                    label="Gênero"
+                    value={gender}
+                    onChange={(event) =>
+                      setGender(event.target.value as string)
+                    }
+                  >
+                    <MenuItem value="masculino">Masculino</MenuItem>
+                    <MenuItem value="feminino">Feminino</MenuItem>
+                    <MenuItem value="outro">Outro</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+            </Grid>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="crm"
+                  label="CRM"
+                  name="crm"
+                  autoComplete="crm"
+                  onChange={(event) => setCRM(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  margin="normal"
+                  fullWidth
+                  id="epecialidade"
+                  label="Especialidade"
+                  name="especialidade"
+                  autoComplete="especialidade"
+                  onChange={(event) => setEspacialidade(event.target.value)}
+                />
+              </Grid>
+            </Grid>
 
-            <select
-              style={{
-                width: "50%",
-                borderRadius: "5px",
-                border: "none",
-                backgroundColor: "#eaeaea",
-                padding: "16px",
-                outline: "none"
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="E-mail"
+              name="email"
+              autoComplete="email"
+              onChange={(event) => setEmailInput(event.target.value)}
+              onBlur={handleEmailBlur}
+              error={emailError}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Senha"
+              type={showPassword ? "text" : "password"}
+              id="password"
+              autoComplete="new-password"
+              onBlur={handlePasswordBlur}
+              onChange={(event) => setPasswordInput(event.target.value)}
+              error={passwordError}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <LuEye /> : <LuEyeOff />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
               }}
-              onChange={(e) => handleChange(e, "sexo")}
+            />
+            <Button
+              onClick={handleSubmit}
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
             >
-              <option value="masculino">Masculino</option>
-              <option value="feminino">Feminino</option>
-              <option value="outro">Outro</option>
-            </select>
-          </div>
-        </div>
-
-        <InputWithIcon
-            icon={<HiOutlineEnvelope />}
-            type="email"
-            placeholder="E-mail"
-            onChange={(e) => handleChange(e, "email")}
-          />
-
-        <InputWithIcon
-          icon={<PiKey />}
-          type="password"
-          placeholder="Senha"
-          onChange={(e) => handleChange(e, "senha")}
-        />
-      </div>
-
-      <SubmitButton onClick={handleSubmit} label={"Cadastrar"} />
-
-      <div className="has-account">
-        Já tem uma conta?
-        <span onClick={goLogin}> Clique aqui</span>
-      </div>
-    </div>
+              {loading ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : (
+                "Cadastrar"
+              )}
+            </Button>
+            <Box
+              sx={{ position: "fixed", top: 0, right: 0, left: 0, zIndex: 100 }}
+            >
+              {formValid && (
+                <Alert severity="error" sx={{ mt: 2 }}>
+                  {formValid}
+                </Alert>
+              )}
+            </Box>
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <Link href="/login/profissional" variant="body2">
+                  Já tem uma conta? Entrar
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+      </Container>
+    </ThemeProvider>
   );
-};
-
-export default SignupProfissional;
+}

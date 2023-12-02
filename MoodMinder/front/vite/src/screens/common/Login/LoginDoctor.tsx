@@ -1,104 +1,190 @@
-import "./Login.css";
-import { PiKey } from "react-icons/pi";
-import { HiOutlineEnvelope } from "react-icons/hi2";
-import { BiLogoFacebook } from "react-icons/bi";
-import { FcGoogle } from "react-icons/fc";
-import { useNavigate } from "react-router-dom";
-import InputWithIcon from "../../../components/Input";
-import SubmitButton from "../../../components/SubmitButton";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import Alert from "@mui/material/Alert";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
+
+import { LuEye, LuEyeOff } from "react-icons/lu";
+import { CiLock } from "react-icons/ci";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { CircularProgress } from "@mui/material";
+import { useFormValidation } from "../../../hooks/useForm";
 
-const Login = () => {
-  const navigate = useNavigate();
+const defaultTheme = createTheme();
 
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
+export default function SignIn() {
+  const { emailError, passwordError, handleEmailBlur, handlePasswordBlur } =
+  useFormValidation();
 
-  const goForm = async () => {
+  const navegacao = useNavigate();
+  const [loading, setLoading] = useState(false); // E
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  // Inputs
+  const [emailInput, setEmailInput] = useState("");
+  const [passwordInput, setPasswordInput] = useState("");
+
+  // Overall Form Validity
+  const [formValid, setFormValid] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+  };
+
+  const handleSubmit = async () => {
+    setSuccess(null);
+
+    if (emailError || !emailInput) {
+      setFormValid("Email inválido.");
+      setTimeout(() => {
+        setFormValid(null);
+      }, 5000);
+      return;
+    }
+
+    if (passwordError || !passwordInput) {
+      setFormValid("Senha deve ter no mínimo 4 caracteres");
+      setTimeout(() => {
+        setFormValid(null);
+      }, 5000);
+      return;
+    }
+
+    setLoading(true);
+    // console.log("Email: " + emailInput);
+    // console.log("Password: " + passwordInput);
+
     try {
       const response = await axios.post(
         "https://ifpi-projeto-integrador-ii.onrender.com/auth/login",
         {
-          email: email,
-          senha: senha,
+          email: emailInput,
+          senha: passwordInput,
         }
       );
 
+      navegacao("/profissional/acompanhamento");
       localStorage.setItem("token", response.data.access_token);
-      navigate("/Profissional/Acompanhamento");
     } catch (error: any) {
       console.log("Erro ao fazer login:", error.message);
+    } finally {
+      setLoading(false); // Indicar que a requisição foi concluída (bem-sucedida ou com erro)
     }
   };
 
-  const goSignup = () => {
-    navigate("/Profissional");
-  };
-
   return (
-    <div className="container">
-      <div className="header">
-        <div className="text">Bem vindo(a) de volta ao MoodMinder </div>
-      </div>
-
-      <ul className="social-list">
-        <li
-          style={{
-            background: "blue",
-            color: "white",
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+    <ThemeProvider theme={defaultTheme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <BiLogoFacebook />
-          <span>Facebook</span>
-        </li>
-        <li
-          style={{
-            background: "white",
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-          }}
-        >
-          <FcGoogle />
-          <span>Google</span>
-        </li>
-      </ul>
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <CiLock />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Bem vindo(a) de volta!
+          </Typography>
+          <Box component="form" noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="E-mail"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              onChange={(event) => setEmailInput(event.target.value)}
+              onBlur={handleEmailBlur}
+              error={emailError}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Senha"
+              type={showPassword ? "text" : "password"}
+              id="password"
+              autoComplete="current-password"
+              onBlur={handlePasswordBlur}
+              onChange={(event) => setPasswordInput(event.target.value)}
+              error={passwordError}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <LuEye /> : <LuEyeOff />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
 
-      <div className="underline" style={{ fontSize: "10pt" }}>
-        <div className="left-u"></div>
-        <p>ou</p>
-        <div className="right-u"></div>
-      </div>
-
-      <div className="inputs">
-      <InputWithIcon
-        icon={<HiOutlineEnvelope />}
-        type="email"
-        placeholder="E-mail"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <InputWithIcon
-        icon={<PiKey />}
-        type="password"
-        placeholder="Senha"
-        value={senha}
-        onChange={(e) => setSenha(e.target.value)}
-      />
-      </div>
-
-      <SubmitButton onClick={goForm} label={"Acessar"} />
-
-      <div className="forgot-password">
-        <span>Esqueci minha senha</span>
-      </div>
-
-      <div className="no-has-account">
-        Ainda não tem uma conta?
-        <span onClick={goSignup}> Clique aqui</span>
-      </div>
-    </div>
+            <Button
+              onClick={handleSubmit}
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              {loading ? (
+                <CircularProgress size={24} color="inherit" /> // Mostrar indicador de carregamento
+              ) : (
+                "Entrar"
+              )}
+            </Button>
+            <Box
+              sx={{
+                position: "fixed",
+                top: 0,
+                right: 0,
+                left: 0,
+                zIndex: 100,
+              }}
+            >
+              {formValid && (
+                <Alert severity="error" sx={{ mt: 2 }}>
+                  {formValid}
+                </Alert>
+              )}
+              {success && (
+                <Alert severity="success" sx={{ mt: 2 }}>
+                  {success}
+                </Alert>
+              )}
+            </Box>
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <Link href="/profissional" variant="body2">
+                  {"Não tem uma conta? Cadastre-se"}
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+      </Container>
+    </ThemeProvider>
   );
-};
-
-export default Login;
+}
