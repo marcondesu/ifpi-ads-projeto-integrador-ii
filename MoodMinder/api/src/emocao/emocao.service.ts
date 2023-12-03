@@ -3,12 +3,14 @@ import { CreateEmocaoDto } from './dto/create-emocao.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Emocao } from './entities/emocao.entity';
 import { DeleteResult, Repository } from 'typeorm';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class EmocaoService {
   constructor(
     @InjectRepository(Emocao)
     private emocaoRepository: Repository<Emocao>,
+    private jwtService: JwtService,
   ) {}
 
   public async create(createEmocaoDto: CreateEmocaoDto) {
@@ -24,8 +26,17 @@ export class EmocaoService {
     return await this.emocaoRepository.save(emocao);
   }
 
-  public async findAll(): Promise<Emocao[]> {
-    return await this.emocaoRepository.find();
+  public async findAll(token: string): Promise<Emocao[]> {
+    const user_id = await this.extractPacienteIdFromToken(token);
+    console.log(user_id);
+
+    return await this.emocaoRepository.find({ where: { idPaciente: user_id } });
+  }
+
+  private async extractPacienteIdFromToken(token: string): Promise<string> {
+    token = token.replace('Bearer ', '');
+
+    return this.jwtService.decode(token).sub;
   }
 
   public async findOne(id: string): Promise<Emocao> {
@@ -51,11 +62,13 @@ export class EmocaoService {
 
   public async updatePrivacidade(id: string) {
     const emocao = await this.findOne(id);
+
     if (!emocao) {
       return null;
     }
 
     emocao.mudarPrivacidade();
+
     return await this.emocaoRepository.save(emocao);
   }
 }
