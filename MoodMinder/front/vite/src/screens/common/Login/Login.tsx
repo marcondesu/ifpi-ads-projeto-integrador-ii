@@ -178,7 +178,7 @@ export default function SignIn() {
             </Box>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/" variant="body2">
+                <Link href="/cadastro" variant="body2">
                   {"Não tem uma conta? Cadastre-se"}
                 </Link>
               </Grid>

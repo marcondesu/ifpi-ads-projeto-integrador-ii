@@ -10,24 +10,27 @@ import EmotionDetails from "../screens/patient/EmotionDetails/EmotionDetails";
 import PatientDash from "../screens/doctor/PatientsDash/PatientsDash";
 import LoginDoctor from "../screens/common/Login/LoginDoctor";
 import SettingsDoctor from "../screens/common/Settings/SettingsDoctor";
+import { UserTypeSelection } from "../screens/common/Start/Start";
 
 const AppRoutes = () => {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Signup />} />
-                <Route path="/Profissional" element={<SignupProfissional />} />
-                <Route path="/Login" element={<Login />} />
-                <Route path="/EmotionForm" element={<EmotionForm />} />
-                <Route path="/Historico/:id" element={<EmotionDetails />} />
-                <Route path="/Historico" element={<HistoryList />} />
-                <Route path="/Acompanhamento" element={<FollowUp />} />
-                <Route path="/Acompanhamento/:id" element={<EmotionDetails />} />
-                <Route path="/Configuracoes" element={<Settings />} />
-                <Route path="/Profissional/Acompanhamento/id" element={<SignupProfissional />} />
-                <Route path="/Login/Profissional" element={<LoginDoctor />} />
-                <Route path="/Profissional/Configuracoes" element={<SettingsDoctor />} />
-                <Route path="/Profissional/Acompanhamento" element={<PatientDash />} />
+                <Route path="/" element={<UserTypeSelection />} />
+                <Route path="/cadastro" element={<Signup />} />
+                <Route path="/profissional" element={<SignupProfissional />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/emotionForm" element={<EmotionForm />} />
+                <Route path="/historico/:id" element={<EmotionDetails />} />
+                <Route path="/historico" element={<HistoryList />} />
+                <Route path="/acompanhamento" element={<FollowUp />} />
+                <Route path="/acompanhamento/:id" element={<EmotionDetails />} />
+                <Route path="/configuracoes" element={<Settings />} />
+                <Route path="/profissional/Acompanhamento/id" element={<SignupProfissional />} />
+                <Route path="/login/Profissional" element={<LoginDoctor />} />
+                <Route path="/profissional/Configuracoes" element={<SettingsDoctor />} />
+                <Route path="/profissional/Acompanhamento" element={<PatientDash />} />
+
             </Routes>
         </Router>
     )
