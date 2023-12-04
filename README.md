@@ -5,6 +5,12 @@
 - **Área de Aplicação:** Saúde mental
 - **Membros da Equipe:** Cibelle Costa e Marcos Silva
 
+## Resumo do Projeto
+Desenvolvimento de uma aplicação ~~mobile~~ web voltada para o autocuidado, em que o paciente pode:
+* registrar e monitorar suas emoções, humor e bem-estar mental;
+* compartilhar seletivamente informações com terapeutas ou profissionais de saúde mental;
+* ~~acompanhar o progresso ao longo do tempo por meio de gráficos e análises.~~
+
 ## Ferramentas de Gerenciamento do Projeto
 - **Definição de Sprints:** [Trello](https://trello.com/b/baOnxLcM/moodminder)
 
@@ -26,20 +32,13 @@
   - [Arquitetura](https://www.canva.com/design/DAFxjNNn3OY/LP39DCaYdXqYS-e6vAf7Kw/edit?utm_content=DAFxjNNn3OY&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
   - [Sprint Backlog](https://trello.com/b/baOnxLcM/moodminder)
 
-## Resumo do Projeto
-Desenvolvimento de uma aplicação mobile voltada para o autocuidado, em que o paciente pode:
-* registrar e monitorar suas emoções, humor e bem-estar mental;
-* acompanhar o progresso ao longo do tempo por meio de gráficos e análises;
-* compartilhar seletivamente informações com terapeutas ou profissionais de saúde mental.
-
-## Como rodar o Projeto
+## Link do projeto
 - **API:**
+  - [Swagger](https://ifpi-projeto-integrador-ii.onrender.com/doc)
   - [/emocao](https://ifpi-projeto-integrador-ii.onrender.com/emocao)
   - [/paciente](https://ifpi-projeto-integrador-ii.onrender.com/paciente)
   - [/profissional](https://ifpi-projeto-integrador-ii.onrender.com/profissional)
   - [/acompanhamento](https://ifpi-projeto-integrador-ii.onrender.com/emocao)
 
 - **FRONT:**
-  - cd \MoodMinder\front\vite
-  - `npm run dev`
-  - http://localhost:5173
+  - [Render](https://moodminder.onrender.com/)
