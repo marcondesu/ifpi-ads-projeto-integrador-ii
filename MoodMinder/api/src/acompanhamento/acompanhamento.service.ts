@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm';
 import { Feedback } from 'src/feedback/entities/feedback.entity';
 import { FeedbackService } from 'src/feedback/feedback.service';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AcompanhamentoService {
@@ -12,6 +13,7 @@ export class AcompanhamentoService {
     @InjectRepository(Acompanhamento)
     private acompanhamentoRepository: Repository<Acompanhamento>,
     private feedbackService: FeedbackService,
+    private jwtService: JwtService,
   ) {}
 
   public async create(createAcompanhamentoDto: CreateAcompanhamentoDto) {
@@ -24,8 +26,18 @@ export class AcompanhamentoService {
     return await this.acompanhamentoRepository.save(acompanhamento);
   }
 
-  public async findAll(): Promise<Acompanhamento[]> {
-    return await this.acompanhamentoRepository.find();
+  public async findAll(token: string): Promise<Acompanhamento[]> {
+    const user_id = await this.extractUserIdFromToken(token);
+
+    return await this.acompanhamentoRepository.find({
+      where: { idPaciente: user_id },
+    });
+  }
+
+  private async extractUserIdFromToken(token: string) {
+    token = token.replace('Bearer ', '');
+
+    return this.jwtService.decode(token).sub;
   }
 
   public async findOne(id: string): Promise<Acompanhamento> {

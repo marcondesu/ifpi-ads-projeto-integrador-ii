@@ -7,6 +7,7 @@ import {
   Delete,
   Patch,
   UseGuards,
+  Headers,
 } from '@nestjs/common';
 import { DeleteResult } from 'typeorm';
 import { ApiTags } from '@nestjs/swagger';
@@ -28,8 +29,8 @@ export class EmocaoController {
 
   @UseGuards(AuthGuard)
   @Get()
-  async findAll(): Promise<Emocao[]> {
-    return await this.emocaoService.findAll();
+  async findAll(@Headers('authorization') token: string): Promise<Emocao[]> {
+    return await this.emocaoService.findAll(token);
   }
 
   @UseGuards(AuthGuard)
