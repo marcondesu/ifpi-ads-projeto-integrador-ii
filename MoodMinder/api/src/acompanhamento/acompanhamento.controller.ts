@@ -6,6 +6,7 @@ import {
   Delete,
   Param,
   UseGuards,
+  Headers,
 } from '@nestjs/common';
 import { DeleteResult } from 'typeorm';
 import { ApiTags } from '@nestjs/swagger';
@@ -28,8 +29,10 @@ export class AcompanhamentoController {
 
   @UseGuards(AuthGuard)
   @Get()
-  async findAll(): Promise<Acompanhamento[]> {
-    return await this.acompanhamentoService.findAll();
+  async findAll(
+    @Headers('authorization') token: string,
+  ): Promise<Acompanhamento[]> {
+    return await this.acompanhamentoService.findAll(token);
   }
 
   @UseGuards(AuthGuard)
