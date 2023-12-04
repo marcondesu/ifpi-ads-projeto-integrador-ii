@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
 interface UserData {
   nome: string;
@@ -23,6 +24,8 @@ const useSettings = () => {
     sexo: "",
     nascimento: "2000-12-01",
   });
+
+  const navegate = useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,26 +52,28 @@ const useSettings = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.patch(
+      await axios.patch(
         `https://ifpi-projeto-integrador-ii.onrender.com/paciente/${id}`,
         dadosDoUsuario,
         { headers }
       );
-      console.log("Usuário alterado com sucesso:", response.data);
+      navegate("/historico")
+      // console.log("Usuário alterado com sucesso:", response.data);
     } catch (error: any) {
       console.error("Erro ao alterar usuário:", error.message);
     }
   };
 
   const handleRemover = async () => {
-    console.log("Delete pressionado");
+    // console.log("Delete pressionado");
     try {
       await axios.delete(
         `https://ifpi-projeto-integrador-ii.onrender.com/paciente/${id}`,
         { headers }
       );
+      navegate("/historico")
     } catch (error: any) {
-      console.error("Erro ao remover emoção:", error.message);
+      console.error("Erro ao remover usuário:", error.message);
     }
   };
 

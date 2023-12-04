@@ -30,8 +30,7 @@ const AppRoutes = () => {
                 <Route path="/login/Profissional" element={<LoginDoctor />} />
                 <Route path="/profissional/Configuracoes" element={<SettingsDoctor />} />
                 <Route path="/profissional/Acompanhamento" element={<PatientDash />} />
-
-            </Routes>
+                </Routes>
         </Router>
     )
 }

@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { FaUser, FaCog, FaSignInAlt } from 'react-icons/fa';
+import React, { useState } from "react";
+import styled from "styled-components";
+import { FaUserFriends, FaSignInAlt, FaUser } from "react-icons/fa";
+import { MdOutlineFeedback } from "react-icons/md";
+import { IoHelpCircleOutline } from "react-icons/io5";
+
+import logo1 from "../../assets/logo1.png";
+import Help from "../Suport/Suport";
 
 interface SidebarProps {
   isOpen: boolean;
 }
 
 const SidebarWrapper = styled.div<SidebarProps>`
-  z-index:2;
+  z-index: 2;
   height: 100vh;
   width: 280px;
   background-color: #fff;
@@ -19,7 +24,7 @@ const SidebarWrapper = styled.div<SidebarProps>`
   transition: transform 0.3s ease-in-out;
 
   @media (max-width: 768px) {
-    transform: translateX(${props => (props.isOpen ? '0' : '-100%')});
+    transform: translateX(${(props) => (props.isOpen ? "0" : "-100%")});
     width: 50%;
   }
 `;
@@ -28,15 +33,12 @@ const SidebarTop = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
-  background-color: #333;
+  padding-top: 20px;
   color: #fff;
 `;
 
 const Logo = styled.img`
   width: 50px;
-  height: 50px;
-  margin-right: 10px;
 `;
 
 const SidebarLink = styled.a`
@@ -83,17 +85,48 @@ const BottomBar: React.FC = () => {
       </HamburgerMenu>
       <SidebarWrapper isOpen={isOpen}>
         <SidebarTop>
-          <Logo src="caminho/para/o/seu/logo.png" alt="Logo" />
+          <Logo src={logo1} alt="Logo" />
+          <h1 style={{color:'black'}}>MoodMinder.</h1>
         </SidebarTop>
+        {/* <h3>MENU RÁPIDO</h3> */}
         <SidebarLink href="/profissional/acompanhamento">
-          <FaUser /> Acompanhamentos
+          <FaUserFriends /> Pacientes
         </SidebarLink>
+        <SidebarLink href="/profissional/feedbacks">
+          <MdOutlineFeedback /> Feedbacks   
+        </SidebarLink>
+        {/* <h3>CONFIGURAÇÕES</h3> */}
         <SidebarLink href="/profissional/configuracoes">
-          <FaCog /> Account
+          <FaUser /> Perfil
         </SidebarLink>
         <SidebarLink href="/login/profissional">
           <FaSignInAlt /> Logout
         </SidebarLink>
+        <div
+          className="sideBarCard"
+          style={{
+            padding: " 1rem",
+            textAlign: "center",
+            position: "relative",
+            marginTop: "20px",
+          }}
+        >
+          <IoHelpCircleOutline
+            className="icon"
+            style={{
+              position: "absolute",
+              backgroundColor: "white",
+              border: "10px solid white",
+              fontSize: "1.5rem",
+              borderRadius: "50%",
+              top: "-8px",
+              right: "50%",
+              transform: "translate(50%)",
+              zIndex: "100",
+            }}
+          />
+          <Help />
+        </div>{" "}
       </SidebarWrapper>
     </>
   );

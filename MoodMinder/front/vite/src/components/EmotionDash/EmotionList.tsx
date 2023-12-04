@@ -33,7 +33,6 @@ const ComplexGrid = () => {
     <div
       style={{
         display: "flex",
-        width: 500,
         flexDirection: "column",
         gap: "1rem",
         paddingTop: "2rem",

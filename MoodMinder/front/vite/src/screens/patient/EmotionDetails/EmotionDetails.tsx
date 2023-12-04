@@ -19,7 +19,7 @@ export default function EmotionDetails() {
   const headers = {
     Authorization: `Bearer ${localStorage.getItem("token")}`,
   };
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -58,59 +58,54 @@ export default function EmotionDetails() {
   };
 
   return (
-    <div>
-      <div
-        style={{
-          position: "fixed",
-          top: 0,
-          left: "50%",
-          transform: "translateX(-50%)",
-        }}
-      >
-        <h1>Detalhes da emoção</h1>
-      </div>
-      <form onSubmit={handleSubmit}>
-        <div className="inputs">
-            
-        <FormField
-          label="Categoria"
-          type="text"
-          name="categoria"
-          value={emocao.categoria}
-          onChange={handleInputChange}
-        />
-        <FormField
-          label="Privacidade"
-          type="text"
-          name="privacidade"
-          value={emocao.privacidade}
-          onChange={handleInputChange}
-        />
-        <FormField
-          label="Descrição"
-          type="text"
-          name="descricao"
-          value={emocao.descricao}
-          onChange={handleInputChange}
-        />
-        <FormField
-          label="Situação"
-          type="text"
-          name="contexto"
-          value={emocao.contexto}
-          onChange={handleInputChange}
-        />
-        <FormField
-          label="Data"
-          type="text"
-          name="data"
-          value={emocao.data}
-          onChange={handleInputChange}
-        />
-        </div>
-        <SubmitButton onClick={handleSubmit} label={"Salvar edições"} />
-      </form>
+
+    <div style={{ display: 'flex', width: '100vw', height: '100vh' }}>
       <BottomBar />
+
+      <div className="content-container">
+        <h1>Detalhes da emoção</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="inputs">
+
+            <FormField
+              label="Categoria"
+              type="text"
+              name="categoria"
+              value={emocao.categoria}
+              onChange={handleInputChange}
+            />
+            <FormField
+              label="Privacidade"
+              type="text"
+              name="privacidade"
+              value={emocao.privacidade}
+              onChange={handleInputChange}
+            />
+            <FormField
+              label="Descrição"
+              type="text"
+              name="descricao"
+              value={emocao.descricao}
+              onChange={handleInputChange}
+            />
+            <FormField
+              label="Situação"
+              type="text"
+              name="contexto"
+              value={emocao.contexto}
+              onChange={handleInputChange}
+            />
+            <FormField
+              label="Data"
+              type="text"
+              name="data"
+              value={emocao.data}
+              onChange={handleInputChange}
+            />
+          </div>
+          <SubmitButton onClick={handleSubmit} label={"Salvar edições"} />
+        </form>
+      </div>
     </div>
   );
 }

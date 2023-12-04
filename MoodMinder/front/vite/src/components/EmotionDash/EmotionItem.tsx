@@ -71,22 +71,22 @@ const GridItem: React.FC<GridItemProps> = ({
     navigate(`/Historico/${id}`);
   };
 
-  const handleMudarPrivacidade = async (id: string) => {
-    try {
-      await axios.patch(
-        `https://ifpi-projeto-integrador-ii.onrender.com/emocao/${id}/mudar-privacidade`,
-        { headers }
-      );
-    } catch (error: any) {
-      console.error("Erro ao mudar a privacidade da emoção:", error.message);
-    }
-  };
+  // const handleMudarPrivacidade = async (id: string) => {
+  //   try {
+  //     await axios.patch(
+  //       `https://ifpi-projeto-integrador-ii.onrender.com/emocao/${id}/mudar-privacidade`,
+  //       { headers }
+  //     );
+  //   } catch (error: any) {
+  //     console.error("Erro ao mudar a privacidade da emoção:", error.message);
+  //   }
+  // };
 
   return (
     <Paper
       sx={{
         p: 2,
-        maxWidth: 500,
+        maxWidth: 400,
         flexGrow: 1,
         display: "flex",
         backgroundColor: (theme) =>
@@ -140,13 +140,13 @@ const GridItem: React.FC<GridItemProps> = ({
                 >
                   Editar
                 </Typography>
-                <Typography
+                {/* <Typography
                   sx={{ cursor: "pointer" }}
                   variant="body2"
                   onClick={() => handleMudarPrivacidade(id)}
                 >
                   Mudar privacidade
-                </Typography>
+                </Typography> */}
               </Box>
             </Grid>
           </Grid>

@@ -1,13 +1,24 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { FaHome, FaUser, FaBuilding, FaCog, FaSignInAlt } from 'react-icons/fa';
+import React, { useState } from "react";
+import styled from "styled-components";
+import { MdOutlineFeedback } from "react-icons/md";
+import {
+  FaUser,
+  FaSignInAlt,
+  FaHistory,
+  // FaPen,
+  FaUserFriends,
+} from "react-icons/fa";
+import { IoHelpCircleOutline } from "react-icons/io5";
+
+import logo1 from "../../assets/logo1.png";
+import Help from "../Suport/Suport";
 
 interface SidebarProps {
   isOpen: boolean;
 }
 
 const SidebarWrapper = styled.div<SidebarProps>`
-  z-index:2;
+  z-index: 2;
   height: 100vh;
   width: 280px;
   background-color: #fff;
@@ -19,7 +30,7 @@ const SidebarWrapper = styled.div<SidebarProps>`
   transition: transform 0.3s ease-in-out;
 
   @media (max-width: 768px) {
-    transform: translateX(${props => (props.isOpen ? '0' : '-100%')});
+    transform: translateX(${(props) => (props.isOpen ? "0" : "-100%")});
     width: 50%;
   }
 `;
@@ -28,15 +39,12 @@ const SidebarTop = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
-  background-color: #333;
+  padding-top: 20px;
   color: #fff;
 `;
 
 const Logo = styled.img`
   width: 50px;
-  height: 50px;
-  margin-right: 10px;
 `;
 
 const SidebarLink = styled.a`
@@ -81,28 +89,60 @@ const BottomBar: React.FC = () => {
       <HamburgerMenu onClick={toggleSidebar}>
         <div>&#9776;</div>
       </HamburgerMenu>
+
       <SidebarWrapper isOpen={isOpen}>
         <SidebarTop>
-          <Logo src="caminho/para/o/seu/logo.png" alt="Logo" />
+          <Logo src={logo1} alt="Logo" />
+          <h1 style={{ color: "black" }}>MoodMinder.</h1>
         </SidebarTop>
+
+        {/* <h3>MENU RÁPIDO</h3> */}
         <SidebarLink href="/Historico">
-          <FaHome /> Histórico
+          <FaHistory /> Histórico
         </SidebarLink>
-        <SidebarLink href="/EmotionForm">
-          <FaHome /> Registro
-        </SidebarLink>
+        {/* <SidebarLink href="/EmotionForm">
+          <FaPen /> Registro
+        </SidebarLink> */}
         <SidebarLink href="/Acompanhamento">
-          <FaUser /> Acompanhamentos
+          <FaUserFriends /> Médicos
         </SidebarLink>
-        <SidebarLink href="/companies">
-          <FaBuilding /> Feedbacks
+        <SidebarLink href="#">
+          <MdOutlineFeedback /> Feedbacks
         </SidebarLink>
+
+        {/* <h3>CONFIGURAÇÕES</h3> */}
         <SidebarLink href="/Configuracoes">
-          <FaCog /> Account
+          <FaUser /> Perfil
         </SidebarLink>
         <SidebarLink href="/Login">
           <FaSignInAlt /> Logout
         </SidebarLink>
+
+        <div
+          className="sideBarCard"
+          style={{
+            padding: " 1rem",
+            textAlign: "center",
+            position: "relative",
+            marginTop: "20px",
+          }}
+        >
+          <IoHelpCircleOutline
+            className="icon"
+            style={{
+              position: "absolute",
+              backgroundColor: "white",
+              border: "10px solid white",
+              fontSize: "1.5rem",
+              borderRadius: "50%",
+              top: "-8px",
+              right: "50%",
+              transform: "translate(50%)",
+              zIndex: "100",
+            }}
+          />
+          <Help />
+        </div>
       </SidebarWrapper>
     </>
   );

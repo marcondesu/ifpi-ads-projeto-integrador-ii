@@ -1,6 +1,6 @@
 import BottomBar from "../../../components/SideBar/SideBarPatient";
 import SubmitButton from "../../../components/SubmitButton";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import useUserData from "../../../hooks/useSettings";
 import FormField from "../../../components/FormField/FormField";
 
@@ -8,16 +8,18 @@ const Settings = () => {
   const { dadosDoUsuario, handleChange, handleSubmit, handleRemover } =
     useUserData();
 
-  const navegate = useNavigate();
-  const goHome = () => {
-    localStorage.removeItem("token");
-    navegate("/login");
-  };
+  // const navegate = useNavigate();
+  // const goHome = () => {
+  //   localStorage.removeItem("token");
+  //   navegate("/login");
+  // };
 
   return (
-    <div style={{ display: "flex" }}>
+    <div style={{ display: 'flex', width: '100vw', height: '100vh' }}>
       <BottomBar />
       <div className="content-container">
+        <h1>Edite suas informações</h1>
+
         <div
           style={{ display: "flex", alignItems: "center", paddingTop: "2rem" }}
         >
@@ -62,11 +64,11 @@ const Settings = () => {
           />
         </div>
 
-        <div
+        {/* <div
           style={{ display: "flex", alignItems: "center", paddingTop: "2rem" }}
         >
           <span>Ações</span>
-        </div>
+        </div> */}
 
         <div
           style={{
@@ -76,13 +78,13 @@ const Settings = () => {
             flexWrap: "wrap",
           }}
         >
-          <SubmitButton onClick={handleSubmit} label={"Salvar Alterações"} />
+          <SubmitButton onClick={handleSubmit} label={"Salvar"} />
           <SubmitButton
-            style={{ background: "#bf2a23" }}
+            style={{ borderColor: "#bf2a23"}}
             onClick={handleRemover}
             label={"Deletar conta"}
           />
-          <SubmitButton onClick={goHome} label={"Logout"} />
+          {/* <SubmitButton onClick={goHome} label={"Logout"} /> */}
         </div>
       </div>
     </div>

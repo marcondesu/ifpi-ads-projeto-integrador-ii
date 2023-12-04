@@ -5,7 +5,7 @@ import './FollowUp.css';
 
 const FollowUp = () => {
   return (
-    <div style={{ display: 'flex' }}>
+    <div style={{ display: 'flex', width:'100vw', height:'100vh' }}>
       <BottomBar />
       <div className="content-container">
         <h1>Conecte-se com profissionais</h1>

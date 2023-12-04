@@ -10,7 +10,7 @@ const EmotionForm: React.FC = () => {
   const { handleChange, handleSliderChange, handleSubmit } = useEmotion();
 
   return (
-    <div style={{ display: "flex" }}>
+    <div style={{ display: 'flex', width: '100vw', height: '100vh' }}>
       <BottomBar />
 
       <div className="content-container">

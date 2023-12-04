@@ -3,7 +3,7 @@ import ComplexGrid from "../../../components/PatientDash/PatientsList";
 
 const PatientDash = () => {
   return (
-    <div style={{ display: 'flex' }}>
+    <div style={{ display: 'flex', width: '100vw', height: '100vh' }}>
       <BottomBar />
       <div className="content-container">
         <h1>Pacientes Cadastrados</h1>
