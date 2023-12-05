@@ -97,13 +97,13 @@ const BottomBar: React.FC = () => {
         </SidebarTop>
 
         {/* <h3>MENU RÁPIDO</h3> */}
-        <SidebarLink href="/Historico">
+        <SidebarLink href="/historico">
           <FaHistory /> Histórico
         </SidebarLink>
         {/* <SidebarLink href="/EmotionForm">
           <FaPen /> Registro
         </SidebarLink> */}
-        <SidebarLink href="/Acompanhamento">
+        <SidebarLink href="/acompanhamentos">
           <FaUserFriends /> Médicos
         </SidebarLink>
         <SidebarLink href="#">
@@ -111,10 +111,10 @@ const BottomBar: React.FC = () => {
         </SidebarLink>
 
         {/* <h3>CONFIGURAÇÕES</h3> */}
-        <SidebarLink href="/Configuracoes">
+        <SidebarLink href="/configuracoes">
           <FaUser /> Perfil
         </SidebarLink>
-        <SidebarLink href="/Login">
+        <SidebarLink href="/login">
           <FaSignInAlt /> Logout
         </SidebarLink>
 

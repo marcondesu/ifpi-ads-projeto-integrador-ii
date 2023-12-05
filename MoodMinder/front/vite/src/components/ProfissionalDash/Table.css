@@ -1,0 +1,46 @@
+/* Estilos para a tabela de acompanhamentos */
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+/* Estilos para os botões na tabela de acompanhamentos */
+.delete-button {
+    cursor: pointer;
+    padding: 5px 10px;
+    margin: 5px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 3px;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+
+.button {
+    cursor: pointer;
+    padding: 5px 10px;
+    color: white;
+    border: none;
+    border-radius: 3px;
+}
+
+.confirmation,
+.add-button {
+    background-color: #4caf50;
+}

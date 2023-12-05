@@ -60,6 +60,7 @@ const GridItem: React.FC<GridItemProps> = ({
         `https://ifpi-projeto-integrador-ii.onrender.com/emocao/${id}`,
         { headers }
       );
+      window.location.reload();
     } catch (error: any) {
       console.error("Erro ao remover emoção:", error.message);
     }
@@ -68,7 +69,7 @@ const GridItem: React.FC<GridItemProps> = ({
   const navigate = useNavigate();
 
   const handleEditar = async (id: string) => {
-    navigate(`/Historico/${id}`);
+    navigate(`/historico/${id}`);
   };
 
   // const handleMudarPrivacidade = async (id: string) => {
@@ -86,7 +87,7 @@ const GridItem: React.FC<GridItemProps> = ({
     <Paper
       sx={{
         p: 2,
-        maxWidth: 400,
+        maxWidth: '320px',
         flexGrow: 1,
         display: "flex",
         backgroundColor: (theme) =>

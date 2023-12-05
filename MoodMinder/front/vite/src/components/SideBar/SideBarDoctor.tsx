@@ -89,7 +89,7 @@ const BottomBar: React.FC = () => {
           <h1 style={{color:'black'}}>MoodMinder.</h1>
         </SidebarTop>
         {/* <h3>MENU RÁPIDO</h3> */}
-        <SidebarLink href="/profissional/acompanhamento">
+        <SidebarLink href="/profissional/acompanhamentos">
           <FaUserFriends /> Pacientes
         </SidebarLink>
         <SidebarLink href="/profissional/feedbacks">
@@ -99,7 +99,7 @@ const BottomBar: React.FC = () => {
         <SidebarLink href="/profissional/configuracoes">
           <FaUser /> Perfil
         </SidebarLink>
-        <SidebarLink href="/login/profissional">
+        <SidebarLink href="/profissional/login">
           <FaSignInAlt /> Logout
         </SidebarLink>
         <div

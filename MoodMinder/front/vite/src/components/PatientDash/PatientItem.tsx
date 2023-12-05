@@ -126,7 +126,7 @@ const GridItem: React.FC<PatientProps> = ({ id, nome, sexo, email }) => {
 
             <Grid item>
               <Box
-                sx={{ display: "flex", justifyContent: "center", gap: "1rem" }}
+                sx={{ display: "flex", justifyContent: "center", gap: "1rem"}}
               >
                 {!acompanhamentoAssociado ? (
                   <Typography

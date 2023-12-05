@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import BottomBar from "../../../components/SideBar/SideBarPatient";
@@ -19,6 +19,8 @@ export default function EmotionDetails() {
   const headers = {
     Authorization: `Bearer ${localStorage.getItem("token")}`,
   };
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,12 +48,13 @@ export default function EmotionDetails() {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.patch(
+      await axios.patch(
         `https://ifpi-projeto-integrador-ii.onrender.com/emocao/${id}`,
         emocao,
         { headers }
       );
-      console.log(response.data);
+      // console.log(response.data);
+      navigate("/historico")
     } catch (error) {
       console.error("Erro ao editar emoção:", error);
     }
@@ -64,7 +67,7 @@ export default function EmotionDetails() {
 
       <div className="content-container">
         <h1>Detalhes da emoção</h1>
-        <form onSubmit={handleSubmit}>
+        <form>
           <div className="inputs">
 
             <FormField
@@ -103,8 +106,8 @@ export default function EmotionDetails() {
               onChange={handleInputChange}
             />
           </div>
-          <SubmitButton onClick={handleSubmit} label={"Salvar edições"} />
         </form>
+        <SubmitButton onClick={handleSubmit} label={"Salvar"} />
       </div>
     </div>
   );

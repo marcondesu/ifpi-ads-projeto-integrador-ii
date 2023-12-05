@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 const ComplexGrid = () => {
   const [emotions, setEmotions] = useState<GridItemProps[]>([]);
-  
+
   const headers = {
     Authorization: `Bearer ${localStorage.getItem("token")}`,
   };
@@ -15,8 +15,7 @@ const ComplexGrid = () => {
         "https://ifpi-projeto-integrador-ii.onrender.com/emocao",
         { headers }
       );
-      console.log(response.data);
-
+      // console.log(response.data);
       setEmotions(response.data);
     } catch (error) {
       console.error(error);
@@ -33,15 +32,19 @@ const ComplexGrid = () => {
     <div
       style={{
         display: "flex",
-        flexDirection: "column",
+        justifyContent: 'center',
         gap: "1rem",
-        paddingTop: "2rem",
-        paddingBottom: "4rem",
+        margin: "0 auto",
+        flexWrap: "wrap"
       }}
     >
       {emotions.map((emotion) => (
         <GridItem key={emotion.id} {...emotion} />
       ))}
+
+      {emotions.length === 0 && (
+        <p>Nenhuma emoção cadastrada.</p>
+      )}
     </div>
   );
 };

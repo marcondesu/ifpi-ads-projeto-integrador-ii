@@ -20,6 +20,8 @@ const Settings = () => {
       <div className="content-container">
         <h1>Edite suas informações</h1>
 
+        <div className="config-container" style={{justifyContent: 'center'}}>
+
         <div
           style={{ display: "flex", alignItems: "center", paddingTop: "2rem" }}
         >
@@ -87,6 +89,7 @@ const Settings = () => {
           {/* <SubmitButton onClick={goHome} label={"Logout"} /> */}
         </div>
       </div>
+        </div>
     </div>
   );
 };

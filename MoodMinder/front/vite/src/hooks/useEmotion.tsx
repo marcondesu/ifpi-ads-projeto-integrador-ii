@@ -48,12 +48,12 @@ function useEmotion() {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post(
+      await axios.post(
         "https://ifpi-projeto-integrador-ii.onrender.com/emocao",
         emotion,
         {headers}
       );
-      console.log("Emoção cadastrada com sucesso:", response.data);
+      // console.log("Emoção cadastrada com sucesso:", response.data);
       navigate("/historico");
     } catch (error: any) {
       console.error("Erro ao cadastrar emoção:", error.message);

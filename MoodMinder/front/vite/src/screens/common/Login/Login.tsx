@@ -63,11 +63,12 @@ export default function SignIn() {
       return;
     }
 
-    setLoading(true);
     // console.log("Email: " + emailInput);
     // console.log("Password: " + passwordInput);
-
+    
     try {
+      setLoading(true);
+
       const response = await axios.post(
         "https://ifpi-projeto-integrador-ii.onrender.com/auth/login",
         {
@@ -76,7 +77,7 @@ export default function SignIn() {
         }
       );
 
-      navegacao("/emotionform");
+      navegacao("/formulario");
       localStorage.setItem("token", response.data.access_token);
       console.log("token", response.data.access_token);
     } catch (error: any) {

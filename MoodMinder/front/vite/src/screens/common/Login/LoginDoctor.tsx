@@ -63,11 +63,13 @@ export default function SignIn() {
       return;
     }
 
-    setLoading(true);
     // console.log("Email: " + emailInput);
     // console.log("Password: " + passwordInput);
-
+    
     try {
+      
+      setLoading(true);
+
       const response = await axios.post(
         "https://ifpi-projeto-integrador-ii.onrender.com/auth/login",
         {
@@ -76,7 +78,7 @@ export default function SignIn() {
         }
       );
 
-      navegacao("/profissional/acompanhamento");
+      navegacao("/profissional/acompanhamentos");
       localStorage.setItem("token", response.data.access_token);
     } catch (error: any) {
       console.log("Erro ao fazer login:", error.message);
@@ -177,7 +179,7 @@ export default function SignIn() {
             </Box>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/profissional" variant="body2">
+                <Link href="/profissional/cadastro" variant="body2">
                   {"Não tem uma conta? Cadastre-se"}
                 </Link>
               </Grid>
