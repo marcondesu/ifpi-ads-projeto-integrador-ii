@@ -30,7 +30,7 @@ export class AcompanhamentoService {
     const user_id = await this.extractUserIdFromToken(token);
 
     return await this.acompanhamentoRepository.find({
-      where: { idPaciente: user_id },
+      where: [{ idPaciente: user_id }, { idProfissional: user_id }],
     });
   }
 
