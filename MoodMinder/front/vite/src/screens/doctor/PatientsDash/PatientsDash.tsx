@@ -6,6 +6,8 @@ const PatientDash = () => {
     <div style={{ display: 'flex', width: '100vw', height: '100vh' }}>
       <BottomBar />
       <div className="content-container">
+        <h1>Seus acompanhamentos</h1>
+      <ComplexGrid />
         <h1>Pacientes Cadastrados</h1>
       <ComplexGrid />
       </div>

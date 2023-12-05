@@ -28,7 +28,7 @@ export const UserTypeSelection = () => {
         <Typography component="h1" variant="h5">
         Inicie sua jornada em direção ao bem-estar e autoconhecimento. </Typography>
         <Button
-          onClick={() => navegacao("/login")}
+          onClick={() => navegacao("/cadastro")}
           fullWidth
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
@@ -36,7 +36,7 @@ export const UserTypeSelection = () => {
           Usuário comum
         </Button>
         <Button
-          onClick={() => navegacao("/login/profissional")}
+          onClick={() => navegacao("/profissional/cadastro")}
           fullWidth
           variant="contained"
         >

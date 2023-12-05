@@ -91,7 +91,7 @@ export default function SignUp() {
       );
 
       // console.log("Usuário cadastrado com sucesso:", response.data);
-      navegacao("/login/profissional");
+      navegacao("/profissional/login");
     } catch (error: any) {
       console.error("Erro ao cadastrar usuário:", error.message);
     } finally {
@@ -258,7 +258,7 @@ export default function SignUp() {
             </Box>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/login/profissional" variant="body2">
+                <Link href="/profissional/login" variant="body2">
                   Já tem uma conta? Entrar
                 </Link>
               </Grid>

@@ -18,19 +18,20 @@ const AppRoutes = () => {
             <Routes>
                 <Route path="/" element={<UserTypeSelection />} />
                 <Route path="/cadastro" element={<Signup />} />
-                <Route path="/profissional" element={<SignupProfissional />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/emotionForm" element={<EmotionForm />} />
-                <Route path="/historico/:id" element={<EmotionDetails />} />
-                <Route path="/historico" element={<HistoryList />} />
-                <Route path="/acompanhamento" element={<FollowUp />} />
-                <Route path="/acompanhamento/:id" element={<EmotionDetails />} />
                 <Route path="/configuracoes" element={<Settings />} />
-                <Route path="/profissional/Acompanhamento/id" element={<SignupProfissional />} />
-                <Route path="/login/Profissional" element={<LoginDoctor />} />
-                <Route path="/profissional/Configuracoes" element={<SettingsDoctor />} />
-                <Route path="/profissional/Acompanhamento" element={<PatientDash />} />
-                </Routes>
+                <Route path="/acompanhamentos" element={<FollowUp />} />
+                <Route path="/acompanhamentos/:id" element={<EmotionDetails />} />
+
+                <Route path="/formulario" element={<EmotionForm />} />
+                <Route path="/historico" element={<HistoryList />} />
+                <Route path="/historico/:id" element={<EmotionDetails />} />
+
+                <Route path="/profissional/cadastro" element={<SignupProfissional />} />
+                <Route path="/profissional/login" element={<LoginDoctor />} />
+                <Route path="profissional/configuracoes" element={<SettingsDoctor />} />
+                <Route path="/profissional/acompanhamentos" element={<PatientDash />} />
+            </Routes>
         </Router>
     )
 }
