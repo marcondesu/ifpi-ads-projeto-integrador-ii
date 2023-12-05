@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Emocao } from './entities/emocao.entity';
 import { DeleteResult, Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
+import { Privacidade } from 'src/privacidade';
 
 @Injectable()
 export class EmocaoService {
@@ -28,7 +29,6 @@ export class EmocaoService {
 
   public async findAll(token: string): Promise<Emocao[]> {
     const user_id = await this.extractPacienteIdFromToken(token);
-    console.log(user_id);
 
     return await this.emocaoRepository.find({ where: { idPaciente: user_id } });
   }
@@ -41,6 +41,16 @@ export class EmocaoService {
 
   public async findOne(id: string): Promise<Emocao> {
     return await this.emocaoRepository.findOne({ where: { id: id } });
+  }
+
+  public async findPublicEmotionsByPacientId(
+    paciente_id: string[],
+  ): Promise<Emocao[]> {
+    return await this.emocaoRepository
+      .createQueryBuilder('emocao')
+      .where('emocao.idPaciente IN (:...paciente_id)', { paciente_id })
+      .andWhere('emocao.privacidade = :privas', { privas: Privacidade.PUBLICO })
+      .getMany();
   }
 
   public async remove(id: string): Promise<DeleteResult> {

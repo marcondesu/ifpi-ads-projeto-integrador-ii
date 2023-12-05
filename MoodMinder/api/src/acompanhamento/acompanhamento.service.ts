@@ -6,6 +6,7 @@ import { DeleteResult, Repository } from 'typeorm';
 import { Feedback } from 'src/feedback/entities/feedback.entity';
 import { FeedbackService } from 'src/feedback/feedback.service';
 import { JwtService } from '@nestjs/jwt';
+import { Paciente } from 'src/paciente/entities/paciente.entity';
 
 @Injectable()
 export class AcompanhamentoService {
@@ -34,22 +35,32 @@ export class AcompanhamentoService {
     });
   }
 
-  private async extractUserIdFromToken(token: string) {
-    token = token.replace('Bearer ', '');
-
-    return this.jwtService.decode(token).sub;
-  }
-
+  
   public async findOne(id: string): Promise<Acompanhamento> {
     return await this.acompanhamentoRepository.findOne({ where: { id: id } });
   }
-
+  
   public async findFeedback(id: string): Promise<Feedback[]> {
     return await this.feedbackService.feedbackRepository.find({
       where: { idAcompanhamento: id },
     });
   }
+  
+  public async findPacientsFromProfessionalId(
+    profissional_id: string,
+    ): Promise<Paciente[]> {
+      const acompanhamentos = await this.acompanhamentoRepository.find({ where: { idProfissional: profissional_id } });
 
+      const pacientes_id: any = acompanhamentos.map((acompanhamento) => acompanhamento.idPaciente);
+      return pacientes_id;
+  }
+  
+  private async extractUserIdFromToken(token: string) {
+    token = token.replace('Bearer ', '');
+
+    return this.jwtService.decode(token).sub;
+  }
+    
   public async remove(id: string): Promise<DeleteResult> {
     this.feedbackService.feedbackRepository.delete({ idAcompanhamento: id });
     return await this.acompanhamentoRepository.delete({ id: id });

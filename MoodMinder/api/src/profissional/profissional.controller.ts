@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   UseGuards,
+  Headers,
 } from '@nestjs/common';
 import { DeleteResult } from 'typeorm';
 import { ApiTags } from '@nestjs/swagger';
@@ -14,6 +15,7 @@ import { ProfissionalService } from './profissional.service';
 import { Profissional } from './entities/profissional.entity';
 import { CreateProfissionalDto } from './dto/create-profissional.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { Emocao } from 'src/emocao/entities/emocao.entity';
 
 @ApiTags('Profissional')
 @Controller('profissional')
@@ -25,6 +27,14 @@ export class ProfissionalController {
     return await this.profissionalService.create(createProfissionalDto);
   }
 
+  @UseGuards(AuthGuard)
+  @Get('emocoes-pacientes')
+  async findPacientsEmotions(
+    @Headers('authorization') header: string,
+  ): Promise<Emocao[]> {
+    return await this.profissionalService.findPacientsEmotions(header);
+  }
+
   @Get()
   async findAll(): Promise<Profissional[]> {
     return await this.profissionalService.findAll();
@@ -33,7 +43,6 @@ export class ProfissionalController {
   @UseGuards(AuthGuard)
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Profissional> {
-    console.log('findOne');
     return await this.profissionalService.findOne(id);
   }
 

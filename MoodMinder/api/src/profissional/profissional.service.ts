@@ -4,13 +4,20 @@ import { Profissional } from './entities/profissional.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm';
 import { PacienteService } from 'src/paciente/paciente.service';
+import { AcompanhamentoService } from 'src/acompanhamento/acompanhamento.service';
+import { JwtService } from '@nestjs/jwt';
+import { EmocaoService } from 'src/emocao/emocao.service';
+import { Emocao } from 'src/emocao/entities/emocao.entity';
 
 @Injectable()
 export class ProfissionalService {
   constructor(
     @InjectRepository(Profissional)
     private profissionalRepository: Repository<Profissional>,
+    private jwtService: JwtService,
+    private emocaoService: EmocaoService,
     private pacienteService: PacienteService,
+    private acompanhamentoService: AcompanhamentoService,
   ) {}
 
   public async create(
@@ -64,6 +71,24 @@ export class ProfissionalService {
     return await this.profissionalRepository.findOne({
       where: { email: email },
     });
+  }
+
+  public async findPacientsEmotions(header: string): Promise<Emocao[]> {
+    const profissional_id = this.extractPacienteIdFromToken(header);
+    const pacientes =
+      await this.acompanhamentoService.findPacientsFromProfessionalId(
+        await profissional_id,
+      );
+
+    const pacientes_id: string[] = pacientes.map((paciente) => paciente.id);
+
+    return await this.emocaoService.findPublicEmotionsByPacientId(pacientes_id);
+  }
+
+  private async extractPacienteIdFromToken(token: string): Promise<string> {
+    token = token.replace('Bearer ', '');
+
+    return this.jwtService.decode(token).sub;
   }
 
   public async updatePartial(

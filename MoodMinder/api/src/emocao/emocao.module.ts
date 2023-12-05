@@ -9,5 +9,6 @@ import { JwtModule } from '@nestjs/jwt';
   imports: [TypeOrmModule.forFeature([Emocao]), JwtModule],
   controllers: [EmocaoController],
   providers: [EmocaoService],
+  exports: [EmocaoService],
 })
 export class EmocaoModule {}
