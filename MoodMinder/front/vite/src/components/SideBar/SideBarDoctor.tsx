@@ -86,7 +86,7 @@ const BottomBar: React.FC = () => {
       <SidebarWrapper isOpen={isOpen}>
         <SidebarTop>
           <Logo src={logo1} alt="Logo" />
-          <h1 style={{color:'black'}}>MoodMinder.</h1>
+          <h1 style={{marginLeft:"3px", color:'black'}}>MoodMinder.</h1>
         </SidebarTop>
         {/* <h3>MENU RÁPIDO</h3> */}
         <SidebarLink href="/profissional/acompanhamentos">

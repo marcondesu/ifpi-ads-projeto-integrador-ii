@@ -15,7 +15,6 @@ const ComplexGrid = () => {
         "https://ifpi-projeto-integrador-ii.onrender.com/emocao",
         { headers }
       );
-      // console.log(response.data);
       setEmotions(response.data);
     } catch (error) {
       console.error(error);
@@ -24,8 +23,6 @@ const ComplexGrid = () => {
 
   useEffect(() => {
     fetchData();
-    // const intervalId = setInterval(fetchData, 3600);
-    // return () => clearInterval(intervalId);
   }, []);
 
   return (
@@ -35,7 +32,9 @@ const ComplexGrid = () => {
         justifyContent: 'center',
         gap: "1rem",
         margin: "0 auto",
-        flexWrap: "wrap"
+        flexWrap: "wrap",
+        maxHeight: "330px", // Defina a altura máxima desejada
+        overflowY: "auto",  // Adiciona scroll quando necessário
       }}
     >
       {emotions.map((emotion) => (

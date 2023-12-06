@@ -1,4 +1,3 @@
-// FollowUp.js
 import BottomBar from "../../../components/SideBar/SideBarPatient";
 import ComplexGrid from "../../../components/ProfissionalDash/ProfList";
 import FollowProf from "../../../components/ProfissionalDash/FollowProf";

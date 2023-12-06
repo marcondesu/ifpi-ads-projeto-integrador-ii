@@ -20,7 +20,7 @@ export default function EmotionDetails() {
     Authorization: `Bearer ${localStorage.getItem("token")}`,
   };
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,28 +48,26 @@ export default function EmotionDetails() {
 
   const handleSubmit = async () => {
     try {
-      await axios.patch(
+      const response = await axios.patch(
         `https://ifpi-projeto-integrador-ii.onrender.com/emocao/${id}`,
         emocao,
         { headers }
       );
-      // console.log(response.data);
-      navigate("/historico")
+      console.log(response.data);
+      navigate("/historico");
     } catch (error) {
       console.error("Erro ao editar emoção:", error);
     }
   };
 
   return (
-
-    <div style={{ display: 'flex', width: '100vw', height: '100vh' }}>
+    <div style={{ display: "flex", width: "100vw", height: "100vh" }}>
       <BottomBar />
 
       <div className="content-container">
         <h1>Detalhes da emoção</h1>
         <form>
           <div className="inputs">
-
             <FormField
               label="Categoria"
               type="text"
@@ -79,7 +77,7 @@ export default function EmotionDetails() {
             />
             <FormField
               label="Privacidade"
-              type="text"
+              type="select"
               name="privacidade"
               value={emocao.privacidade}
               onChange={handleInputChange}

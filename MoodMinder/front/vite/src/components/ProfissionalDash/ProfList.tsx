@@ -43,7 +43,7 @@ const ComplexGrid: React.FC = () => {
           idProfissional,
           idPaciente: userId,
           dtInicio: new Date(),
-          dtFim: null,
+          dtFim: '2025-11-12',
         },
         {
           headers: {
