@@ -1,21 +1,36 @@
 /* FollowUp.css */
 
 .content-container {
-    box-sizing: border-box;
-    width: 100%; /* Largura do conteúdo interno */
-    padding: 20px; /* Adicionando espaço interno */
-    position: relative;
-    background-color: rgb(248, 248, 248);
+  box-sizing: border-box;
+  width: 100%; /* Largura do conteúdo interno */
+  padding: 20px; /* Adicionando espaço interno */
+  position: relative;
+  background-color: rgb(248, 248, 248);
+}
+
+/* FollowUp.css */
+.content-container {
+overflow: hidden; /* Adicionado para evitar barras de rolagem se o conteúdo for maior que a tela */
+}
+
+.acompanhamentos, .conexoes {
+overflow-y: auto; /* Adicionado para habilitar a rolagem vertical se o conteúdo ultrapassar a altura máxima */
+box-sizing: border-box;
+}
+
+@media (min-width: 769px) {
+  .content-container {
+    margin-left: 280px; /* Largura da Sidebar */
   }
-  
+}
+
+@media (max-width: 769px) {
   h1 {
-    /* background-color: #fff; Cor de fundo do cabeçalho */
-    padding: 10px; /* Adicionando espaço interno ao cabeçalho */
+    margin-top: 40px;
+    font-size: medium;
   }
-  
-  @media (min-width: 769px) {
-    .content-container {
-      margin-left: 280px; /* Largura da Sidebar */
-    }
+
+  th, td, button {
+    font-size: 10px;
   }
-  
+}

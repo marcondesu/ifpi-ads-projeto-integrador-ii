@@ -8,7 +8,7 @@ const PatientDash = () => {
       <div className="content-container">
         <h1>Seus acompanhamentos</h1>
       <ComplexGrid />
-        <h1>Pacientes Cadastrados</h1>
+        <h1>Conecte-se com outros pacientes</h1>
       <ComplexGrid />
       </div>
     </div>

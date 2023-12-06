@@ -1,6 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import './Table.css'
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
+import IconButton from "@mui/material/IconButton";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import "./Table.css";
+
+const ITEMS_PER_PAGE = 2;
 
 export interface Acompanhamento {
   id: string;
@@ -29,18 +40,25 @@ export interface Acompanhamento {
 
 const FollowProf: React.FC = () => {
   const [acompanhamentos, setAcompanhamentos] = useState<Acompanhamento[]>([]);
-  const [selectedAppointment, setSelectedAppointment] = useState<string | null>(null);
+  const [selectedAppointment, setSelectedAppointment] = useState<string | null>(
+    null
+  );
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const token = localStorage.getItem('token') ?? '';
+  const token = localStorage.getItem("token") || "";
   const headers = {
     Authorization: `Bearer ${token}`,
   };
 
   const fetchData = async () => {
     try {
-      const response = await axios.get<Acompanhamento[]>('https://ifpi-projeto-integrador-ii.onrender.com/acompanhamento', {
-        headers,
-      });
+      const response = await axios.get<Acompanhamento[]>(
+        "https://ifpi-projeto-integrador-ii.onrender.com/acompanhamento",
+        {
+          headers,
+        }
+      );
       setAcompanhamentos(response.data);
     } catch (error) {
       console.error(error);
@@ -48,19 +66,64 @@ const FollowProf: React.FC = () => {
   };
 
   const handleDelete = async (id: string) => {
+    setSelectedAppointment(id);
+    setDialogOpen(true);
+  };
+
+  const confirmDelete = async () => {
     try {
-      await axios.delete(`https://ifpi-projeto-integrador-ii.onrender.com/acompanhamento/${id}`, {
-        headers,
-      });
-      // After deletion, fetch updated data
+      await axios.delete(
+        `https://ifpi-projeto-integrador-ii.onrender.com/acompanhamento/${selectedAppointment}`,
+        {
+          headers,
+        }
+      );
       fetchData();
-      setSelectedAppointment(null)
+      setSelectedAppointment(null);
+      setDialogOpen(false);
     } catch (error: any) {
-      console.error('Error deleting appointment:', error.message);
+      console.error("Error deleting appointment:", error.message);
     }
   };
 
-  // Fetch data on component mount
+  const cancelDelete = () => {
+    setSelectedAppointment(null);
+    setDialogOpen(false);
+  };
+
+  const renderAcompanhamentos = () => {
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    const currentAcompanhamentos = acompanhamentos.slice(startIndex, endIndex);
+
+    return currentAcompanhamentos.map((acompanhamento) => (
+      <tr key={acompanhamento.id}>
+        <td>{acompanhamento.idProfissional.nome}</td>
+        <td>{acompanhamento.idProfissional.email}</td>
+        <td>{acompanhamento.idProfissional.especialidade}</td>
+        <td>{acompanhamento.dtInicio}</td>
+        <td>{acompanhamento.dtFim}</td>
+        <td>
+          <button
+            className="button delete-button"
+            onClick={() => handleDelete(acompanhamento.id)}
+          >
+            Deletar
+          </button>
+        </td>
+      </tr>
+    ));
+  };
+
+  const changePage = (newPage: number) => {
+    if (newPage > 0 && newPage <= getTotalPages()) {
+      setCurrentPage(newPage);
+    }
+  };
+
+  const getTotalPages = () =>
+    Math.ceil(acompanhamentos.length / ITEMS_PER_PAGE);
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -78,32 +141,55 @@ const FollowProf: React.FC = () => {
             <th>Ações</th>
           </tr>
         </thead>
-        <tbody>
-          {acompanhamentos.map((acompanhamento) => (
-            <tr key={acompanhamento.id}>
-              <td>{acompanhamento.idProfissional.nome}</td>
-              <td>{acompanhamento.idProfissional.email}</td>
-              <td>{acompanhamento.idProfissional.especialidade}</td>
-              <td>{acompanhamento.dtInicio}</td>
-              <td>{acompanhamento.dtFim}</td>
-              <td>
-                <button className='button delete-button' onClick={() => setSelectedAppointment(acompanhamento.id)}>Deletar</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
+        <tbody>{renderAcompanhamentos()}</tbody>
       </table>
 
-      {acompanhamentos.length === 0 && (
-        <p>Nenhum acompanhamento cadastrado.</p>
-      )}
+      {acompanhamentos.length === 0 && <p>Nenhum acompanhamento cadastrado.</p>}
 
-      {selectedAppointment && (
-        <div>
-          <p>Confirmar exclusão do acompanhamento?</p>
-          <button className='button delete-button' onClick={() => handleDelete(selectedAppointment)}>Sim</button>
-          <button className='button confirmation' onClick={() => setSelectedAppointment(null)}>Não</button>
-        </div>
+      <Dialog
+        open={dialogOpen}
+        onClose={cancelDelete}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Confirmar exclusão</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Tem certeza de que deseja excluir este acompanhamento?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={cancelDelete}>Cancelar</Button>
+          <Button onClick={confirmDelete} autoFocus>
+            Confirmar
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {getTotalPages() > 1 && (
+        <Stack
+          spacing={2}
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          className="pagination"
+        >
+          <IconButton
+            onClick={() => changePage(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+          </IconButton>
+          <Pagination
+            count={getTotalPages()}
+            page={currentPage}
+            onChange={(_event, value) => changePage(value)}
+          />
+          <IconButton
+            onClick={() => changePage(currentPage + 1)}
+            disabled={currentPage === getTotalPages()}
+          >
+          </IconButton>
+        </Stack>
       )}
     </div>
   );
