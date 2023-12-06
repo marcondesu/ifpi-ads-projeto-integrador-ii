@@ -10,6 +10,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import "./Table.css";
+import { useNavigate } from "react-router-dom";
 
 const ITEMS_PER_PAGE = 2;
 
@@ -43,13 +44,18 @@ const FollowProf: React.FC = () => {
   const [selectedAppointment, setSelectedAppointment] = useState<string | null>(
     null
   );
-  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+  const [dialogOpenDelete, setDialogOpenDelete] = useState<boolean>(false);
+  const [dialogOpenFeedback, setDialogOpenFeedback] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [nota, setNota] = useState<number>(0);
+  const [texto, setTexto] = useState<string>('');
 
   const token = localStorage.getItem("token") || "";
   const headers = {
     Authorization: `Bearer ${token}`,
   };
+
+  const navigate = useNavigate()
 
   const fetchData = async () => {
     try {
@@ -67,7 +73,7 @@ const FollowProf: React.FC = () => {
 
   const handleDelete = async (id: string) => {
     setSelectedAppointment(id);
-    setDialogOpen(true);
+    setDialogOpenDelete(true);
   };
 
   const confirmDelete = async () => {
@@ -80,7 +86,7 @@ const FollowProf: React.FC = () => {
       );
       fetchData();
       setSelectedAppointment(null);
-      setDialogOpen(false);
+      setDialogOpenDelete(false);
     } catch (error: any) {
       console.error("Error deleting appointment:", error.message);
     }
@@ -88,7 +94,52 @@ const FollowProf: React.FC = () => {
 
   const cancelDelete = () => {
     setSelectedAppointment(null);
-    setDialogOpen(false);
+    setDialogOpenDelete(false);
+  };
+
+  const openFeedbackDialog = (id: string) => {
+    setSelectedAppointment(id);
+    setDialogOpenFeedback(true);
+  };
+
+  const closeFeedbackDialog = () => {
+    setSelectedAppointment(null);
+    setNota(0);
+    setTexto('');
+    setDialogOpenFeedback(false);
+  };
+
+  const handleNotaChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newNota = parseInt(event.target.value, 10);
+    setNota(newNota);
+    console.log(nota);
+    
+  };
+
+  const handleTextoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newTexto = event.target.value;
+    setTexto(newTexto);
+  };
+
+  const handleConfirmFeedbackDialog = async () => {
+    try {
+      await axios.post(
+        `https://ifpi-projeto-integrador-ii.onrender.com/feedback`,
+        {
+          idAcompanhamento: selectedAppointment,
+          nota,
+          texto,
+        },
+        {
+          headers,
+        }
+      );
+      fetchData();
+      closeFeedbackDialog();
+      navigate("/feedback")
+    } catch (error: any) {
+      console.error("Error adding feedback:", error.message);
+    }
   };
 
   const renderAcompanhamentos = () => {
@@ -104,6 +155,12 @@ const FollowProf: React.FC = () => {
         <td>{acompanhamento.dtInicio}</td>
         <td>{acompanhamento.dtFim}</td>
         <td>
+          <button
+            className="button delete-button"
+            onClick={() => openFeedbackDialog(acompanhamento.id)}
+          >
+            Feedback
+          </button>
           <button
             className="button delete-button"
             onClick={() => handleDelete(acompanhamento.id)}
@@ -147,7 +204,7 @@ const FollowProf: React.FC = () => {
       {acompanhamentos.length === 0 && <p>Nenhum acompanhamento cadastrado.</p>}
 
       <Dialog
-        open={dialogOpen}
+        open={dialogOpenDelete}
         onClose={cancelDelete}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -191,6 +248,45 @@ const FollowProf: React.FC = () => {
           </IconButton>
         </Stack>
       )}
+
+      <Dialog
+        open={dialogOpenFeedback}
+        onClose={closeFeedbackDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Adicionar Feedback</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            <div>
+              <label htmlFor="nota">Nota:</label>
+              <input
+                type="number"
+                id="nota"
+                name="nota"
+                value={nota}
+                onChange={handleNotaChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="texto">Texto:</label>
+              <input
+                type="text"
+                id="texto"
+                name="texto"
+                value={texto}
+                onChange={handleTextoChange}
+              />
+            </div>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeFeedbackDialog}>Cancelar</Button>
+          <Button onClick={handleConfirmFeedbackDialog} autoFocus>
+            Confirmar
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

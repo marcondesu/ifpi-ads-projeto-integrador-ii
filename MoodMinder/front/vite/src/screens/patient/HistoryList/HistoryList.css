@@ -1,0 +1,90 @@
+  .redirect-card {
+    display: flex;
+    height: 15%;
+    color: white;
+    gap: 1rem;
+    background: black;
+    border-radius: 10px;
+    padding-left: 1rem;
+    align-items: center;
+  }
+  
+  .img {
+    margin-right: 1rem;
+  }
+  
+  .img img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .content {
+    display: flex;
+    padding-right: 1rem;
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .redirect-button {
+    display: flex;
+    align-items: center;
+  }
+  
+  .redirect-button button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    background: #fff;
+    color: black;
+    border-radius: 5px;
+    border: none;
+  }
+
+  .redirect-button .icon {
+    display: none;
+  }
+  
+  .welcome-text p::before {
+    content: 'O que temos de novo?';
+  }  
+
+  @media screen and (max-width: 520px) {
+    .img {
+      display: none;
+    }
+  }  
+
+  @media screen and (min-width: 770px) and (max-width: 900px) {
+    .redirect-card .img {
+      display: none; /* Oculta a div da foto na faixa de largura desejada */
+    }
+  }
+  
+  @media screen and (max-width: 430px) {
+
+    .redirect-button {
+      align-items: flex-start;
+      margin-top: 1rem;
+    }
+    .redirect-button button {
+      display: none;
+    }
+    
+    .redirect-button .icon {
+      display: contents;
+    }
+    
+    .welcome-text p::before {
+      content: '';
+    }  
+
+    .welcome-text p::after {
+      content: 'Adicione uma Emoção';
+    }   
+    
+    .redirect-button .icon {
+      color: white;
+    }
+  }

@@ -33,7 +33,7 @@ const ComplexGrid = () => {
         gap: "1rem",
         margin: "0 auto",
         flexWrap: "wrap",
-        maxHeight: "330px", // Defina a altura máxima desejada
+        maxHeight: "55vh", // Defina a altura máxima desejada
         overflowY: "auto",  // Adiciona scroll quando necessário
       }}
     >

@@ -106,7 +106,7 @@ const BottomBar: React.FC = () => {
         <SidebarLink href="/acompanhamentos">
           <FaUserFriends /> Médicos
         </SidebarLink>
-        <SidebarLink href="#">
+        <SidebarLink href="feedback">
           <MdOutlineFeedback /> Feedbacks
         </SidebarLink>
 

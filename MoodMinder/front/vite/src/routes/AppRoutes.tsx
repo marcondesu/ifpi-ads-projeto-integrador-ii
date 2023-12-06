@@ -11,6 +11,7 @@ import PatientDash from "../screens/doctor/PatientsDash/PatientsDash";
 import LoginDoctor from "../screens/common/Login/LoginDoctor";
 import SettingsDoctor from "../screens/common/Settings/SettingsDoctor";
 import { UserTypeSelection } from "../screens/common/Start/Start";
+import FeedbackList from "../screens/patient/Feedbacks/Feedback";
 
 const AppRoutes = () => {
     return (
@@ -26,6 +27,8 @@ const AppRoutes = () => {
                 <Route path="/formulario" element={<EmotionForm />} />
                 <Route path="/historico" element={<HistoryList />} />
                 <Route path="/historico/:id" element={<EmotionDetails />} />
+
+                <Route path="/feedback" element={<FeedbackList />} />
 
                 <Route path="/profissional/cadastro" element={<SignupProfissional />} />
                 <Route path="/profissional/login" element={<LoginDoctor />} />
