@@ -12,6 +12,8 @@ import LoginDoctor from "../screens/common/Login/LoginDoctor";
 import SettingsDoctor from "../screens/common/Settings/SettingsDoctor";
 import { UserTypeSelection } from "../screens/common/Start/Start";
 import FeedbackList from "../screens/patient/Feedbacks/Feedback";
+import PFeedbackList from "../screens/patient/Feedbacks/ProfFeedback";
+import PacientDetails from "../screens/doctor/PatientsDetail/PatientsDetail";
 
 const AppRoutes = () => {
     return (
@@ -29,11 +31,13 @@ const AppRoutes = () => {
                 <Route path="/historico/:id" element={<EmotionDetails />} />
 
                 <Route path="/feedback" element={<FeedbackList />} />
+                <Route path="/profissional/feedbacks" element={<PFeedbackList />} />
 
                 <Route path="/profissional/cadastro" element={<SignupProfissional />} />
                 <Route path="/profissional/login" element={<LoginDoctor />} />
                 <Route path="profissional/configuracoes" element={<SettingsDoctor />} />
                 <Route path="/profissional/acompanhamentos" element={<PatientDash />} />
+                <Route path="/profissional/acompanhamentos/emocoes" element={<PacientDetails />} />
             </Routes>
         </Router>
     )

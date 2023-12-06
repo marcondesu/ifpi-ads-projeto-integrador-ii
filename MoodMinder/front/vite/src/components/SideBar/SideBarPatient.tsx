@@ -77,7 +77,7 @@ const HamburgerMenu = styled.div`
   }
 `;
 
-const BottomBar: React.FC = () => {
+const SideBarPatient: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -148,4 +148,4 @@ const BottomBar: React.FC = () => {
   );
 };
 
-export default BottomBar;
+export default SideBarPatient;

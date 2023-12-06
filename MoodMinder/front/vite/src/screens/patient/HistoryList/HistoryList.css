@@ -34,12 +34,11 @@
 
 .redirect-button button {
   padding: 0.5rem 1rem;
-  font-size: 1rem;
   cursor: pointer;
-  background: #fff;
-  color: black;
+  background: none;
+  color: white;
   border-radius: 5px;
-  border: none;
+  border: 1px solid white;
 }
 
 .redirect-button .icon {

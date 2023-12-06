@@ -10,6 +10,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import "../ProfissionalDash/Table.css";
+import { format } from "date-fns";
 
 const ITEMS_PER_PAGE = 2;
 
@@ -65,15 +66,21 @@ const FollowPatient: React.FC = () => {
     }
   };
 
-  const handleDelete = async (id: string) => {
+  const handleFinish = async (id: string) => {
     setSelectedAppointment(id);
     setDialogOpen(true);
   };
 
   const confirmDelete = async () => {
     try {
-      await axios.delete(
-        `https://ifpi-projeto-integrador-ii.onrender.com/acompanhamento/${selectedAppointment}`,
+      await axios.patch(
+        `https://ifpi-projeto-integrador-ii.onrender.com/acompanhamento/${selectedAppointment}/finalizar/${format(
+          new Date(),
+          "yyyy-MM-dd"
+        )}`,
+        // {
+        //   dtFim: )
+        // },
         {
           headers,
         }
@@ -106,7 +113,7 @@ const FollowPatient: React.FC = () => {
         <td>
           <button
             className="button delete-button"
-            onClick={() => handleDelete(acompanhamento.id)}
+            onClick={() => handleFinish(acompanhamento.id)}
           >
             Deletar
           </button>

@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Grid, Typography, Paper } from "@mui/material";
-import BottomBar from "../../../components/SideBar/SideBarPatient";
+import {
+    Paper,
+    Table,
+    TableContainer,
+    TableHead,
+    TableBody,
+    TableRow,
+    TableCell,
+    TextField,
+  } from "@mui/material";import BottomBar from "../../../components/SideBar/SideBarDoctor";
 
 interface Feedback {
     data: string;
@@ -11,9 +19,12 @@ interface Feedback {
     texto: string;
 }
 
-const FeedbackList: React.FC = () => {
+const PFeedbackList: React.FC = () => {
     const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
-
+    const [filteredFeedbacks, setFilteredFeedbacks] = useState<Feedback[]>([]);
+    const [filterDate, setFilterDate] = useState("");
+    const [filterNomePaciente, setfilterNomePaciente] = useState("");
+  
     const headers = {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
     };
@@ -25,7 +36,8 @@ const FeedbackList: React.FC = () => {
                 { headers }
             );
             setFeedbacks(response.data);
-            console.log(response.data);
+            setFilteredFeedbacks(response.data);
+            // console.log(response.data);
 
         } catch (error) {
             console.error(error);
@@ -36,58 +48,101 @@ const FeedbackList: React.FC = () => {
         fetchData();
     }, []);
 
+    const handleFilter = () => {
+        let filteredData = feedbacks;
+    
+        if (filterDate) {
+          filteredData = filteredData.filter((item) =>
+            item.data.includes(filterDate)
+          );
+        }
+    
+        if (filterNomePaciente) {
+          filteredData = filteredData.filter((item) =>
+            item.idAcompanhamento.idPaciente.nome
+              .toLowerCase()
+              .includes(filterNomePaciente.toLowerCase())
+          );
+        }
+    
+        setFilteredFeedbacks(filteredData);
+      };
+    
+
     return (
-        <div style={{ display: 'flex', width: '100vw', height: '100vh' }}>
-            <BottomBar />
-            <div className="content-container">
-            <h1>
-                        Comentários enviados
-                    </h1>
+        <div style={{ display: "flex", width: "100vw", height: "100vh" }}>
+      <BottomBar />
+      <div className="content-container">
+        <h1>Comentários enviados</h1>
 
-                <div
-                    style={{
-                        display: "flex",
-                        justifyContent: 'center',
-                        gap: "1rem",
-                        margin: "0 auto",
-                        flexWrap: "wrap",
-                        maxHeight: "80vh", // Defina a altura máxima desejada
-                        overflowY: "auto",  // Adiciona scroll quando necessário
-                    }}
-                >                   
-
-                    {feedbacks.length === 0 ? (
-                        <p>Nenhum feedback cadastrado.</p>
-                    ) : (
-                        <Grid container spacing={2}>
-                            {feedbacks.map((feedback) => (
-                                <Grid item key={feedback.id} xs={12} sm={6} md={4} lg={3}>
-                                    <Paper style={{ padding: "1rem", marginBottom: "1rem" }}>
-                                        <Typography variant="body1" gutterBottom>
-                                            {feedback.data}
-                                        </Typography>
-                                        {/* <Typography variant="h6" gutterBottom>
-                  ID: {feedback.id}
-                </Typography> */}
-                                        <Typography variant="body1" gutterBottom>
-                                            Médico: {feedback.idAcompanhamento.idProfissional.nome}
-                                        </Typography>
-                                        <Typography variant="body1" gutterBottom>
-                                            Nota: {feedback.nota}
-                                        </Typography>
-                                        <Typography variant="body1" gutterBottom>
-                                            Texto: {feedback.texto}
-                                        </Typography>
-                                    </Paper>
-                                </Grid>
-                            ))}
-                        </Grid>
-                    )}
-                </div>
-            </div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "flex-start",
+            gap: "1rem",
+            padding: "0px 0px 1rem 0px",
+          }}
+        >
+          <div>
+            <TextField
+              label="Data"
+              variant="outlined"
+              value={filterDate}
+              onChange={(e) => setFilterDate(e.target.value)}
+            />
+          </div>
+          <div>
+            <TextField
+              label="Paciente"
+              variant="outlined"
+              value={filterNomePaciente}
+              onChange={(e) => setfilterNomePaciente(e.target.value)}
+            />
+          </div>
+          <div>
+            <button className="filter-button" onClick={handleFilter}>Aplicar Filtros</button>
+          </div>
         </div>
 
-    );
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "1rem",
+            margin: "0 auto",
+            flexWrap: "wrap",
+            maxHeight: "70vh",
+            overflowY: "auto",
+          }}
+        >
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Data</TableCell>
+                  <TableCell>Nome do Paciente</TableCell>
+                  <TableCell>Nota</TableCell>
+                  <TableCell>Texto</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {filteredFeedbacks.map((feedback) => (
+                  <TableRow key={feedback.id}>
+                    <TableCell>{feedback.data}</TableCell>
+                    <TableCell>
+                      {feedback.idAcompanhamento.idPaciente.nome}
+                    </TableCell>
+                    <TableCell>{feedback.nota}</TableCell>
+                    <TableCell>{feedback.texto}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
+      </div>
+    </div>
+  )
 };
 
-export default FeedbackList;
+export default PFeedbackList;

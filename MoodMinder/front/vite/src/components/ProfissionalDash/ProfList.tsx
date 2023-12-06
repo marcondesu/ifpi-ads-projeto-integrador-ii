@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
-import IconButton from '@mui/material/IconButton';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
+import IconButton from "@mui/material/IconButton";
 import { jwtDecode } from "jwt-decode";
-import { Acompanhamento } from './FollowProf';
+import { Acompanhamento } from "./FollowProf";
+// import { format } from "date-fns";
 
 interface Professional {
   id: string;
@@ -22,13 +23,15 @@ const ComplexGrid: React.FC = () => {
 
   const token = localStorage.getItem("token") ?? "";
   const decoded = jwtDecode(token);
-  const userId = decoded.sub ?? "" //não aceita undefined
+  const userId = decoded.sub ?? ""; //não aceita undefined
 
   const [_acompanhamentos, setAcompanhamentos] = useState<Acompanhamento[]>([]);
 
   const fetchProfessionals = async () => {
     try {
-      const response = await axios.get<Professional[]>('https://ifpi-projeto-integrador-ii.onrender.com/profissional');
+      const response = await axios.get<Professional[]>(
+        "https://ifpi-projeto-integrador-ii.onrender.com/profissional"
+      );
       setProfessionals(response.data);
     } catch (error) {
       console.error(error);
@@ -38,32 +41,38 @@ const ComplexGrid: React.FC = () => {
   const handleAddAcompanhamento = async (idProfissional: string) => {
     try {
       const response = await axios.post<Acompanhamento>(
-        'https://ifpi-projeto-integrador-ii.onrender.com/acompanhamento',
+        "https://ifpi-projeto-integrador-ii.onrender.com/acompanhamento",
         {
           idProfissional,
           idPaciente: userId,
           dtInicio: new Date(),
-          dtFim: '2025-11-12',
         },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('token') ?? ''}`,
+            Authorization: `Bearer ${localStorage.getItem("token") ?? ""}`,
           },
         }
       );
-      setAcompanhamentos((prevAcompanhamentos) => [...prevAcompanhamentos, response.data]);
+      setAcompanhamentos((prevAcompanhamentos) => [
+        ...prevAcompanhamentos,
+        response.data,
+      ]);
       window.location.reload();
     } catch (error: any) {
-      console.error('Erro ao criar acompanhamento:', error.message);
+      console.error("Erro ao criar acompanhamento:", error.message);
     }
   };
+
   useEffect(() => {
     fetchProfessionals();
   }, []);
 
   const totalPages = Math.ceil(professionals.length / ITEMS_PER_PAGE);
 
-  const handlePageChange = (_event: React.ChangeEvent<unknown>, newPage: number) => {
+  const handlePageChange = (
+    _event: React.ChangeEvent<unknown>,
+    newPage: number
+  ) => {
     setCurrentPage(newPage);
   };
 
@@ -104,12 +113,26 @@ const ComplexGrid: React.FC = () => {
       </table>
 
       {totalPages > 1 && (
-        <Stack spacing={2} direction="row" justifyContent="center" alignItems="center" className="pagination">
-          <IconButton onClick={(event) => handlePageChange(event, currentPage - 1)} disabled={currentPage === 1}>
-          </IconButton>
-          <Pagination count={totalPages} page={currentPage} onChange={handlePageChange} />
-          <IconButton onClick={(event) => handlePageChange(event, currentPage + 1)} disabled={currentPage === totalPages}>
-          </IconButton>
+        <Stack
+          spacing={2}
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          className="pagination"
+        >
+          <IconButton
+            onClick={(event) => handlePageChange(event, currentPage - 1)}
+            disabled={currentPage === 1}
+          ></IconButton>
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={handlePageChange}
+          />
+          <IconButton
+            onClick={(event) => handlePageChange(event, currentPage + 1)}
+            disabled={currentPage === totalPages}
+          ></IconButton>
         </Stack>
       )}
     </div>

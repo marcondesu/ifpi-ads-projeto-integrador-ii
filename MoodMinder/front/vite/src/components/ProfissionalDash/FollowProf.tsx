@@ -11,6 +11,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import "./Table.css";
 import { useNavigate } from "react-router-dom";
+import { format } from "date-fns";
 
 const ITEMS_PER_PAGE = 2;
 
@@ -48,14 +49,14 @@ const FollowProf: React.FC = () => {
   const [dialogOpenFeedback, setDialogOpenFeedback] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [nota, setNota] = useState<number>(0);
-  const [texto, setTexto] = useState<string>('');
+  const [texto, setTexto] = useState<string>("");
 
   const token = localStorage.getItem("token") || "";
   const headers = {
     Authorization: `Bearer ${token}`,
   };
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     try {
@@ -66,6 +67,8 @@ const FollowProf: React.FC = () => {
         }
       );
       setAcompanhamentos(response.data);
+      console.log(acompanhamentos);
+      
     } catch (error) {
       console.error(error);
     }
@@ -78,11 +81,13 @@ const FollowProf: React.FC = () => {
 
   const confirmDelete = async () => {
     try {
-      await axios.delete(
-        `https://ifpi-projeto-integrador-ii.onrender.com/acompanhamento/${selectedAppointment}`,
-        {
-          headers,
-        }
+      await axios.patch(
+        `https://ifpi-projeto-integrador-ii.onrender.com/acompanhamento/${selectedAppointment}/finalizar/${format(
+          new Date(),
+          "yyyy-MM-dd"
+        )}`,
+        null,
+        { headers }
       );
       fetchData();
       setSelectedAppointment(null);
@@ -91,7 +96,7 @@ const FollowProf: React.FC = () => {
       console.error("Error deleting appointment:", error.message);
     }
   };
-
+  
   const cancelDelete = () => {
     setSelectedAppointment(null);
     setDialogOpenDelete(false);
@@ -105,7 +110,7 @@ const FollowProf: React.FC = () => {
   const closeFeedbackDialog = () => {
     setSelectedAppointment(null);
     setNota(0);
-    setTexto('');
+    setTexto("");
     setDialogOpenFeedback(false);
   };
 
@@ -113,7 +118,6 @@ const FollowProf: React.FC = () => {
     const newNota = parseInt(event.target.value, 10);
     setNota(newNota);
     console.log(nota);
-    
   };
 
   const handleTextoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -136,7 +140,7 @@ const FollowProf: React.FC = () => {
       );
       fetchData();
       closeFeedbackDialog();
-      navigate("/feedback")
+      navigate("/feedback");
     } catch (error: any) {
       console.error("Error adding feedback:", error.message);
     }
@@ -234,8 +238,7 @@ const FollowProf: React.FC = () => {
           <IconButton
             onClick={() => changePage(currentPage - 1)}
             disabled={currentPage === 1}
-          >
-          </IconButton>
+          ></IconButton>
           <Pagination
             count={getTotalPages()}
             page={currentPage}
@@ -244,8 +247,7 @@ const FollowProf: React.FC = () => {
           <IconButton
             onClick={() => changePage(currentPage + 1)}
             disabled={currentPage === getTotalPages()}
-          >
-          </IconButton>
+          ></IconButton>
         </Stack>
       )}
 
