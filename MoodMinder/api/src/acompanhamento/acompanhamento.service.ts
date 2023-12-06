@@ -31,24 +31,39 @@ export class AcompanhamentoService {
     acompanhamento.idPaciente = createAcompanhamentoDto.idPaciente;
     acompanhamento.idProfissional = createAcompanhamentoDto.idProfissional;
     acompanhamento.dtInicio = createAcompanhamentoDto.dtInicio;
-    acompanhamento.dtFim = createAcompanhamentoDto.dtFim;
 
+    return await this.acompanhamentoRepository.save(acompanhamento);
+  }
+
+  public async finish(id: string, date: Date) {
+    const acompanhamento = await this.findOne(id);
+
+    if (!acompanhamento) {
+      return null;
+    }
+
+    acompanhamento.dtFim = date;
     return await this.acompanhamentoRepository.save(acompanhamento);
   }
 
   public async findAll(token: string): Promise<Acompanhamento[]> {
     const user_id = await this.extractUserIdFromToken(token);
 
-    return await this.acompanhamentoRepository.find({
-      where: [{ idPaciente: user_id }, { idProfissional: user_id }],
-    });
+    return await this.acompanhamentoRepository
+      .createQueryBuilder('acompanhamento')
+      .where('acompanhamento.idPaciente = :user_id', { user_id })
+      .andWhere('acompanhamento.dtFim IS NULL')
+      .orWhere('acompanhamento.idProfissional = :user_id', {
+        user_id,
+      })
+      .getMany();
   }
 
   public async findOne(id: string): Promise<Acompanhamento> {
     return await this.acompanhamentoRepository.findOne({ where: { id: id } });
   }
 
-  public async findFeedback(id: string): Promise<Feedback[]> {
+  public async findFeedbacks(id: string): Promise<Feedback[]> {
     return await this.feedbackService.feedbackRepository.find({
       where: { idAcompanhamento: id },
     });
@@ -58,12 +73,13 @@ export class AcompanhamentoService {
     profissional_id: string,
   ): Promise<Paciente[]> {
     const acompanhamentos = await this.acompanhamentoRepository.find({
-      where: { idProfissional: profissional_id },
+      where: { idProfissional: profissional_id }
     });
 
     const pacientes_id: any = acompanhamentos.map(
       (acompanhamento) => acompanhamento.idPaciente,
     );
+
     return pacientes_id;
   }
 

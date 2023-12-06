@@ -27,6 +27,6 @@ export class Acompanhamento extends BaseEntity {
   @Column({ name: 'dtInicio', type: 'date' })
   dtInicio: Date;
 
-  @Column({ name: 'dtFim', type: 'date' })
+  @Column({ name: 'dtFim', type: 'date', default: null })
   dtFim: Date;
 }
