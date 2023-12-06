@@ -3,7 +3,7 @@ import "./FormField.css";
 
 interface FormFieldProps {
   label: string;
-  type: "text" | "select"; // Modificado para aceitar "select" como tipo
+  type: "text" | "select" | "email" | "password" | any; // Modificado para aceitar "select" como tipo
   name: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void; // Atualizado o tipo do evento
