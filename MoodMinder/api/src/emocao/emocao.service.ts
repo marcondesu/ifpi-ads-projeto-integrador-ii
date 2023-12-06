@@ -49,7 +49,9 @@ export class EmocaoService {
     return await this.emocaoRepository
       .createQueryBuilder('emocao')
       .where('emocao.idPaciente IN (:...paciente_id)', { paciente_id })
-      .andWhere('emocao.privacidade = :privas', { privas: Privacidade.PUBLICO })
+      .andWhere('emocao.privacidade = :privacidade', {
+        privacidade: Privacidade.PUBLICO,
+      })
       .getMany();
   }
 
