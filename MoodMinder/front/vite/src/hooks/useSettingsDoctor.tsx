@@ -71,7 +71,8 @@ const useSettings = () => {
         `https://ifpi-projeto-integrador-ii.onrender.com/profissional/${id}`,
         { headers }
       );
-      navegate("profissional/acompanhamento")
+      localStorage.removeItem("token");
+      navegate("/profissional/login")
     } catch (error: any) {
       console.error("Erro ao remover profissional:", error.message);
     }
