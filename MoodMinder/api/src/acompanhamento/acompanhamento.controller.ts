@@ -43,12 +43,6 @@ export class AcompanhamentoController {
   }
 
   @UseGuards(AuthGuard)
-  @Get(':id/feedback')
-  async findFeedback(@Param('id') id: string): Promise<Feedback[]> {
-    return await this.acompanhamentoService.findFeedbacks(id);
-  }
-
-  @UseGuards(AuthGuard)
   @Patch(':id/finalizar/:date')
   async updatePartial(@Param('id') id: string, @Param('date') date: Date) {
     return await this.acompanhamentoService.finish(id, date);

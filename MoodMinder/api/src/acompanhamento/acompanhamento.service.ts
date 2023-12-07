@@ -3,8 +3,6 @@ import { CreateAcompanhamentoDto } from './dto/create-acompanhamento.dto';
 import { Acompanhamento } from './entities/acompanhamento.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm';
-import { Feedback } from 'src/feedback/entities/feedback.entity';
-import { FeedbackService } from 'src/feedback/feedback.service';
 import { JwtService } from '@nestjs/jwt';
 import { Paciente } from 'src/paciente/entities/paciente.entity';
 
@@ -13,7 +11,6 @@ export class AcompanhamentoService {
   constructor(
     @InjectRepository(Acompanhamento)
     private acompanhamentoRepository: Repository<Acompanhamento>,
-    private feedbackService: FeedbackService,
     private jwtService: JwtService,
   ) {}
 
@@ -66,12 +63,6 @@ export class AcompanhamentoService {
     return await this.acompanhamentoRepository.findOne({ where: { id: id } });
   }
 
-  public async findFeedbacks(id: string): Promise<Feedback[]> {
-    return await this.feedbackService.feedbackRepository.find({
-      where: { idAcompanhamento: id },
-    });
-  }
-
   public async findPacientsFromProfessionalId(
     profissional_id: string,
   ): Promise<Paciente[]> {
@@ -110,7 +101,6 @@ export class AcompanhamentoService {
   }
 
   public async remove(id: string): Promise<DeleteResult> {
-    this.feedbackService.feedbackRepository.delete({ idAcompanhamento: id });
     return await this.acompanhamentoRepository.delete({ id: id });
   }
 }

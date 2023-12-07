@@ -5,6 +5,7 @@ import {
   Body,
   Param,
   Delete,
+  Headers,
   UseGuards,
 } from '@nestjs/common';
 import { DeleteResult } from 'typeorm';
@@ -26,8 +27,8 @@ export class FeedbackController {
   }
 
   @Get()
-  async findAll() {
-    return await this.feedbackService.findAll();
+  async findAll(@Headers('authorization') token: string) {
+    return await this.feedbackService.findAll(token);
   }
 
   @Get(':id')
