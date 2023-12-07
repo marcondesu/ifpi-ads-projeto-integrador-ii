@@ -1,6 +1,12 @@
-/* eslint-disable prettier/prettier */
 import { Acompanhamento } from 'src/acompanhamento/entities/acompanhamento.entity';
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Feedback extends BaseEntity {
