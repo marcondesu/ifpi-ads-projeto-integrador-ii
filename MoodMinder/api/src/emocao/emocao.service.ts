@@ -58,6 +58,12 @@ export class EmocaoService {
     return this.jwtService.decode(token).role;
   }
 
+  public async removeFromPacienteId(
+    paciente_id: string,
+  ): Promise<DeleteResult> {
+    return await this.emocaoRepository.delete({ idPaciente: paciente_id });
+  }
+
   public async remove(id: string): Promise<DeleteResult> {
     return await this.emocaoRepository.delete({ id: id });
   }

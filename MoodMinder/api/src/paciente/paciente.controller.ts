@@ -6,6 +6,7 @@ import {
   Delete,
   Param,
   Patch,
+  Headers,
   HttpException,
   UseGuards,
 } from '@nestjs/common';
@@ -65,7 +66,10 @@ export class PacienteController {
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string): Promise<DeleteResult> {
-    return await this.pacienteService.remove(id);
+  async remove(
+    @Param('id') id: string,
+    @Headers('authorization') token: string,
+  ): Promise<DeleteResult> {
+    return await this.pacienteService.remove(id, token);
   }
 }

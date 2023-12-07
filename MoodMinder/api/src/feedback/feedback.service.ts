@@ -56,6 +56,13 @@ export class FeedbackService {
     return this.jwtService.decode(token).role;
   }
 
+  public async removeFromAcompanhamentoId(
+    ids: string[],
+  ): Promise<DeleteResult> {
+    console.log(ids);
+    return await this.feedbackRepository.delete({ idAcompanhamento: In(ids) });
+  }
+
   public async remove(id: string): Promise<DeleteResult> {
     return await this.feedbackRepository.delete({ id: id });
   }

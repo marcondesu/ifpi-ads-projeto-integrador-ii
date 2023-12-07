@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateAcompanhamentoDto } from './dto/create-acompanhamento.dto';
 import { Acompanhamento } from './entities/acompanhamento.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository } from 'typeorm';
+import { DeleteResult, In, Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { Paciente } from 'src/paciente/entities/paciente.entity';
 
@@ -102,6 +102,19 @@ export class AcompanhamentoService {
       .getOne();
 
     return !!acompanhamento;
+  }
+
+  public async removeFromPacientId(id: string): Promise<DeleteResult> {
+    const acompanhamentos = await this.acompanhamentoRepository.find({
+      where: { idPaciente: id },
+    });
+    const ids_acompanhamentos: any = acompanhamentos.map(
+      (acompanhamento) => acompanhamento.id,
+    );
+
+    return await this.acompanhamentoRepository.delete({
+      id: In(ids_acompanhamentos),
+    });
   }
 
   public async remove(id: string): Promise<DeleteResult> {

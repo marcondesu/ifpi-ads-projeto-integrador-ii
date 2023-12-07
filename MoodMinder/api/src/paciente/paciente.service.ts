@@ -3,12 +3,20 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm';
 import { Paciente } from './entities/paciente.entity';
 import { CreatePacienteDto } from './dto/create-paciente.dto';
+import { AcompanhamentoService } from 'src/acompanhamento/acompanhamento.service';
+import { FeedbackService } from 'src/feedback/feedback.service';
+import { EmocaoService } from 'src/emocao/emocao.service';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class PacienteService {
   constructor(
     @InjectRepository(Paciente)
     private pacienteRepository: Repository<Paciente>,
+    private jwtService: JwtService,
+    private emocaoService: EmocaoService,
+    private feedbackService: FeedbackService,
+    private acompanhamentoService: AcompanhamentoService,
   ) {}
 
   public async create(
@@ -53,6 +61,10 @@ export class PacienteService {
     return await this.pacienteRepository.findOne({ where: { email: email } });
   }
 
+  private async extractUserId(token: string) {
+    return this.jwtService.decode(token).sub;
+  }
+
   public async updatePartial(
     id: string,
     partialPacienteDto: Partial<CreatePacienteDto>,
@@ -66,7 +78,18 @@ export class PacienteService {
     return await this.pacienteRepository.save(paciente);
   }
 
-  public async remove(id: string): Promise<DeleteResult> {
+  public async remove(id: string, token: string): Promise<DeleteResult> {
+    token = token.replace('Bearer ', '');
+    const paciente_id = await this.extractUserId(token);
+    const acompanhamentos = await this.acompanhamentoService.findAll(token);
+    const ids_acompanhamentos: any = acompanhamentos.map(
+      (acompanhamento) => acompanhamento.id,
+    );
+
+    console.log(ids_acompanhamentos);
+    await this.emocaoService.removeFromPacienteId(paciente_id);
+    await this.feedbackService.removeFromAcompanhamentoId(ids_acompanhamentos);
+    await this.acompanhamentoService.removeFromPacientId(id);
     return await this.pacienteRepository.delete({ id: id });
   }
 }
