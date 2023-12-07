@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateEmocaoDto } from './dto/create-emocao.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Emocao } from './entities/emocao.entity';
-import { DeleteResult, Repository } from 'typeorm';
+import { DeleteResult, In, Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { Privacidade } from 'src/privacidade';
 
@@ -28,15 +28,10 @@ export class EmocaoService {
   }
 
   public async findAll(token: string): Promise<Emocao[]> {
-    const user_id = await this.extractPacienteIdFromToken(token);
+    token = token.replace('Bearer ', '');
+    const user_id = await this.extractUserId(token);
 
     return await this.emocaoRepository.find({ where: { idPaciente: user_id } });
-  }
-
-  private async extractPacienteIdFromToken(token: string): Promise<string> {
-    token = token.replace('Bearer ', '');
-
-    return this.jwtService.decode(token).sub;
   }
 
   public async findOne(id: string): Promise<Emocao> {
@@ -44,15 +39,23 @@ export class EmocaoService {
   }
 
   public async findPublicEmotionsByPacientId(
-    paciente_id: string[],
+    ids_paciente: string[],
   ): Promise<Emocao[]> {
-    return await this.emocaoRepository
-      .createQueryBuilder('emocao')
-      .where('emocao.idPaciente IN (:...paciente_id)', { paciente_id })
-      .andWhere('emocao.privacidade = :privacidade', {
-        privacidade: Privacidade.PUBLICO,
-      })
-      .getMany();
+    const emocoes = await this.emocaoRepository.find({
+      where: { idPaciente: In(ids_paciente) },
+    });
+
+    return emocoes.filter(
+      (emocao) => emocao.privacidade === Privacidade.PUBLICO,
+    );
+  }
+
+  private async extractUserId(token: string) {
+    return this.jwtService.decode(token).sub;
+  }
+
+  private async extractRole(token: string) {
+    return this.jwtService.decode(token).role;
   }
 
   public async remove(id: string): Promise<DeleteResult> {

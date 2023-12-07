@@ -70,7 +70,11 @@ export class AcompanhamentoService {
       where: { idProfissional: profissional_id }
     });
 
-    const pacientes_id: any = acompanhamentos.map(
+    const acompanhamentos_ativos = acompanhamentos.filter(
+      (acompanhamento) => !acompanhamento.dtFim,
+    );
+
+    const pacientes_id: any = acompanhamentos_ativos.map(
       (acompanhamento) => acompanhamento.idPaciente,
     );
 
