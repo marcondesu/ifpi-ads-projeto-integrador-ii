@@ -71,7 +71,8 @@ const useSettings = () => {
         `https://ifpi-projeto-integrador-ii.onrender.com/paciente/${id}`,
         { headers }
       );
-      navegate("/historico")
+     localStorage.removeItem("token");
+     navegate("/login")
     } catch (error: any) {
       console.error("Erro ao remover usuário:", error.message);
     }
