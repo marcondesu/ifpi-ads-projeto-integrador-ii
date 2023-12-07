@@ -47,16 +47,19 @@ export class AcompanhamentoService {
   }
 
   public async findAll(token: string): Promise<Acompanhamento[]> {
-    const user_id = await this.extractUserIdFromToken(token);
+    token = token.replace('Bearer ', '');
+    const user_id = await this.extractUserId(token);
+    const role = await this.extractRole(token);
 
-    return await this.acompanhamentoRepository
-      .createQueryBuilder('acompanhamento')
-      .where('acompanhamento.idPaciente = :user_id', { user_id })
-      .andWhere('acompanhamento.dtFim IS NULL')
-      .orWhere('acompanhamento.idProfissional = :user_id', {
-        user_id,
-      })
-      .getMany();
+    if (role == 'paciente') {
+      return await this.acompanhamentoRepository.find({
+        where: { idPaciente: user_id },
+      });
+    }
+
+    return await this.acompanhamentoRepository.find({
+      where: { idProfissional: user_id },
+    });
   }
 
   public async findOne(id: string): Promise<Acompanhamento> {
@@ -83,10 +86,12 @@ export class AcompanhamentoService {
     return pacientes_id;
   }
 
-  private async extractUserIdFromToken(token: string) {
-    token = token.replace('Bearer ', '');
-
+  private async extractUserId(token: string) {
     return this.jwtService.decode(token).sub;
+  }
+
+  private async extractRole(token: string) {
+    return this.jwtService.decode(token).role;
   }
 
   private async verifyUnique(

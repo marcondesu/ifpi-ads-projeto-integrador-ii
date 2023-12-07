@@ -15,18 +15,21 @@ export class AuthService {
 
   async signIn(email: string, password: string): Promise<any> {
     let usuario: Paciente | Profissional;
+    let role: string;
 
     usuario = await this.pacienteService.findEmail(email);
+    role = 'paciente';
 
     if (!usuario) {
       usuario = await this.profissionalService.findEmail(email);
+      role = 'profissional';
     }
 
     if (usuario?.senha !== password) {
       throw new UnauthorizedException();
     }
 
-    const payload = { sub: usuario.id, email: usuario.email };
+    const payload = { sub: usuario.id, email: usuario.email, role: role };
 
     return {
       access_token: await this.jwtService.signAsync(payload),
