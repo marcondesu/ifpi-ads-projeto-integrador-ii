@@ -1,4 +1,4 @@
-import BottomBar from "../../../components/SideBar/SideBarPatient";
+import SideBarPatient from "../../../components/SideBar/SideBarPatient";
 import SubmitButton from "../../../components/SubmitButton";
 // import { useNavigate } from "react-router-dom";
 import useUserData from "../../../hooks/useSettings";
@@ -16,7 +16,7 @@ const Settings = () => {
 
   return (
     <div style={{ display: 'flex', width: '100vw', height: '100vh' }}>
-      <BottomBar />
+      <SideBarPatient />
       <div className="content-container">
         <h1>Edite suas informações</h1>
 

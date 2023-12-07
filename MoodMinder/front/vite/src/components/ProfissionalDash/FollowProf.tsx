@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
-import IconButton from "@mui/material/IconButton";
+import {
+  Paper,
+  Table,
+  TableContainer,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+} from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import "./Table.css";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
-
-const ITEMS_PER_PAGE = 2;
+import './Table.css';
 
 export interface Acompanhamento {
   id: string;
@@ -47,7 +51,6 @@ const FollowProf: React.FC = () => {
   );
   const [dialogOpenDelete, setDialogOpenDelete] = useState<boolean>(false);
   const [dialogOpenFeedback, setDialogOpenFeedback] = useState<boolean>(false);
-  const [currentPage, setCurrentPage] = useState(1);
   const [nota, setNota] = useState<number>(0);
   const [texto, setTexto] = useState<string>("");
 
@@ -67,12 +70,14 @@ const FollowProf: React.FC = () => {
         }
       );
       setAcompanhamentos(response.data);
-      console.log(acompanhamentos);
-      
     } catch (error) {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleDelete = async (id: string) => {
     setSelectedAppointment(id);
@@ -96,7 +101,7 @@ const FollowProf: React.FC = () => {
       console.error("Error deleting appointment:", error.message);
     }
   };
-  
+
   const cancelDelete = () => {
     setSelectedAppointment(null);
     setDialogOpenDelete(false);
@@ -117,7 +122,6 @@ const FollowProf: React.FC = () => {
   const handleNotaChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newNota = parseInt(event.target.value, 10);
     setNota(newNota);
-    console.log(nota);
   };
 
   const handleTextoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -128,7 +132,7 @@ const FollowProf: React.FC = () => {
   const handleConfirmFeedbackDialog = async () => {
     try {
       await axios.post(
-        `https://ifpi-projeto-integrador-ii.onrender.com/feedback`,
+        "https://ifpi-projeto-integrador-ii.onrender.com/feedback",
         {
           idAcompanhamento: selectedAppointment,
           nota,
@@ -146,64 +150,57 @@ const FollowProf: React.FC = () => {
     }
   };
 
-  const renderAcompanhamentos = () => {
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    const endIndex = startIndex + ITEMS_PER_PAGE;
-    const currentAcompanhamentos = acompanhamentos.slice(startIndex, endIndex);
-
-    return currentAcompanhamentos.map((acompanhamento) => (
-      <tr key={acompanhamento.id}>
-        <td>{acompanhamento.idProfissional.nome}</td>
-        <td>{acompanhamento.idProfissional.email}</td>
-        <td>{acompanhamento.idProfissional.especialidade}</td>
-        <td>{acompanhamento.dtInicio}</td>
-        <td>{acompanhamento.dtFim}</td>
-        <td>
-          <button
-            className="button delete-button"
-            onClick={() => openFeedbackDialog(acompanhamento.id)}
-          >
-            Feedback
-          </button>
-          <button
-            className="button delete-button"
-            onClick={() => handleDelete(acompanhamento.id)}
-          >
-            Deletar
-          </button>
-        </td>
-      </tr>
-    ));
-  };
-
-  const changePage = (newPage: number) => {
-    if (newPage > 0 && newPage <= getTotalPages()) {
-      setCurrentPage(newPage);
-    }
-  };
-
-  const getTotalPages = () =>
-    Math.ceil(acompanhamentos.length / ITEMS_PER_PAGE);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   return (
     <div className="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>Médico</th>
-            <th>Email</th>
-            <th>Especialidade</th>
-            <th>Data de Início</th>
-            <th>Data de Fim</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>{renderAcompanhamentos()}</tbody>
-      </table>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Médico</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Especialidade</TableCell>
+              <TableCell>Data de Início</TableCell>
+              <TableCell>Data de Fim</TableCell>
+              <TableCell>Ações</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {acompanhamentos.map((acompanhamento) => (
+              <TableRow key={acompanhamento.id}>
+                <TableCell>{acompanhamento.idProfissional.nome}</TableCell>
+                <TableCell>{acompanhamento.idProfissional.email}</TableCell>
+                <TableCell>{acompanhamento.idProfissional.especialidade}</TableCell>
+                <TableCell>{acompanhamento.dtInicio}</TableCell>
+                <TableCell>{acompanhamento.dtFim}</TableCell>
+                <TableCell style={{display:'flex', gap: '.5rem', flexWrap: 'wrap'}}>
+            
+                  <button onClick={() => openFeedbackDialog(acompanhamento.id)}
+                    style={{ padding: '10px 15px', backgroundColor: 'rgb(255, 255, 255)', border: '1px solid rgb(51, 51, 51)', borderRadius: ' 5px', color: ' rgb(51, 51, 51)', cursor: 'pointer', transition: 'backgroundColor 0.3s ease 0s, color 0.3s ease 0s,' }}>Feedback</button>
+
+                  <button onClick={() => handleDelete(acompanhamento.id)}
+                    style={{ padding: '10px 15px', backgroundColor: 'rgb(255, 255, 255)', border: '1px solid red', borderRadius: ' 5px', color: ' rgb(51, 51, 51)', cursor: 'pointer', transition: 'backgroundColor 0.3s ease 0s, color 0.3s ease 0s,' }}>Encerrar</button>
+
+                  {/* <Button
+                    variant="outlined"
+                    className="button delete-button"
+                    onClick={() => openFeedbackDialog(acompanhamento.id)}
+                  >
+                    Feedback
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    className="button delete-button"
+                    onClick={() => handleDelete(acompanhamento.id)}
+                  >
+                    Encerrar
+                  </Button> */}
+
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
 
       {acompanhamentos.length === 0 && <p>Nenhum acompanhamento cadastrado.</p>}
 
@@ -213,43 +210,19 @@ const FollowProf: React.FC = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">Confirmar exclusão</DialogTitle>
+        <DialogTitle id="alert-dialog-title">Confirmar encerramento</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Tem certeza de que deseja excluir este acompanhamento?
+            Tem certeza de que deseja encerrar este acompanhamento?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={cancelDelete}>Cancelar</Button>
           <Button onClick={confirmDelete} autoFocus>
-            Confirmar
+            Encerrar
           </Button>
         </DialogActions>
       </Dialog>
-
-      {getTotalPages() > 1 && (
-        <Stack
-          spacing={2}
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-          className="pagination"
-        >
-          <IconButton
-            onClick={() => changePage(currentPage - 1)}
-            disabled={currentPage === 1}
-          ></IconButton>
-          <Pagination
-            count={getTotalPages()}
-            page={currentPage}
-            onChange={(_event, value) => changePage(value)}
-          />
-          <IconButton
-            onClick={() => changePage(currentPage + 1)}
-            disabled={currentPage === getTotalPages()}
-          ></IconButton>
-        </Stack>
-      )}
 
       <Dialog
         open={dialogOpenFeedback}

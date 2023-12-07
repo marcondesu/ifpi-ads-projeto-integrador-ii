@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { FaUserFriends, FaSignInAlt, FaUser } from "react-icons/fa";
+import { FaUserFriends, FaSignInAlt, FaUser, FaHistory } from "react-icons/fa";
 import { MdOutlineFeedback } from "react-icons/md";
 import { IoHelpCircleOutline } from "react-icons/io5";
 
@@ -89,6 +89,9 @@ const SideBarDoctor: React.FC = () => {
           <h1 style={{marginLeft:"3px", color:'black'}}>MoodMinder.</h1>
         </SidebarTop>
         {/* <h3>MENU RÁPIDO</h3> */}
+        <SidebarLink href="/profissional/acompanhamentos/emocoes">
+          <FaHistory /> Emoções   
+        </SidebarLink>
         <SidebarLink href="/profissional/acompanhamentos">
           <FaUserFriends /> Pacientes
         </SidebarLink>

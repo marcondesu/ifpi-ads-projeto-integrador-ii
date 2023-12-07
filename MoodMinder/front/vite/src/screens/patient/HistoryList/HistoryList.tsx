@@ -1,4 +1,4 @@
-import BottomBar from "../../../components/SideBar/SideBarPatient";
+import SideBarPatient from "../../../components/SideBar/SideBarPatient";
 import ComplexGrid from "../../../components/EmotionDash/EmotionList";
 import { Link } from "react-router-dom";
 import emotionImage from "../../../assets/logocircular.png"; // Substitua pelo caminho correto da sua imagem
@@ -11,7 +11,7 @@ const HistoryList = () => {
 
   return (
     <div style={{ display: 'flex', width: '100vw', height: '100vh' }}>
-      <BottomBar />
+      <SideBarPatient />
 
       <div className="content-container">
         <h1>Cadastre um registro</h1>

@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
-import IconButton from "@mui/material/IconButton";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import "../ProfissionalDash/Table.css";
+import {
+  Paper,
+  Table,
+  TableContainer,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
 import { format } from "date-fns";
-
-const ITEMS_PER_PAGE = 2;
 
 export interface Acompanhamento {
   id: string;
@@ -45,7 +48,6 @@ const FollowPatient: React.FC = () => {
     null
   );
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
-  const [currentPage, setCurrentPage] = useState(1);
 
   const token = localStorage.getItem("token") || "";
   const headers = {
@@ -78,12 +80,8 @@ const FollowPatient: React.FC = () => {
           new Date(),
           "yyyy-MM-dd"
         )}`,
-        // {
-        //   dtFim: )
-        // },
-        {
-          headers,
-        }
+        null,
+        { headers }
       );
       fetchData();
       setSelectedAppointment(null);
@@ -92,44 +90,40 @@ const FollowPatient: React.FC = () => {
       console.error("Error deleting appointment:", error.message);
     }
   };
-
+  
   const cancelDelete = () => {
     setSelectedAppointment(null);
     setDialogOpen(false);
   };
 
   const renderAcompanhamentos = () => {
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    const endIndex = startIndex + ITEMS_PER_PAGE;
-    const currentAcompanhamentos = acompanhamentos.slice(startIndex, endIndex);
-
-    return currentAcompanhamentos.map((acompanhamento) => (
-      <tr key={acompanhamento.id}>
-        <td>{acompanhamento.idPaciente.nome}</td>
-        <td>{acompanhamento.idPaciente.email}</td>
-        <td>{acompanhamento.idPaciente.sexo}</td>
-        <td>{acompanhamento.dtInicio}</td>
-        <td>{acompanhamento.dtFim}</td>
-        <td>
+    return acompanhamentos.map((acompanhamento) => (
+      <TableRow key={acompanhamento.id}>
+        <TableCell>{acompanhamento.idPaciente.nome}</TableCell>
+        <TableCell>{acompanhamento.idPaciente.email}</TableCell>
+        <TableCell>{acompanhamento.idPaciente.sexo}</TableCell>
+        <TableCell>{acompanhamento.dtInicio}</TableCell>
+        <TableCell>{acompanhamento.dtFim}</TableCell>
+        <TableCell>
           <button
             className="button delete-button"
             onClick={() => handleFinish(acompanhamento.id)}
+            style={{
+              padding: "10px 15px",
+              backgroundColor: "rgb(255, 255, 255)",
+              border: "1px solid red",
+              borderRadius: "5px",
+              color: "rgb(51, 51, 51)",
+              cursor: "pointer",
+              transition: "backgroundColor 0.3s ease 0s, color 0.3s ease 0s",
+            }}
           >
-            Deletar
+            Encerrar
           </button>
-        </td>
-      </tr>
+        </TableCell>
+      </TableRow>
     ));
   };
-
-  const changePage = (newPage: number) => {
-    if (newPage > 0 && newPage <= getTotalPages()) {
-      setCurrentPage(newPage);
-    }
-  };
-
-  const getTotalPages = () =>
-    Math.ceil(acompanhamentos.length / ITEMS_PER_PAGE);
 
   useEffect(() => {
     fetchData();
@@ -137,19 +131,21 @@ const FollowPatient: React.FC = () => {
 
   return (
     <div className="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>Paciente</th>
-            <th>Email</th>
-            <th>Sexo</th>
-            <th>Data de Início</th>
-            <th>Data de Fim</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>{renderAcompanhamentos()}</tbody>
-      </table>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Paciente</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Sexo</TableCell>
+              <TableCell>Data de Início</TableCell>
+              <TableCell>Data de Fim</TableCell>
+              <TableCell>Ações</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>{renderAcompanhamentos()}</TableBody>
+        </Table>
+      </TableContainer>
 
       {acompanhamentos.length === 0 && <p>Nenhum acompanhamento cadastrado.</p>}
 
@@ -159,10 +155,10 @@ const FollowPatient: React.FC = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">Confirmar exclusão</DialogTitle>
+        <DialogTitle id="alert-dialog-title">Confirmar encerramento</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Tem certeza de que deseja excluir este acompanhamento?
+            Tem certeza de que deseja encerrar este acompanhamento?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -172,30 +168,6 @@ const FollowPatient: React.FC = () => {
           </Button>
         </DialogActions>
       </Dialog>
-
-      {getTotalPages() > 1 && (
-        <Stack
-          spacing={2}
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-          className="pagination"
-        >
-          <IconButton
-            onClick={() => changePage(currentPage - 1)}
-            disabled={currentPage === 1}
-          ></IconButton>
-          <Pagination
-            count={getTotalPages()}
-            page={currentPage}
-            onChange={(_event, value) => changePage(value)}
-          />
-          <IconButton
-            onClick={() => changePage(currentPage + 1)}
-            disabled={currentPage === getTotalPages()}
-          ></IconButton>
-        </Stack>
-      )}
     </div>
   );
 };

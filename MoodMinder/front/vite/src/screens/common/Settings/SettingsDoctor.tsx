@@ -2,7 +2,7 @@ import SubmitButton from "../../../components/SubmitButton";
 // import { useNavigate } from "react-router-dom";
 import useUserData from "../../../hooks/useSettingsDoctor";
 import FormField from "../../../components/FormField/FormField";
-import BottomBarDoctor from "../../../components/SideBar/SideBarDoctor";
+import SideBarDoctor from "../../../components/SideBar/SideBarDoctor";
 
 const Settings = () => {
   const { dadosDoUsuario, handleChange, handleSubmit, handleRemover } =
@@ -15,7 +15,7 @@ const Settings = () => {
   // };
   return (
     <div style={{ display: 'flex', width: '100vw', height: '100vh' }}>
-      <BottomBarDoctor />
+      <SideBarDoctor />
       <div className="content-container">
       <h1>Edite suas informações</h1>
 

@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
-import IconButton from "@mui/material/IconButton";
+import {
+  Paper,
+  Table,
+  TableContainer,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+  // Button,
+} from "@mui/material";
 import { jwtDecode } from "jwt-decode";
 import { Acompanhamento } from "./FollowProf";
-// import { format } from "date-fns";
 
 interface Professional {
   id: string;
@@ -15,15 +21,12 @@ interface Professional {
   email: string;
 }
 
-const ITEMS_PER_PAGE = 2;
-
 const ComplexGrid: React.FC = () => {
   const [professionals, setProfessionals] = useState<Professional[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const token = localStorage.getItem("token") ?? "";
   const decoded = jwtDecode(token);
-  const userId = decoded.sub ?? ""; //não aceita undefined
+  const userId = decoded.sub ?? "";
 
   const [_acompanhamentos, setAcompanhamentos] = useState<Acompanhamento[]>([]);
 
@@ -67,74 +70,44 @@ const ComplexGrid: React.FC = () => {
     fetchProfessionals();
   }, []);
 
-  const totalPages = Math.ceil(professionals.length / ITEMS_PER_PAGE);
-
-  const handlePageChange = (
-    _event: React.ChangeEvent<unknown>,
-    newPage: number
-  ) => {
-    setCurrentPage(newPage);
-  };
-
   const renderProfessionals = () => {
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    const endIndex = startIndex + ITEMS_PER_PAGE;
-    return professionals.slice(startIndex, endIndex).map((professional) => (
-      <tr key={professional.id}>
-        <td>{professional.nome}</td>
-        <td>{professional.crm}</td>
-        <td>{professional.especialidade}</td>
-        <td>{professional.email}</td>
-        <td>
-          <button
+    return professionals.map((professional) => (
+      <TableRow key={professional.id}>
+        <TableCell>{professional.nome}</TableCell>
+        <TableCell>{professional.crm}</TableCell>
+        <TableCell>{professional.especialidade}</TableCell>
+        <TableCell>{professional.email}</TableCell>
+        <TableCell>
+          <button onClick={() => handleAddAcompanhamento(professional.id)}
+            style={{ padding: '10px 15px', backgroundColor: 'rgb(255, 255, 255)', border: '1px solid rgb(51, 51, 51)', borderRadius: ' 5px', color: ' rgb(51, 51, 51)', cursor: 'pointer', transition: 'backgroundColor 0.3s ease 0s, color 0.3s ease 0s,' }}>Adicionar Acompanhamento</button>
+
+          {/* <Button
+            variant="outlined"
             className="button add-button"
-            onClick={() => handleAddAcompanhamento(professional.id)}
           >
-            Adicionar Acompanhamento
-          </button>
-        </td>
-      </tr>
+
+          </Button> */}
+        </TableCell>
+      </TableRow>
     ));
   };
 
   return (
     <div className="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>CRM</th>
-            <th>Especialidade</th>
-            <th>Email</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>{renderProfessionals()}</tbody>
-      </table>
-
-      {totalPages > 1 && (
-        <Stack
-          spacing={2}
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-          className="pagination"
-        >
-          <IconButton
-            onClick={(event) => handlePageChange(event, currentPage - 1)}
-            disabled={currentPage === 1}
-          ></IconButton>
-          <Pagination
-            count={totalPages}
-            page={currentPage}
-            onChange={handlePageChange}
-          />
-          <IconButton
-            onClick={(event) => handlePageChange(event, currentPage + 1)}
-            disabled={currentPage === totalPages}
-          ></IconButton>
-        </Stack>
-      )}
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Nome</TableCell>
+              <TableCell>CRM</TableCell>
+              <TableCell>Especialidade</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Ações</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>{renderProfessionals()}</TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 };

@@ -10,7 +10,7 @@ import {
   TableCell,
   TextField,
 } from "@mui/material";
-import BottomBar from "../../../components/SideBar/SideBarPatient";
+import SideBarPatient from "../../../components/SideBar/SideBarPatient";
 import './Feedback.css'
 
 interface Feedback {
@@ -70,7 +70,7 @@ const FeedbackList: React.FC = () => {
 
   return (
     <div style={{ display: "flex", width: "100vw", height: "100vh" }}>
-      <BottomBar />
+      <SideBarPatient />
       <div className="content-container">
         <h1>Comentários enviados</h1>
 

@@ -13,7 +13,7 @@
 overflow: hidden; /* Adicionado para evitar barras de rolagem se o conteúdo for maior que a tela */
 }
 
-.acompanhamentos, .conexoes {
+.acompanhamentos, .conexoes, .emocoes {
 overflow-y: auto; /* Adicionado para habilitar a rolagem vertical se o conteúdo ultrapassar a altura máxima */
 box-sizing: border-box;
 }

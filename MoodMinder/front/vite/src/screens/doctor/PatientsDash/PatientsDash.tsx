@@ -1,4 +1,4 @@
-import BottomBar from "../../../components/SideBar/SideBarDoctor";
+import SideBarDoctor from "../../../components/SideBar/SideBarDoctor";
 import ComplexGrid from "../../../components/PatientDash/PatientsList";
 import FollowPatient from "../../../components/PatientDash/FollowPatient";
 
@@ -12,14 +12,14 @@ const PatientDash = () => {
         overflow: "hidden",
       }}
     >
-      <BottomBar />
+      <SideBarDoctor />
       <div className="content-container">
-        <div className="acompanhamentos" style={{ maxHeight: "50vh" }}>
           <h1>Seus acompanhamentos</h1>
+        <div className="acompanhamentos" style={{ maxHeight: "35vh" }}>
           <FollowPatient />
         </div>
-        <div className="conexoes" style={{ maxHeight: "50vh" }}>
           <h1>Conecte-se com outros pacientes</h1>
+        <div className="conexoes" style={{ maxHeight: "35vh" }}>
           <ComplexGrid />
         </div>
       </div>

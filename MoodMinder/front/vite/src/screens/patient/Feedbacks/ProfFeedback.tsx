@@ -9,7 +9,7 @@ import {
     TableRow,
     TableCell,
     TextField,
-  } from "@mui/material";import BottomBar from "../../../components/SideBar/SideBarDoctor";
+  } from "@mui/material";import SideBarDoctor from "../../../components/SideBar/SideBarDoctor";
 
 interface Feedback {
     data: string;
@@ -71,7 +71,7 @@ const PFeedbackList: React.FC = () => {
 
     return (
         <div style={{ display: "flex", width: "100vw", height: "100vh" }}>
-      <BottomBar />
+      <SideBarDoctor />
       <div className="content-container">
         <h1>Comentários enviados</h1>
 

@@ -2,7 +2,7 @@ import React from "react";
 import { BsStopwatch, BsLightbulb, BsArrowThroughHeart } from "react-icons/bs";
 import EmotionSlider from "../../../components/EmotionForm/EmotionSlider";
 import Input from "../../../components/Input";
-import BottomBar from "../../../components/SideBar/SideBarPatient";
+import SideBarPatient from "../../../components/SideBar/SideBarPatient";
 import SubmitButton from "../../../components/SubmitButton";
 import useEmotion from "../../../hooks/useEmotion";
 
@@ -11,7 +11,7 @@ const EmotionForm: React.FC = () => {
 
   return (
     <div style={{ display: 'flex', width: '100vw', height: '100vh' }}>
-      <BottomBar />
+      <SideBarPatient />
 
       <div className="content-container">
         <h1>Guarde um novo momento</h1>

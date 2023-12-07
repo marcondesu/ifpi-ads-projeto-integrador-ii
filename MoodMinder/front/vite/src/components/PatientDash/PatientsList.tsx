@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
-import IconButton from "@mui/material/IconButton";
-import { Acompanhamento } from "../../components/ProfissionalDash/FollowProf";
+import {
+  Paper,
+  Table,
+  TableContainer,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+} from "@mui/material";
 import { jwtDecode } from "jwt-decode";
+import { Acompanhamento } from "../../components/ProfissionalDash/FollowProf";
 
 interface Patient {
   id: string;
@@ -14,11 +20,8 @@ interface Patient {
   email: string;
 }
 
-const ITEMS_PER_PAGE = 2;
-
 const ComplexGrid: React.FC = () => {
   const [patients, setPatients] = useState<Patient[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const token = localStorage.getItem("token") ?? "";
   const decoded = jwtDecode(token);
@@ -71,74 +74,49 @@ const ComplexGrid: React.FC = () => {
     fetchPatients();
   }, []);
 
-  const totalPages = Math.ceil(patients.length / ITEMS_PER_PAGE);
-
-  const handlePageChange = (
-    _event: React.ChangeEvent<unknown>,
-    newPage: number
-  ) => {
-    setCurrentPage(newPage);
-  };
-
   const renderPatients = () => {
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    const endIndex = startIndex + ITEMS_PER_PAGE;
-    return patients.slice(startIndex, endIndex).map((patient) => (
-      <tr key={patient.id}>
-        <td>{patient.nome}</td>
-        <td>{patient.cpf}</td>
-        <td>{patient.sexo}</td>
-        <td>{patient.email}</td>
-        <td>
+    return patients.map((patient) => (
+      <TableRow key={patient.id}>
+        <TableCell>{patient.nome}</TableCell>
+        <TableCell>{patient.cpf}</TableCell>
+        <TableCell>{patient.sexo}</TableCell>
+        <TableCell>{patient.email}</TableCell>
+        <TableCell>
           <button
-            className="button add-button"
             onClick={() => handleAddAcompanhamento(patient.id)}
+            style={{
+              padding: "10px 15px",
+              backgroundColor: "rgb(255, 255, 255)",
+              border: "1px solid green",
+              borderRadius: "5px",
+              color: "rgb(51, 51, 51)",
+              cursor: "pointer",
+              transition: "backgroundColor 0.3s ease 0s, color 0.3s ease 0s",
+            }}
           >
             Adicionar Acompanhamento
           </button>
-        </td>
-      </tr>
+        </TableCell>
+      </TableRow>
     ));
   };
 
   return (
     <div className="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>CPF</th>
-            <th>Sexo</th>
-            <th>Email</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>{renderPatients()}</tbody>
-      </table>
-
-      {totalPages > 1 && (
-        <Stack
-          spacing={2}
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-          className="pagination"
-        >
-          <IconButton
-            onClick={(event) => handlePageChange(event, currentPage - 1)}
-            disabled={currentPage === 1}
-          ></IconButton>
-          <Pagination
-            count={totalPages}
-            page={currentPage}
-            onChange={handlePageChange}
-          />
-          <IconButton
-            onClick={(event) => handlePageChange(event, currentPage + 1)}
-            disabled={currentPage === totalPages}
-          ></IconButton>
-        </Stack>
-      )}
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Nome</TableCell>
+              <TableCell>CPF</TableCell>
+              <TableCell>Sexo</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Ações</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>{renderPatients()}</TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 };
