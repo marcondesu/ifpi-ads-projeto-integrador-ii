@@ -25,9 +25,9 @@ const EmotionSlider: React.FC<EmotionSliderProps> = ({ onChange }) => {
         justifyContent: "center",
       }}
     >
-      <div
+      <div className="rateEmotion"
         style={{
-          width: "60%",
+          width: "50%",
           display: "flex",
           alignItems: "center",
           gap: "20px",
