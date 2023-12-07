@@ -2,14 +2,14 @@ import axios from "axios";
 import { useEffect } from "react";
 
 export default function PacientDetails() {
-  interface Emocao {
-    nome: "";
-    categoria: "";
-    privacidade: "";
-    descricao: "";
-    contexto: "";
-    data: "";
-  }
+  // interface Emocao {
+  //   nome: "";
+  //   categoria: "";
+  //   privacidade: "";
+  //   descricao: "";
+  //   contexto: "";
+  //   data: "";
+  // }
 
   const headers = {
     Authorization: `Bearer ${localStorage.getItem("token")}`,
