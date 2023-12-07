@@ -8,6 +8,7 @@ import {
   TableBody,
   TableRow,
   TableCell,
+  TextField,
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -225,43 +226,45 @@ const FollowProf: React.FC = () => {
       </Dialog>
 
       <Dialog
-        open={dialogOpenFeedback}
-        onClose={closeFeedbackDialog}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">Adicionar Feedback</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            <div>
-              <label htmlFor="nota">Nota:</label>
-              <input
-                type="number"
-                id="nota"
-                name="nota"
-                value={nota}
-                onChange={handleNotaChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="texto">Texto:</label>
-              <input
-                type="text"
-                id="texto"
-                name="texto"
-                value={texto}
-                onChange={handleTextoChange}
-              />
-            </div>
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={closeFeedbackDialog}>Cancelar</Button>
-          <Button onClick={handleConfirmFeedbackDialog} autoFocus>
-            Confirmar
-          </Button>
-        </DialogActions>
-      </Dialog>
+      open={dialogOpenFeedback}
+      onClose={closeFeedbackDialog}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">Adicionar Feedback</DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          <TextField
+            label="Nota"
+            type="number"
+            id="nota"
+            name="nota"
+            value={nota}
+            onChange={handleNotaChange}
+            fullWidth
+            margin="dense"
+            variant="outlined"
+          />
+          <TextField
+            label="Texto"
+            type="text"
+            id="texto"
+            name="texto"
+            value={texto}
+            onChange={handleTextoChange}
+            fullWidth
+            margin="dense"
+            variant="outlined"
+          />
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={closeFeedbackDialog}>Cancelar</Button>
+        <Button onClick={handleConfirmFeedbackDialog} autoFocus>
+          Confirmar
+        </Button>
+      </DialogActions>
+    </Dialog>
     </div>
   );
 };
