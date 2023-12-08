@@ -42,3 +42,5 @@ Desenvolvimento de uma aplicação ~~mobile~~ web voltada para o autocuidado, em
 
 - **FRONT:**
   - [Render](https://moodminder.onrender.com/)
+## Relatório final
+- [Link de visualização](https://1drv.ms/w/s!AkAQG8uKndH5iWtbyePkZ7Vw9UYQ)
